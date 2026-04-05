@@ -196,6 +196,86 @@
                 </div>
                 <div class="formula-box">Formula: T = T_intrinsic + (Drive * Total_Cap)</div>
             </div>
+
+            <!-- Slew Rate Calculator (NEW) -->
+            <div class="tool-card glass reveal">
+                <h3>Slew Rate Estimator</h3>
+                <div class="input-group">
+                    <label>Input Slew (ps)</label>
+                    <input type="number" id="slew-in" value="50" step="5">
+                </div>
+                <div class="input-group">
+                    <label>Fanout Load (fF)</label>
+                    <input type="number" id="slew-load" value="10" step="1">
+                </div>
+                <div class="input-group" style="display: none;"> <!-- Advanced toggle later -->
+                    <label>Output Driver Res (Ω)</label>
+                    <input type="number" id="slew-res" value="1000" step="100">
+                </div>
+                <div class="result-box" style="background: linear-gradient(135deg, #FF9500 0%, #FFCC00 100%);">
+                    <span>Effective Slew OUT:</span><br>
+                    <span class="result-value" id="slew-out">65 ps</span>
+                </div>
+                <div class="formula-box">Formula: S_out = √(S_in² + (2.2 * R * C)²) approx.</div>
+            </div>
+
+            <!-- Multi-Unit Converter Pro (NEW) -->
+            <div class="tool-card glass reveal">
+                <h3>Unit Converter Pro</h3>
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <div style="flex:1">
+                        <label style="font-size: 11px; color: var(--text-secondary);">From Unit</label>
+                        <select id="unit-from" class="glass" style="width:100%; padding:10px; border-radius:8px; background:transparent; color:var(--text-primary);">
+                            <option value="nm">Nanometers (nm)</option>
+                            <option value="um" selected>Microns (µm)</option>
+                            <option value="mm">Millimeters (mm)</option>
+                            <option value="mil">Mils (thou)</option>
+                            <option value="in">Inches (in)</option>
+                        </select>
+                    </div>
+                    <div style="flex:1">
+                        <label style="font-size: 11px; color: var(--text-secondary);">To Unit</label>
+                        <select id="unit-to" class="glass" style="width:100%; padding:10px; border-radius:8px; background:transparent; color:var(--text-primary);">
+                            <option value="nm" selected>Nanometers (nm)</option>
+                            <option value="um">Microns (µm)</option>
+                            <option value="mm">Millimeters (mm)</option>
+                            <option value="mil">Mils (thou)</option>
+                            <option value="in">Inches (in)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Value to Convert</label>
+                    <input type="number" id="unit-val" value="1.0" step="0.1">
+                </div>
+                <div class="result-box" style="background: var(--text-primary); color: var(--bg-color);">
+                    <span class="result-value" id="unit-result">1000 nm</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Timing Path Visualizer (TRAFFIC MAGNET) -->
+        <div class="tool-card glass reveal" style="margin-top: 40px; grid-column: span 2;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <h3>Timing Path Visualizer (Pro)</h3>
+                <button id="add-stage" class="btn btn-primary" style="font-size: 14px; padding: 10px 20px;">+ Add Logic Stage</button>
+            </div>
+            
+            <div id="path-container" style="display: flex; align-items: center; gap: 15px; overflow-x: auto; padding: 20px; min-height: 200px; background: rgba(0,0,0,0.05); border-radius: 16px;">
+                <!-- Stages will be added here -->
+                <div class="path-node glass" style="min-width: 150px; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--accent-color);">
+                    <div style="font-size: 11px; color: var(--text-secondary);">Start: Reg A</div>
+                    <div style="font-size: 18px; font-weight: 600;">0.00 ps</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; justify-content: space-between; align-items: center; padding: 20px; border-top: 1px solid var(--border-color);">
+                <div>
+                    <span style="color: var(--text-secondary);">Total Path Delay:</span><br>
+                    <span id="visualizer-total" style="font-size: 24px; font-weight: 700;">0.00 ps</span>
+                </div>
+                <div id="visualizer-status" style="color: #34c759; font-weight: 600;">STATUS: WITHIN BUDGET</div>
+            </div>
         </div>
     </main>
 

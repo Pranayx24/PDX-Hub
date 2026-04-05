@@ -98,6 +98,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (el) el.addEventListener('input', calculateFanout);
         });
 
+        // Slew Rate
+        ['slew-in', 'slew-load', 'slew-res'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateSlew);
+        });
+
+        // Unit Converter Pro
+        ['unit-from', 'unit-to', 'unit-val'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateUnits);
+        });
+
+        // Timing Path Visualizer
+        const addStageBtn = document.getElementById('add-stage');
+        if (addStageBtn) addStageBtn.addEventListener('click', addPathStage);
+
         // Copy-to-Clipboard logic for result boxes
         document.querySelectorAll('.result-box').forEach(box => {
             box.style.cursor = 'pointer';
@@ -177,6 +193,84 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const delay = t_base + (drive * (count * cap));
         document.getElementById('fanout-result').textContent = delay.toFixed(2) + ' ps';
+    }
+
+    function calculateSlew() {
+        const s_in = parseFloat(document.getElementById('slew-in').value) || 0;
+        const load = parseFloat(document.getElementById('slew-load').value) || 0;
+        const res = parseFloat(document.getElementById('slew-res').value) || 1000;
+        const delay_rc = 2.2 * (res * (load / 1000)); // Convert fF to pF for ps result
+        const s_out = Math.sqrt(Math.pow(s_in, 2) + Math.pow(delay_rc, 2));
+        document.getElementById('slew-out').textContent = s_out.toFixed(1) + ' ps';
+    }
+
+    function calculateUnits() {
+        const from = document.getElementById('unit-from').value;
+        const to = document.getElementById('unit-to').value;
+        const val = parseFloat(document.getElementById('unit-val').value) || 0;
+        
+        const ratios = {
+            nm: 1,
+            um: 1000,
+            mm: 1000000,
+            mil: 25400,
+            in: 25400000
+        };
+
+        const result = (val * ratios[from]) / ratios[to];
+        document.getElementById('unit-result').textContent = result.toLocaleString() + ' ' + to;
+    }
+
+    let stageCount = 0;
+    function addPathStage() {
+        const container = document.getElementById('path-container');
+        if (!container) return;
+        
+        stageCount++;
+        const arrow = document.createElement('div');
+        arrow.innerHTML = '→';
+        arrow.style.cssText = 'color: var(--accent-color); font-weight: bold;';
+        
+        const stage = document.createElement('div');
+        stage.className = 'path-node glass';
+        stage.style.cssText = 'min-width: 150px; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid var(--border-color); animation: fadeInUp 0.4s ease-out;';
+        
+        const delay = (Math.random() * 50 + 20).toFixed(2); // Mock logic delay for visualizer demo
+        stage.innerHTML = `
+            <div style="font-size:11px; color:var(--text-secondary);">Stage ${stageCount}: Gate</div>
+            <div class="stage-delay" style="font-size:18px; font-weight:600;">${delay} ps</div>
+            <button class="remove-stage" style="background:none; border:none; color:#ff3b30; cursor:pointer; font-size:10px; margin-top:5px;">[Remove]</button>
+        `;
+        
+        stage.querySelector('.remove-stage').onclick = () => {
+            arrow.remove();
+            stage.remove();
+            updateTotalDelay();
+        };
+        
+        container.appendChild(arrow);
+        container.appendChild(stage);
+        updateTotalDelay();
+    }
+
+    function updateTotalDelay() {
+        const delays = document.querySelectorAll('.stage-delay');
+        let total = 0;
+        delays.forEach(d => total += parseFloat(d.textContent));
+        
+        const totalEl = document.getElementById('visualizer-total');
+        if (totalEl) totalEl.textContent = total.toFixed(2) + ' ps';
+        
+        const statusEl = document.getElementById('visualizer-status');
+        if (statusEl) {
+            if (total > 500) { // arbitrary threshold for demo
+                statusEl.textContent = 'STATUS: TIMING VIOLATION';
+                statusEl.style.color = '#ff3b30';
+            } else {
+                statusEl.textContent = 'STATUS: WITHIN BUDGET';
+                statusEl.style.color = '#34c759';
+            }
+        }
     }
 
     // --- 3. Reveal Animation (Intersection Observer) ---
