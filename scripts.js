@@ -734,4 +734,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
     }
+    // Silicon Sign-off Badge Logic
+    window.updateSignoffBadge = function(status) {
+        localStorage.setItem('pdx_signoff_score', status);
+        const modal = document.getElementById('modal-medals-count');
+        if (modal) modal.innerText = status + '/4';
+    }
+
+    // DRC Collision Detection Engine
+    window.checkDRCCollision = function() {
+        const macros = document.querySelectorAll('.placed-macro');
+        let violation = false;
+        macros.forEach(m1 => {
+            const r1 = m1.getBoundingClientRect();
+            m1.style.borderColor = 'var(--border-color)';
+            macros.forEach(m2 => {
+                if (m1 !== m2) {
+                    const r2 = m2.getBoundingClientRect();
+                    if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
+                        violation = true;
+                        m1.style.borderColor = '#ff3b30';
+                        m2.style.borderColor = '#ff3b30';
+                    }
+                }
+            });
+        });
+        
+        const statusEl = document.getElementById('layer-status');
+        if (statusEl) {
+            statusEl.innerText = violation ? 'DRC VIOLATION: MACRO OVERLAP' : 'DRC CLEAN: SIGN-OFF READY';
+            statusEl.style.color = violation ? '#ff3b30' : '#34c759';
+        }
+        
+        if (!violation && macros.length > 3) {
+            window.updateSignoffBadge(2); // Award Badge for Clean Flow
+        }
+    }
 });

@@ -227,9 +227,14 @@
                     const rect = canvas.getBoundingClientRect();
                     m.style.left = (e.clientX - rect.left - w/2) + 'px';
                     m.style.top = (e.clientY - rect.top - h/2) + 'px';
+                    // Trigger real-time DRC
+                    if (window.checkDRCCollision) window.checkDRCCollision();
                 }
             };
-            document.onmouseup = () => { isDragging = false; };
+            document.onmouseup = () => { 
+                isDragging = false; 
+                if (window.checkDRCCollision) window.checkDRCCollision();
+            };
 
             canvas.appendChild(m);
             updateStats(w * h * 10); // Simulated scale
