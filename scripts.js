@@ -240,8 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const capture = parseFloat(document.getElementById('setup-capture').value) || 0;
         const slack = (period + capture) - (launch + data + lib);
         const resultEl = document.getElementById('setup-result');
+        const cardEl = resultEl.closest('.tool-card');
+        
         resultEl.textContent = slack.toFixed(3) + ' ns';
-        resultEl.parentElement.style.backgroundColor = slack < 0 ? '#ff3b30' : '#0071e3';
+        if (cardEl) {
+            cardEl.classList.remove('slack-positive', 'slack-negative');
+            cardEl.classList.add(slack < 0 ? 'slack-negative' : 'slack-positive');
+        }
     }
 
     function calculateHold() {
@@ -251,8 +256,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const capture = parseFloat(document.getElementById('hold-capture').value) || 0;
         const slack = (launch + data) - (capture + lib);
         const resultEl = document.getElementById('hold-result');
+        const cardEl = resultEl.closest('.tool-card');
+        
         resultEl.textContent = slack.toFixed(3) + ' ns';
-        resultEl.parentElement.style.backgroundColor = slack < 0 ? '#ff3b30' : '#34c759';
+        if (cardEl) {
+            cardEl.classList.remove('slack-positive', 'slack-negative');
+            cardEl.classList.add(slack < 0 ? 'slack-negative' : 'slack-positive');
+        }
     }
 
     function calculatePower() {

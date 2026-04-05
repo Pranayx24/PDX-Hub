@@ -1340,3 +1340,32 @@ h1 {
     }
 }
 
+/* --- Advanced Tool Upgrades --- */
+.tool-card.slack-negative .result-box {
+    background: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%) !important;
+    animation: pulseRed 2s infinite;
+}
+
+.tool-card.slack-positive .result-box {
+    background: linear-gradient(135deg, #34C759 0%, #0071E3 100%) !important;
+}
+
+@keyframes pulseRed {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 59, 48, 0.4); }
+    100% { transform: scale(1); }
+}
+
+.tool-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: rgba(0, 113, 227, 0.1);
+    color: var(--accent-color);
+    letter-spacing: 1px;
+}
+
