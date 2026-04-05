@@ -99,39 +99,41 @@
 
     <main class="section-container" style="padding-top: 130px; display: flex; gap: 40px; align-items: flex-start;">
         <!-- Academy Roadmap (FORCE-REFRESH V2.5) -->
-        <aside class="glass" style="width: 320px; padding: 100px 25px 40px !important; border-radius: 28px; position: sticky; top: 120px; z-index: 100 !important; max-height: 80vh; overflow-y: auto;">
-            <div style="margin-bottom: 30px !important;">
+        <aside class="glass" style="width: 320px; padding: 40px 25px !important; border-radius: 28px; position: sticky; top: 120px; z-index: 100 !important; max-height: 85vh; overflow-y: auto;">
+            <div style="margin-bottom: 25px;">
                 <h5 style="font-size: 11px; letter-spacing: 3px; color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Curriculum - v2.5</h5>
-                <div style="font-size: 9px; opacity: 0.5; margin-top: 5px;">23 Professional Materials Sync</div>
+                <div style="font-size: 9px; opacity: 0.5; margin-top: 5px;">Professional VLSI Roadmap</div>
             </div>
-            <nav style="display: flex; flex-direction: column; gap: 8px;">
+            
+            <div style="display: flex; flex-direction: column; gap: 8px;">
                 <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE I: FOUNDATIONS</div>
-                <a href="academy/m1-cmos-asic.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-primary); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(5)"><span>01</span> CMOS & ASIC Design</a>
-                <a href="academy/m2-synthesis.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(10)"><span>02</span> Synthesis (1-3)</a>
-                <a href="academy/m3-data-prep.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(15)"><span>03</span> Data Preparation</a>
-                <a href="academy/m4-sanity-checks.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(20)"><span>04</span> Sanity Checks</a>
-                <a href="academy/m5-pd-flow.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(25)"><span>05</span> PD Flow & Terminology</a>
+                <a href="academy/m1-cmos-asic.html" class="roadmap-node active" onclick="updateAcademyProgress(5)"><span>01</span> CMOS & ASIC Design</a>
+                <a href="academy/m2-synthesis.html" class="roadmap-node" onclick="updateAcademyProgress(10)"><span>02</span> Synthesis (1-3)</a>
+                <a href="academy/m3-data-prep.html" class="roadmap-node" onclick="updateAcademyProgress(15)"><span>03</span> Data Preparation</a>
+                <a href="academy/m4-sanity-checks.html" class="roadmap-node" onclick="updateAcademyProgress(20)"><span>04</span> Sanity Checks</a>
+                <a href="academy/m5-pd-flow.html" class="roadmap-node" onclick="updateAcademyProgress(25)"><span>05</span> PD Flow & Terminology</a>
 
                 <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE II: EXECUTION</div>
-                <a href="academy/m6-floorplan.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(35)"><span>06</span> Floorplan Strategy</a>
-                <a href="academy/m7-power-plan.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(40)"><span>07</span> Power Planning</a>
-                <a href="academy/m8-sta-fundamentals.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(45)"><span>08</span> STA Fundamentals</a>
-                <a href="academy/m9-placement.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(55)"><span>09</span> Placement Engine</a>
-                <a href="academy/m10-cts.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(65)"><span>10</span> Clock Tree (CTS)</a>
-                <a href="academy/m11-routing.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(75)"><span>11</span> Routing Phase</a>
+                <a href="academy/m6-floorplan.html" class="roadmap-node" onclick="updateAcademyProgress(35)"><span>06</span> Floorplan Strategy</a>
+                <a href="academy/m7-power-plan.html" class="roadmap-node" onclick="updateAcademyProgress(40)"><span>07</span> Power Planning</a>
+                <a href="academy/m8-sta-fundamentals.html" class="roadmap-node" onclick="updateAcademyProgress(45)"><span>08</span> STA Fundamentals</a>
+                <a href="academy/m9-placement.html" class="roadmap-node" onclick="updateAcademyProgress(55)"><span>09</span> Placement Engine</a>
+                <a href="academy/m10-cts.html" class="roadmap-node" onclick="updateAcademyProgress(65)"><span>10</span> Clock Tree (CTS)</a>
+                <a href="academy/m11-routing.html" class="roadmap-node" onclick="updateAcademyProgress(75)"><span>11</span> Routing Phase</a>
 
                 <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE III: ADVANCED</div>
-                <a href="academy/m12-optimizations.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(80)"><span>12</span> Optimization Tech</a>
-                <a href="academy/m13-process-variations.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(85)"><span>13</span> Process Variations</a>
-                <a href="academy/m14-signoff-1.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(90)"><span>14</span> Signoff - I</a>
-                <a href="academy/m15-signoff-2.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(92)"><span>15</span> Signoff - II</a>
-                <a href="academy/m16-advanced-timing.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(95)"><span>16</span> Adv Timing Concepts</a>
-                <a href="academy/m17-low-power.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(98)"><span>17</span> Low Power Design</a>
-                <a href="academy/m18-tcl-scripting.html" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(100)"><span>18</span> TCL Scripting</a>
-            </nav>
-            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                <div style="font-size: 11px; opacity: 0.7;">Academy Progress: <span id="academy-pct">5%</span></div>
-                <div style="width: 100%; height: 6px; background: #222; border-radius: 3px; margin-top: 5px;">
+                <a href="academy/m12-optimizations.html" class="roadmap-node" onclick="updateAcademyProgress(80)"><span>12</span> Optimization Tech</a>
+                <a href="academy/m13-process-variations.html" class="roadmap-node" onclick="updateAcademyProgress(85)"><span>13</span> Process Variations</a>
+                <a href="academy/m14-signoff-1.html" class="roadmap-node" onclick="updateAcademyProgress(90)"><span>14</span> Signoff - I</a>
+                <a href="academy/m15-signoff-2.html" class="roadmap-node" onclick="updateAcademyProgress(92)"><span>15</span> Signoff - II</a>
+                <a href="academy/m16-advanced-timing.html" class="roadmap-node" onclick="updateAcademyProgress(95)"><span>16</span> Adv Timing Concepts</a>
+                <a href="academy/m17-low-power.html" class="roadmap-node" onclick="updateAcademyProgress(98)"><span>17</span> Low Power Design</a>
+                <a href="academy/m18-tcl-scripting.html" class="roadmap-node" onclick="updateAcademyProgress(100)"><span>18</span> TCL Scripting</a>
+            </div>
+
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <div style="font-size: 11px; opacity: 0.7; margin-bottom: 8px;">Academy Progress: <span id="academy-pct">5%</span></div>
+                <div style="width: 100%; height: 6px; background: #222; border-radius: 3px;">
                     <div id="academy-progress-bar" style="width: 5%; height: 100%; background: var(--accent-color); border-radius: 3px; transition: width 0.5s;"></div>
                 </div>
             </div>
