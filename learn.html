@@ -68,10 +68,10 @@
     </nav>
 
     <main class="section-container" style="padding-top: 130px; display: flex; gap: 40px; align-items: flex-start;">
-        <!-- Academy Sidebar (FINAL ALIGNMENT) -->
-        <aside class="glass" style="width: 270px; padding: 50px 25px; border-radius: 24px; position: sticky; top: 120px; z-index: 10;">
-            <h5 style="margin-bottom: 40px; padding-left: 15px; font-size: 11px; letter-spacing: 2px; color: var(--accent-color); font-weight: 700; text-transform: uppercase; opacity: 0.8;">Silicon Path</h5>
-            <nav style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Academy Sidebar (GRID ARCHITECTURE) -->
+        <aside class="glass" style="width: 280px; padding: 40px 25px; border-radius: 24px; position: sticky; top: 120px; z-index: 100; display: grid; grid-template-rows: auto 1fr auto; gap: 32px;">
+            <h5 style="font-size: 11px; letter-spacing: 2px; color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Silicon Path</h5>
+            <nav style="display: flex; flex-direction: column; gap: 10px;">
                 <a href="#basics" class="academy-link" style="color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 600;" onclick="updateAcademyProgress(25)">1. Silicon Basics</a>
                 <a href="#flow" class="academy-link" style="color: var(--text-secondary); text-decoration: none; font-size: 14px;" onclick="updateAcademyProgress(65)">2. The P&R Flow</a>
                 <a href="#signoff" class="academy-link" style="color: var(--text-secondary); text-decoration: none; font-size: 14px;" onclick="updateAcademyProgress(100)">3. Final Sign-off</a>
