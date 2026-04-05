@@ -21,6 +21,26 @@
         .diagram-arrow { width: 40px; height: 2px; background: var(--accent-color); margin: 0 10px; position: relative; }
         .diagram-arrow::after { content: ''; position: absolute; right: 0; top: -4px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid var(--accent-color); }
         .floorplan-macro { width: 60px; height: 60px; background: rgba(0, 113, 227, 0.2); border: 1px solid var(--accent-color); border-radius: 4px; position: absolute; }
+        
+        @media (max-width: 768px) {
+            main.section-container {
+                flex-direction: column !important;
+                padding-top: 100px !important;
+            }
+            aside.glass {
+                width: 100% !important;
+                position: relative !important;
+                top: 0 !important;
+                padding: 40px 20px !important;
+                margin-bottom: 40px;
+            }
+            .module-section h2 {
+                font-size: 32px !important;
+            }
+            .grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 <body data-theme="dark">
@@ -53,6 +73,9 @@
 
     <nav class="glass">
         <div class="nav-content">
+            <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
             <button class="theme-toggle" id="theme-toggle">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>

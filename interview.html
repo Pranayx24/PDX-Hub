@@ -47,6 +47,9 @@
 
     <nav class="glass">
         <div class="nav-content">
+            <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
             <button class="theme-toggle" id="theme-toggle">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
@@ -65,9 +68,9 @@
     </nav>
 
     <main class="section-container" style="padding-top: 130px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 20px;">
             <h2 style="font-size: 40px;">Interview Master Prep</h2>
-            <button id="start-sim" class="btn btn-primary" style="background: linear-gradient(135deg, #FF9500 0%, #FF3B30 100%);">Start Live Simulation</button>
+            <button id="start-sim" class="btn btn-primary" style="background: linear-gradient(135deg, #FF9500 0%, #FF3B30 100%); width: auto;">Start Live Simulation</button>
         </div>
 
         <!-- Simulator Modal / Section -->
@@ -77,7 +80,7 @@
                 <span id="quiz-score" style="color: var(--text-secondary);">Score: 0/5</span>
             </div>
             <h4 id="quiz-question" style="font-size: 24px; margin-bottom: 30px;">Loading Question...</h4>
-            <div id="quiz-options" class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div id="quiz-options" class="grid" style="gap: 15px;">
                 <!-- Options populated by JS -->
             </div>
         </div>
@@ -143,8 +146,35 @@
         </div>
     </main>
 
-    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
-        <p>© 2026 PDX Hub. Engineered for Excellence.</p>
+    <!-- Universal Silicon Footer (UPGRADE) -->
+    <footer class="glass-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">PLATFORM</h5>
+                <a href="index.html">Mastery Home</a>
+                <a href="visualizer.html">GDSII Visualizer</a>
+                <a href="lab.html">Tools Lab Pro</a>
+                <a href="learn_new.html">Academy Masterclass</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">RESOURCES</h5>
+                <a href="interview.html">Interview Hub</a>
+                <a href="tools.html">Physical Design Tools</a>
+                <a href="#">Tier-1 Checklists</a>
+                <a href="#">Foundry Specs</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">COMMUNITY</h5>
+                <a href="#">Global Leaderboard</a>
+                <a href="javascript:void(0)" onclick="openProfile()">Identity Modal</a>
+                <a href="#">Engineering Bot</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">PDX HUB IDENTITY</h5>
+                <div style="font-size: 13px; opacity: 0.7;">Physical Design Expert Hub – The elite educational ecosystem for Tier-1 Engineers.</div>
+                <div style="margin-top: 20px; font-weight: 700; font-size: 11px; letter-spacing: 2px;">© 2026 SILICON 2.0</div>
+            </div>
+        </div>
     </footer>
 
     <script src="scripts.js"></script>

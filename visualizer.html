@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         .canvas-area {
-            width: 600px;
+            width: 100%;
+            max-width: 600px;
             height: 400px;
             background: #111;
             border-radius: 12px;
@@ -21,6 +22,17 @@
                 linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
             background-size: 20px 20px;
+        }
+        @media (max-width: 768px) {
+            .canvas-area {
+                height: 300px;
+            }
+            main[style*="display: flex"] {
+                flex-direction: column !important;
+            }
+            .section-container > div {
+                flex-direction: column !important;
+            }
         }
         .macro-block {
             padding: 10px;
@@ -78,6 +90,9 @@
 
     <nav class="glass">
         <div class="nav-content">
+            <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
             <button class="theme-toggle" id="theme-toggle">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>

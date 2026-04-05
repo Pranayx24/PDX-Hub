@@ -39,6 +39,9 @@
 
     <nav class="glass">
         <div class="nav-content">
+            <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
             <button class="theme-toggle" id="theme-toggle">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
             </button>
@@ -114,7 +117,7 @@
         <!-- Sign-Off Dashboard (NEW) -->
         <!-- PDN Power Analyzer (NEW) -->
         <section class="section-container reveal" style="margin-top: 50px;">
-            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(255,149,0,0.1) 0%, rgba(255,255,255,0.02) 100%);">
+            <div class="tool-card glass" style="background: linear-gradient(135deg, rgba(255,149,0,0.1) 0%, rgba(255,255,255,0.02) 100%);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h3>Automated PDN Analyzer</h3>
@@ -122,7 +125,7 @@
                     </div>
                     <button class="btn btn-primary" onclick="runPDNAnalysis()" style="padding: 10px 20px; font-size: 13px; background: #FF9500;">Analyze Power Grid</button>
                 </div>
-                <div id="pdn-results" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                <div id="pdn-results" class="grid" style="margin-top: 20px;">
                     <div style="grid-column: span 2; padding: 20px; background: rgba(0,0,0,0.1); border-radius: 12px; border: 1px dashed var(--border-color); text-align: center; color: var(--text-secondary);">
                         Power Mesh: Standby for Grid Extraction...
                     </div>
@@ -130,7 +133,7 @@
             </div>
         </section>
         <section class="section-container reveal" style="margin-top: 50px;">
-            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(0,113,227,0.1) 0%, rgba(255,255,255,0.02) 100%);">
+            <div class="tool-card glass" style="background: linear-gradient(135deg, rgba(0,113,227,0.1) 0%, rgba(255,255,255,0.02) 100%);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h3>Multi-Corner Sign-Off Lab</h3>
@@ -138,15 +141,15 @@
                     </div>
                     <button class="btn btn-primary" onclick="runMultiCornerAnalysis()" style="padding: 10px 20px; font-size: 13px;">Simulate Corners</button>
                 </div>
-                <div id="corner-results" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                <div id="corner-results" class="grid" style="margin-top: 20px;">
                     <!-- Population by JS -->
-                    <div style="grid-column: span 3; text-align: center; color: var(--text-secondary); font-style: italic;">
+                    <div style="text-align: center; color: var(--text-secondary); font-style: italic;">
                         Click Simulate to see multi-variation slack data.
                     </div>
                 </div>
             </div>
         </section>
-            <div class="tool-card glass" style="grid-column: span 1;">
+            <div class="tool-card glass">
                 <h3 style="margin-bottom: 20px;">🛡️ Final Sign-Off Checklist</h3>
                 <div class="checklist-item">
                     <input type="checkbox" id="check-drc" class="signoff-check">
@@ -183,7 +186,7 @@
 
         <!-- DRC Lite Simulator (NEW) -->
         <section class="section-container reveal" style="margin-top: 50px;">
-            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.05) 100%);">
+            <div class="tool-card glass" style="background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.05) 100%);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                     <div>
                         <h3>DRC Lite Simulator</h3>
@@ -194,14 +197,14 @@
                 <div id="drc-console" style="background: rgba(0,0,0,0.5); border-radius: 12px; padding: 20px; font-family: monospace; font-size: 12px; height: 160px; overflow-y: auto; border: 1px solid var(--border-color); color: #34c759;">
                     [INFO] DRC Engine Initialized... Standing by for input layout...
                 </div>
-                <div id="drc-results" style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div id="drc-results" class="grid" style="margin-top: 20px;">
                     <!-- Population by JS -->
                 </div>
             </div>
         </section>
-            <div class="tool-card glass" style="grid-column: span 1;">
+            <div class="tool-card glass">
                 <h3>🛡️ Lab Integration: Timing Analyzer Pro</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                <div class="grid" style="margin-top: 20px;">
                     <div>
                         <div class="input-group">
                             <label>Design Path Delay (ps)</label>
