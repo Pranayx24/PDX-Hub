@@ -1259,32 +1259,19 @@ h1 {
         }
 
         .hero-section {
-            padding: 40px 20px 40px !important;
-        }
-
-        #silicon-crystal {
-            width: 70px !important;
-            height: 70px !important;
-            margin: 40px auto 40px !important;
-        }
-
-        #silicon-crystal div {
-            transform-origin: center center !important;
-            transform: scale(0.7) !important; /* Visual scale down of faces */
+            padding: 60px 20px 40px !important;
         }
         
         .hero-section h1 {
             font-size: 38px !important;
             letter-spacing: -2px !important;
             line-height: 1.1;
-            margin-top: 20px !important;
         }
 
         .hero-section .reveal[style*="display: flex"] {
             flex-direction: row !important;
             gap: 10px !important;
             padding: 0 10px;
-            margin-top: 30px !important;
         }
 
         .btn {
@@ -1299,6 +1286,40 @@ h1 {
     table {
         min-width: 500px;
     }
+}
+
+/* 3D Silicon Crystal Animation & Fix */
+@keyframes rotateCrystal {
+    0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+.hero-section {
+    perspective: 1200px;
+}
+
+#silicon-crystal {
+    transform-style: preserve-3d;
+}
+
+/* Scale the crystal on mobile to avoid squashing */
+@media (max-width: 768px) {
+    #silicon-crystal {
+        width: 60px !important;
+        height: 60px !important;
+        margin-bottom: 30px !important;
+    }
+    #silicon-crystal div {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    /* Adjust Z-translation for smaller cube faces on mobile */
+    #silicon-crystal div:nth-child(1) { transform: rotateY(0deg) translateZ(30px) !important; }
+    #silicon-crystal div:nth-child(2) { transform: rotateY(90deg) translateZ(30px) !important; }
+    #silicon-crystal div:nth-child(3) { transform: rotateY(180deg) translateZ(30px) !important; }
+    #silicon-crystal div:nth-child(4) { transform: rotateY(270deg) translateZ(30px) !important; }
+    #silicon-crystal div:nth-child(5) { transform: rotateX(90deg) translateZ(30px) !important; }
+    #silicon-crystal div:nth-child(6) { transform: rotateX(-90deg) translateZ(30px) !important; }
 }
 
 /* Small Phones */
