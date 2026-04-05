@@ -326,7 +326,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     };
 
-    // GDSII Layer Toggling Logic
+    // Academy Progress Logic
+    window.updateAcademyProgress = function(pct) {
+        const bar = document.getElementById('academy-progress-bar');
+        const text = document.getElementById('academy-pct');
+        if (bar && text) {
+            bar.style.width = pct + '%';
+            text.innerText = pct + '%';
+        }
+        
+        // Persist progress for Mastery dashboard
+        const currentMastery = parseInt(localStorage.getItem('pdx_academy_progress') || 0);
+        if (pct > currentMastery) {
+            localStorage.setItem('pdx_academy_progress', pct);
+            updateHomeDashboard();
+        }
+    }
     window.toggleGDSLayer = function(layer) {
         const statuses = {
             'metal1': 'Metal 1 Visibility Toggled',

@@ -47,123 +47,99 @@
         </div>
     </nav>
 
-    <main class="section-container" style="padding-top: 100px;">
-        <h2 style="font-size: 48px; margin-bottom: 60px; text-align: center;">Physical Design Flow</h2>
-
-        <!-- Floorplanning -->
-        <section class="learn-section reveal">
-            <div class="learn-grid">
-                <div>
-                    <h3>1. Floorplanning</h3>
-                    <p>The first step in defining the chip architecture. It involves determining the size of the chip, placing macros (memory, IP blocks), and defining the power grid (P/G rings and straps).</p>
-                    <ul style="color: var(--text-secondary); margin-left: 20px; list-style: circle;">
-                        <li>Core and Die area definition</li>
-                        <li>Macro placement & port positioning</li>
-                        <li>Power Grid (IR drop analysis setup)</li>
-                    </ul>
-                    <div class="interview-tip">💡 Interview Tip: Why avoid placing macros at the center of the chip? Because it can cause routing congestion and IR drop issues later. Always place them along the boundaries first.</div>
-                </div>
-                <div class="summary-box">
-                    <h4>Quick Summary</h4>
-                    <p style="font-size: 14px; margin-top: 10px;">Goal: Fix die size and macro positions to ensure enough space for standard cell placement and routing.</p>
+    <main class="section-container" style="padding-top: 130px; display: flex; gap: 40px; align-items: flex-start;">
+        <!-- Academy Sidebar (NEW) -->
+        <aside class="glass" style="width: 250px; padding: 25px; border-radius: 20px; position: sticky; top: 120px;">
+            <h4 style="margin-bottom: 20px; font-size: 14px; letter-spacing: 1px; color: var(--accent-color);">ACADEMY PATH</h4>
+            <nav style="display: flex; flex-direction: column; gap: 15px;">
+                <a href="#basics" class="academy-link" style="color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 600;" onclick="updateAcademyProgress(25)">1. Silicon Basics</a>
+                <a href="#flow" class="academy-link" style="color: var(--text-secondary); text-decoration: none; font-size: 14px;" onclick="updateAcademyProgress(65)">2. The P&R Flow</a>
+                <a href="#signoff" class="academy-link" style="color: var(--text-secondary); text-decoration: none; font-size: 14px;" onclick="updateAcademyProgress(100)">3. Final Sign-off</a>
+            </nav>
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                <div style="font-size: 11px; opacity: 0.7;">Academy Progress: <span id="academy-pct">25%</span></div>
+                <div style="width: 100%; height: 6px; background: #222; border-radius: 3px; margin-top: 5px;">
+                    <div id="academy-progress-bar" style="width: 25%; height: 100%; background: var(--accent-color); border-radius: 3px; transition: width 0.5s;"></div>
                 </div>
             </div>
-            <div class="diagram-container">
-                <div class="floorplan-macro" style="top: 20px; left: 20px;">Macro</div>
-                <div class="floorplan-macro" style="top: 20px; right: 20px;">Macro</div>
-                <div class="floorplan-macro" style="bottom: 20px; left: 20px;">Macro</div>
-                <div class="diagram-box" style="width: 100px; height: 60px; opacity: 0.5; border-style: dashed;">Core Area</div>
-            </div>
-        </section>
+        </aside>
 
-        <!-- Placement -->
-        <section class="learn-section reveal">
-            <div class="learn-grid">
-                <div>
-                    <h3>2. Placement</h3>
-                    <p>Standard cells of the logic netlist are placed within the available rows in the core area. Placement aims to minimize wire length while satisfying timing and congestion constraints.</p>
-                    <div class="interview-tip">💡 Interview Tip: What is 'local congestion'? It occurs when too many pins are in a small local area, leaving no room for routing tracks. Use "Density Control" to fix it.</div>
+        <!-- Masterclass Content Hub -->
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 100px;">
+            <!-- Module 1: Silicon Basics -->
+            <section id="basics" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: var(--accent-color); letter-spacing: 2px; text-transform: uppercase;">Module 1: Fundamental Physics</span>
+                <h2 style="font-size: 48px; margin-top: 10px;">The Silicon Atom to CMOS</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
+                    Every chip begins with the manipulation of silicon. From P-type and N-type doping, we create the CMOS inverter—the basic building block of all digital logic.
+                </p>
+                
+                <div class="card glass" style="margin-top: 40px; padding: 40px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                        <div>
+                            <h4>Dynamic Switching Theory</h4>
+                            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">CMOS logic consumes zero static power. Energy is only dissipated during the switching (0 → 1 or 1 → 0) phase.</p>
+                            <div class="interview-tip" style="margin-top: 20px;">💡 Concept: Threshold Voltage (Vth) - The gate-source voltage required to create a conduction path between source and drain.</div>
+                        </div>
+                        <div style="background: rgba(0,113,227,0.05); border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Cmos_inverter.png" style="width: 90px; filter: invert(1) brightness(2);" alt="CMOS Symbol">
+                        </div>
+                    </div>
                 </div>
-                <div class="summary-box">
-                    <h4>Key Metrics</h4>
-                    <ul style="font-size: 14px; list-style: none;">
-                        <li>• WNS (Worst Negative Slack)</li>
-                        <li>• TNS (Total Negative Slack)</li>
-                        <li>• Cell Density (%)</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- CTS -->
-        <section class="learn-section reveal">
-            <div class="learn-grid">
-                <div>
-                    <h3>3. Clock Tree Synthesis (CTS)</h3>
-                    <p>Building a tree-like network of buffers and inverters to distribute the clock signal to all sequential elements (flip-flops) with minimum skew and latency.</p>
-                    <div class="interview-tip">💡 Interview Tip: Why use H-Tree? To ensure the clock arrives at every flip-flop at the exact same time, minimizing global skew.</div>
-                </div>
-                <div class="summary-box">
-                    <h4>CTS Targets</h4>
-                    <p style="font-size: 14px;">Minimize Skew, Minimize Insertion Delay, and Minimize Clock Power.</p>
-                </div>
-            </div>
-        </section>
+            <!-- Module 2: The Physical Design Flow -->
+            <section id="flow" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #34c759; letter-spacing: 2px; text-transform: uppercase;">Module 2: Netlist-to-GDSII</span>
+                <h2 style="font-size: 48px; margin-top: 10px;">The Physical Design Flow</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
+                    This is the core process of chipmaking. Transforming the synthesized netlist into a manufacturable physical layout follows a strict, multi-stage pipeline.
+                </p>
 
-        <!-- Routing -->
-        <section class="learn-section reveal">
-            <div class="learn-grid">
-                <div>
-                    <h3>4. Routing</h3>
-                    <p>Connecting the placed cells and macros using metal layers. Routing happens in two phases: Global Routing (defining tracks) and Detail Routing (defining specific metal layers and vias).</p>
-                    <div class="interview-tip">💡 Interview Tip: DRC vs LVS? DRC ensures manufacturing rules are met. LVS ensures the final layout matches the schematic netlist.</div>
+                <div class="grid" style="margin-top: 40px;">
+                    <div class="card glass">
+                        <h4 style="color: var(--accent-color);">1. Floorplanning</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">The chip's blueprint. Deciding die area, I/O placement, and macro positioning to minimize congestion and IR drop.</p>
+                    </div>
+                    <div class="card glass">
+                        <h4 style="color: var(--accent-color);">2. Placement</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Positioning millions of standard cells within row boundaries. Aim: Minimized wirelength and timing satisfaction.</p>
+                    </div>
+                    <div class="card glass">
+                        <h4 style="color: var(--accent-color);">3. Clock Tree (CTS)</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Building the H-Tree or Mesh to deliver clock signals to all registers with minimum global skew and latency.</p>
+                    </div>
+                    <div class="card glass">
+                        <h4 style="color: var(--accent-color);">4. Routing</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Final metal interconnect design. Global and Detail routing phases that fulfill all logical net requirements.</p>
+                    </div>
                 </div>
-                <div class="summary-box">
-                    <h4>Routing Rules</h4>
-                    <p style="font-size: 14px;">Min Spacing, Min Width, Antenna Effect, Crosstalk Noise.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- GDSII Roadmap (NEW) -->
-        <section class="learn-section reveal" style="margin-top: 100px; padding: 40px; background: rgba(0,0,0,0.2); border-radius: 20px;">
-            <h3 style="text-align: center;">Silicon Roadmap: RTL to Tape-out</h3>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; overflow-x: auto; padding: 20px;">
-                <div class="roadmap-node">
-                    <div style="font-weight: 700;">Synthesis</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Netlist Gen</div>
+            <!-- Module 3: Sign-off Verification -->
+            <section id="signoff" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ff9500; letter-spacing: 2px; text-transform: uppercase;">Module 3: The Goal</span>
+                <h2 style="font-size: 48px; margin-top: 10px;">Tape-out & Verification</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
+                    The final stage. Before manufacturing, the design must undergo rigorous sign-off checks to ensure it will function correctly and have high yield.
+                </p>
+                
+                <div class="grid" style="margin-top: 40px;">
+                    <div class="card glass" style="border-left: 4px solid #34c759;">
+                        <h4>PV: Physical Verification</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">DRC (Rule checks), LVS (Layout matched to Netlist), and ERC (Electrical checks).</p>
+                    </div>
+                    <div class="card glass" style="border-left: 4px solid #ff3b30;">
+                        <h4>STA: Static Timing</h4>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Verifying setup and hold times across all corners to ensure operating frequency targets.</p>
+                    </div>
                 </div>
-                <div class="diagram-arrow"></div>
-                <div class="roadmap-node">
-                    <div style="font-weight: 700;">Floorplan</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Die & IO</div>
+                
+                <div class="interview-tip" style="margin-top: 40px; border: 1px dashed var(--accent-color); background: rgba(0,113,227,0.05);">
+                    🚀 Mastery Path: "Every person visiting this site must get full knowledge from basics to advanced." Use our <strong>Visualizer</strong> and <strong>Tools Lab</strong> to apply these concepts in real-time.
                 </div>
-                <div class="diagram-arrow"></div>
-                <div class="roadmap-node">
-                    <div style="font-weight: 700;">Placement</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Std Cell Fix</div>
-                </div>
-                <div class="diagram-arrow"></div>
-                <div class="roadmap-node">
-                    <div style="font-weight: 700;">CTS</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Clock Tree</div>
-                </div>
-                <div class="diagram-arrow"></div>
-                <div class="roadmap-node">
-                    <div style="font-weight: 700;">Routing</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Metal Layer</div>
-                </div>
-                <div class="diagram-arrow"></div>
-                <div class="roadmap-node" style="border-color: #34c759; color: #34c759;">
-                    <div style="font-weight: 700;">GDSII</div>
-                    <div style="font-size: 10px; opacity: 0.7;">Tape-out</div>
-                </div>
-            </div>
-            <p style="text-align: center; margin-top: 40px; font-size: 14px; color: var(--text-secondary);">Interactive Roadmap: Hover over nodes to see industry-standard sign-off checklists.</p>
-        </section>
-
-        <!-- Existing Flow sections -->
-        <div class="ads-placeholder">AD SENSE PLACEHOLDER (NON-INTRUSIVE)</div>
+            </section>
+        </div>
     </main>
 
     <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">

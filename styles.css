@@ -694,8 +694,36 @@ h1 {
     transition: transform 0.3s;
 }
 
-.medal-card:hover .medal-icon { transform: scale(1.1) rotate(10deg); }
+/* Academy Path Styles */
+.module-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
+.module-section.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.academy-link {
+    transition: var(--transition-smooth);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: block;
+}
+
+.academy-link:hover {
+    background: rgba(0, 113, 227, 0.1);
+    color: var(--accent-color) !important;
+    transform: translateX(5px);
+}
+
+.module-card {
+    border-left: 2px solid var(--accent-color);
+    padding-left: 20px;
+    margin: 20px 0;
+}
 .cell-card {
     transition: var(--transition-smooth);
     background: rgba(0,0,0,0.2);
