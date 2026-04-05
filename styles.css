@@ -1186,12 +1186,63 @@ h1 {
             box-sizing: border-box;
         }
         
-        /* Simplify nav on academy pages for mobile */
-        nav.glass .nav-links {
+        /* Premium Mobile Menu Overlay */
+        nav.glass .nav-links.mobile-active {
+            display: flex !important;
+            flex-direction: column;
+            position: fixed;
+            top: 85px;
+            left: 5%;
+            right: 5%;
+            width: 90%;
+            background: var(--surface-color);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 40px 30px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            gap: 20px;
+            z-index: 1001;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        nav.glass .nav-links.mobile-active a {
+            font-size: 18px !important;
+            font-weight: 600;
+            color: var(--text-primary) !important;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            width: 100%;
+            display: block;
+        }
+
+        nav.glass .nav-content {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 0 20px !important;
+            width: 100%;
+        }
+
+        .nav-search {
             display: none !important;
         }
+
+        nav.glass .logo {
+            order: 1;
+            text-align: left;
+        }
+
+        nav.glass .theme-toggle {
+            order: 2;
+            margin-left: auto;
+            margin-right: 15px;
+        }
+
         nav.glass .mobile-menu-toggle {
             display: block !important;
+            order: 3;
         }
     }
 
