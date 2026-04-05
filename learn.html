@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn PD Flow | PDX Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .learn-section { margin-bottom: 80px; }
+        .learn-section h3 { font-size: 32px; margin-bottom: 20px; color: var(--accent-color); }
+        .learn-section p { font-size: 18px; margin-bottom: 20px; line-height: 1.6; max-width: 800px; }
+        .learn-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .summary-box { background: var(--surface-color); border: 1px solid var(--border-color); padding: 25px; border-radius: 16px; margin-top: 20px; }
+        .interview-tip { border-left: 4px solid var(--accent-color); background: rgba(0, 113, 227, 0.05); padding: 15px 25px; border-radius: 4px 16px 16px 4px; margin-top: 20px; font-weight: 600; }
+        .diagram-container { background: var(--bg-color); border: 1px solid var(--border-color); height: 250px; border-radius: 16px; margin: 20px 0; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .diagram-box { width: 150px; height: 100px; border: 2px solid var(--text-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; background: var(--surface-color); z-index: 1; }
+        .diagram-arrow { width: 40px; height: 2px; background: var(--accent-color); margin: 0 10px; position: relative; }
+        .diagram-arrow::after { content: ''; position: absolute; right: 0; top: -4px; width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 8px solid var(--accent-color); }
+        .floorplan-macro { width: 60px; height: 60px; background: rgba(0, 113, 227, 0.2); border: 1px solid var(--accent-color); border-radius: 4px; position: absolute; }
+    </style>
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tools.html">Tools</a>
+                <a href="learn.html">Learn</a>
+                <a href="interview.html">Interview</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="section-container" style="padding-top: 100px;">
+        <h2 style="font-size: 48px; margin-bottom: 60px; text-align: center;">Physical Design Flow</h2>
+
+        <!-- Floorplanning -->
+        <section class="learn-section reveal">
+            <div class="learn-grid">
+                <div>
+                    <h3>1. Floorplanning</h3>
+                    <p>The first step in defining the chip architecture. It involves determining the size of the chip, placing macros (memory, IP blocks), and defining the power grid (P/G rings and straps).</p>
+                    <ul style="color: var(--text-secondary); margin-left: 20px; list-style: circle;">
+                        <li>Core and Die area definition</li>
+                        <li>Macro placement & port positioning</li>
+                        <li>Power Grid (IR drop analysis setup)</li>
+                    </ul>
+                    <div class="interview-tip">💡 Interview Tip: Why avoid placing macros at the center of the chip? Because it can cause routing congestion and IR drop issues later. Always place them along the boundaries first.</div>
+                </div>
+                <div class="summary-box">
+                    <h4>Quick Summary</h4>
+                    <p style="font-size: 14px; margin-top: 10px;">Goal: Fix die size and macro positions to ensure enough space for standard cell placement and routing.</p>
+                </div>
+            </div>
+            <div class="diagram-container">
+                <div class="floorplan-macro" style="top: 20px; left: 20px;">Macro</div>
+                <div class="floorplan-macro" style="top: 20px; right: 20px;">Macro</div>
+                <div class="floorplan-macro" style="bottom: 20px; left: 20px;">Macro</div>
+                <div class="diagram-box" style="width: 100px; height: 60px; opacity: 0.5; border-style: dashed;">Core Area</div>
+            </div>
+        </section>
+
+        <!-- Placement -->
+        <section class="learn-section reveal">
+            <div class="learn-grid">
+                <div>
+                    <h3>2. Placement</h3>
+                    <p>Standard cells of the logic netlist are placed within the available rows in the core area. Placement aims to minimize wire length while satisfying timing and congestion constraints.</p>
+                    <div class="interview-tip">💡 Interview Tip: What is 'local congestion'? It occurs when too many pins are in a small local area, leaving no room for routing tracks. Use "Density Control" to fix it.</div>
+                </div>
+                <div class="summary-box">
+                    <h4>Key Metrics</h4>
+                    <ul style="font-size: 14px; list-style: none;">
+                        <li>• WNS (Worst Negative Slack)</li>
+                        <li>• TNS (Total Negative Slack)</li>
+                        <li>• Cell Density (%)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTS -->
+        <section class="learn-section reveal">
+            <div class="learn-grid">
+                <div>
+                    <h3>3. Clock Tree Synthesis (CTS)</h3>
+                    <p>Building a tree-like network of buffers and inverters to distribute the clock signal to all sequential elements (flip-flops) with minimum skew and latency.</p>
+                    <div class="interview-tip">💡 Interview Tip: Why use H-Tree? To ensure the clock arrives at every flip-flop at the exact same time, minimizing global skew.</div>
+                </div>
+                <div class="summary-box">
+                    <h4>CTS Targets</h4>
+                    <p style="font-size: 14px;">Minimize Skew, Minimize Insertion Delay, and Minimize Clock Power.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Routing -->
+        <section class="learn-section reveal">
+            <div class="learn-grid">
+                <div>
+                    <h3>4. Routing</h3>
+                    <p>Connecting the placed cells and macros using metal layers. Routing happens in two phases: Global Routing (defining tracks) and Detail Routing (defining specific metal layers and vias).</p>
+                    <div class="interview-tip">💡 Interview Tip: DRC vs LVS? DRC ensures manufacturing rules are met. LVS ensures the final layout matches the schematic netlist.</div>
+                </div>
+                <div class="summary-box">
+                    <h4>Routing Rules</h4>
+                    <p style="font-size: 14px;">Min Spacing, Min Width, Antenna Effect, Crosstalk Noise.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Placeholder -->
+        <div class="ads-placeholder">AD SENSE PLACEHOLDER (NON-INTRUSIVE)</div>
+    </main>
+
+    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
+        <p>© 2026 PDX Hub. Engineered for Excellence.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

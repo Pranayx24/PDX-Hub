@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Prep | PDX Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .accordion-item { border-bottom: 1px solid var(--border-color); margin-bottom: 10px; }
+        .accordion-header { padding: 20px; font-size: 18px; font-weight: 500; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: var(--transition-smooth); border-radius: 12px; }
+        .accordion-header:hover { background: rgba(0, 113, 227, 0.05); }
+        .accordion-header.active { color: var(--accent-color); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding: 0 20px; color: var(--text-secondary); font-size: 16px; line-height: 1.6; }
+        .accordion-content.active { padding: 10px 20px 30px 20px; max-height: 1000px; }
+        .keyword { color: var(--text-primary); font-weight: 600; text-decoration: underline dotted var(--accent-color); }
+        input#search-interview { width: 100%; padding: 16px 24px; border-radius: 980px; border: 1px solid var(--border-color); background: var(--surface-color); color: var(--text-primary); font-size: 18px; margin-bottom: 40px; box-shadow: var(--card-shadow); }
+    </style>
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tools.html">Tools</a>
+                <a href="learn.html">Learn</a>
+                <a href="interview.html">Interview</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="section-container" style="padding-top: 100px;">
+        <h2 style="font-size: 40px; margin-bottom: 20px; text-align: center;">Interview Master Prep</h2>
+        <input type="text" id="search-interview" placeholder="Search questions (e.g., Slack, RC, Antennas)...">
+
+        <div id="accordion-container">
+            <!-- Questions to be populated -->
+            <div class="accordion-item reveal">
+                <div class="accordion-header">
+                    Q1: What is the difference between Setup Time and Hold Time?
+                    <span>+</span>
+                </div>
+                <div class="accordion-content">
+                    <span class="keyword">Setup Time</span> is the minimum time before the clock edge that the data must be stable. If violated, it causes <span class="keyword">timing failure</span>. <br>
+                    <span class="keyword">Hold Time</span> is the minimum time after the clock edge data must remain stable. Hold violations cannot be fixed by reducing clock frequency.
+                </div>
+            </div>
+
+            <div class="accordion-item reveal">
+                <div class="accordion-header">
+                    Q2: What are 'Antenna Rules' in Physical Design?
+                    <span>+</span>
+                </div>
+                <div class="accordion-content">
+                    During manufacturing, metal wires act as <span class="keyword">antennas</span>. They collect electric charge during plasma etching, which can discharge through the <span class="keyword">gate oxide</span> of transistors, permanently damaging them. Fixes include adding <span class="keyword">antenna diodes</span> or metal hopping (moving to higher layers).
+                </div>
+            </div>
+
+            <div class="accordion-item reveal">
+                <div class="accordion-header">
+                    Q3: Why is Clock Tree Synthesis (CTS) important?
+                    <span>+</span>
+                </div>
+                <div class="accordion-content">
+                    CTS ensures that the clock signal reaches all <span class="keyword">sequential elements</span> at roughly the same time. The main goals are to minimize <span class="keyword">global skew</span>, minimize <span class="keyword">insertion delay</span>, and keep <span class="keyword">power consumption</span> low through efficient buffer placement.
+                </div>
+            </div>
+
+            <div class="accordion-item reveal">
+                <div class="accordion-header">
+                    Q4: What is Crosstalk and how it affects timing?
+                    <span>+</span>
+                </div>
+                <div class="accordion-content">
+                    <span class="keyword">Crosstalk</span> is the unwanted interaction between adjacent wires due to <span class="keyword">coupling capacitance</span>. It can cause <span class="keyword">Delta Delay</span> (speeding up or slowing down signals) or <span class="keyword">Glitches</span> (changing logic state).
+                </div>
+            </div>
+
+            <div class="accordion-item reveal">
+                <div class="accordion-header">
+                    Q5: Explain OCV (On-Chip Variation).
+                    <span>+</span>
+                </div>
+                <div class="accordion-content">
+                    <span class="keyword">OCV</span> accounts for variations in process, voltage, and temperature across different regions of the <span class="keyword">same die</span>. It's modeled using derating factors to make timing analysis more <span class="keyword">pessimistic</span> and ensure robust manufacturing.
+                </div>
+            </div>
+            
+            <!-- AdSense placeholder -->
+            <div class="ads-placeholder" style="margin-top: 50px;">AD SENSE PLACEHOLDER (CONTENT SIDEBAR)</div>
+        </div>
+    </main>
+
+    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
+        <p>© 2026 PDX Hub. Engineered for Excellence.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

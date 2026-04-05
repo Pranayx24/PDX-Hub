@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced VLSI Tools | PDX Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tools.html">Tools</a>
+                <a href="learn.html">Learn</a>
+                <a href="interview.html">Interview</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="section-container" style="padding-top: 100px;">
+        <h2 style="font-size: 40px; margin-bottom: 10px; text-align: center;">Advanced PD Tools</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 50px;">High-precision calculators for Timing, Power, and Interconnect analysis.</p>
+
+        <div class="tool-grid">
+            <!-- Setup Time Calculator -->
+            <div class="tool-card glass reveal">
+                <h3>Setup Slack Calculator</h3>
+                <div class="input-group">
+                    <label>Clock Period (ns)</label>
+                    <input type="number" id="setup-period" value="1.0" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Data Path Delay (ns)</label>
+                    <input type="number" id="setup-data" value="0.4" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Library Setup Time (ns)</label>
+                    <input type="number" id="setup-lib" value="0.05" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Launch Clock Latency (ns)</label>
+                    <input type="number" id="setup-launch" value="0.01" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Capture Clock Latency (ns)</label>
+                    <input type="number" id="setup-capture" value="0.01" step="0.01">
+                </div>
+                <div class="result-box">
+                    <span>Setup Slack:</span><br>
+                    <span class="result-value" id="setup-result">0.54 ns</span>
+                </div>
+                <div class="formula-box">Formula: Slack = (T_period + T_capture) - (T_launch + T_data + T_setup)</div>
+            </div>
+
+            <!-- Hold Time Calculator -->
+            <div class="tool-card glass reveal">
+                <h3>Hold Slack Calculator</h3>
+                <div class="input-group">
+                    <label>Data Path Delay (ns)</label>
+                    <input type="number" id="hold-data" value="0.2" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Library Hold Time (ns)</label>
+                    <input type="number" id="hold-lib" value="0.02" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Launch Clock Latency (ns)</label>
+                    <input type="number" id="hold-launch" value="0.01" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Capture Clock Latency (ns)</label>
+                    <input type="number" id="hold-capture" value="0.01" step="0.01">
+                </div>
+                <div class="result-box" style="background-color: #34c759;">
+                    <span>Hold Slack:</span><br>
+                    <span class="result-value" id="hold-result">0.18 ns</span>
+                </div>
+                <div class="formula-box">Formula: Slack = (T_launch + T_data) - (T_capture + T_hold)</div>
+            </div>
+
+            <!-- Frequency Converter -->
+            <div class="tool-card glass reveal">
+                <h3>Clock Freq ↔ Period</h3>
+                <div class="input-group">
+                    <label>Frequency (GHz)</label>
+                    <input type="number" id="conv-freq" value="2.0" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Period (ps)</label>
+                    <input type="number" id="conv-period" value="500" step="1">
+                </div>
+                <p style="font-size: 11px; color: var(--text-secondary); margin-top: 10px;">Inter-linked conversion: changing one updates the other.</p>
+            </div>
+
+            <!-- Power Estimation -->
+            <div class="tool-card glass reveal">
+                <h3>Power Estimation (Switching)</h3>
+                <div class="input-group">
+                    <label>Capacitance (C) in pF</label>
+                    <input type="number" id="power-cap" value="10" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Supply Voltage (Vdd)</label>
+                    <input type="number" id="power-vdd" value="1.0" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Frequency (f) in MHz</label>
+                    <input type="number" id="power-freq" value="1000" step="10">
+                </div>
+                <div class="input-group">
+                    <label>Activity Factor (α)</label>
+                    <input type="number" id="power-alpha" value="0.1" step="0.01" max="1" min="0">
+                </div>
+                <div class="result-box" style="background-color: #ff9500;">
+                    <span>Switching Power:</span><br>
+                    <span class="result-value" id="power-result">1.00 mW</span>
+                </div>
+                <div class="formula-box">Formula: P = α * C * Vdd² * f</div>
+            </div>
+
+            <!-- RC Delay -->
+            <div class="tool-card glass reveal">
+                <h3>RC Delay Calculator</h3>
+                <div class="input-group">
+                    <label>Resistance (R) in Ohms</label>
+                    <input type="number" id="rc-res" value="100" step="1">
+                </div>
+                <div class="input-group">
+                    <label>Capacitance (C) in fF</label>
+                    <input type="number" id="rc-cap" value="50" step="0.5">
+                </div>
+                <div class="result-box">
+                    <span>Pin-to-Pin Delay:</span><br>
+                    <span class="result-value" id="rc-result">5.00 ps</span>
+                </div>
+                <div class="formula-box">Formula: τ = R * C</div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
+        <p>© 2026 PDX Hub. Engineered for Excellence.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
