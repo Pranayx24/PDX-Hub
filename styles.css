@@ -127,20 +127,28 @@ body {
 /* Navbar */
 nav {
     position: fixed;
-    top: 20px; /* Floating look */
+    top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    max-width: 1024px;
+    width: 95%; /* Wider for elite feel */
+    max-width: 1200px;
     height: var(--nav-height);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     transition: var(--transition-smooth);
-    border-radius: 980px; /* Capsule look */
+    border-radius: 980px; 
     border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+}
+
+.nav-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
 }
 
 /* Circular Progress Dashboard */
@@ -208,27 +216,28 @@ body::before {
 /* Omni-Search Pro */
 .nav-search {
     flex: 1;
-    max-width: 300px;
-    margin: 0 20px;
+    max-width: 400px;
+    margin: 0 30px;
     position: relative;
 }
 
 .nav-search input {
     width: 100%;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 980px;
     border: 1px solid var(--border-color);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
-    font-size: 13px;
+    font-size: 14px;
     outline: none;
-    transition: var(--transition-smooth);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-search input:focus {
-    background: var(--surface-color);
-    box-shadow: 0 0 15px var(--accent-color);
-    width: 120%; /* Expand on focus */
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 25px rgba(0, 113, 227, 0.4);
+    border-color: var(--accent-color);
+    transform: scale(1.02);
 }
 
 /* Chip 3D Transform */
