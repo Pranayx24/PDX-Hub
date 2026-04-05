@@ -1,5 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. Theme Configuration ---
+    // --- 1. Elite UI: Custom Cursor & Aura ---
+    const cursor = document.getElementById('custom-cursor');
+    const follower = document.getElementById('custom-cursor-follower');
+    const aura = document.getElementById('aura-blob');
+    
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        
+        if (cursor) cursor.style.transform = `translate(${x - 10}px, ${y - 10}px)`;
+        if (follower) follower.style.transform = `translate(${x - 20}px, ${y - 20}px)`;
+        if (aura) aura.style.transform = `translate(${x - 300}px, ${y - 300}px)`;
+    });
+
+    // Hover effect for interactive elements
+    document.querySelectorAll('a, button, input, .accordion-header').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            if (follower) follower.style.transform += ' scale(2)';
+            if (follower) follower.style.borderColor = 'rgba(0, 113, 227, 0.5)';
+        });
+        el.addEventListener('mouseleave', () => {
+            if (follower) follower.style.transform = follower.style.transform.replace(' scale(2)', '');
+            if (follower) follower.style.borderColor = 'var(--accent-color)';
+        });
+    });
+
+    // Theme Configuration
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
     const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -59,6 +85,37 @@ document.addEventListener('DOMContentLoaded', () => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', calculateRC);
         });
+
+        // Wire R&C
+        ['wire-len', 'wire-res-sq', 'wire-cap-um'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateWire);
+        });
+
+        // Fanout Delay
+        ['fanout-base', 'fanout-drive', 'fanout-count', 'fanout-cap'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateFanout);
+        });
+
+        // Copy-to-Clipboard logic for result boxes
+        document.querySelectorAll('.result-box').forEach(box => {
+            box.style.cursor = 'pointer';
+            box.addEventListener('click', () => {
+                const text = box.querySelector('.result-value')?.textContent || box.textContent;
+                copyToClipboard(text);
+            });
+        });
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toast-v');
+            if (toast) {
+                toast.classList.add('visible');
+                setTimeout(() => toast.classList.remove('visible'), 2000);
+            }
+        });
     }
 
     function calculateSetup() {
@@ -98,6 +155,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const C = parseFloat(document.getElementById('rc-cap').value) || 0; // fF
         const T = (R * C) / 1000; // Result in ps
         document.getElementById('rc-result').textContent = T.toFixed(3) + ' ps';
+    }
+
+    function calculateWire() {
+        const len = parseFloat(document.getElementById('wire-len').value) || 0;
+        const res_sq = parseFloat(document.getElementById('wire-res-sq').value) || 0;
+        const cap_um = parseFloat(document.getElementById('wire-cap-um').value) || 0;
+        
+        const total_r = len * res_sq; // simplified R = (L/W)*Rs, assuming W=1 for unit calc
+        const total_c = len * cap_um;
+        
+        document.getElementById('wire-res-res').textContent = `R: ${total_r.toFixed(1)} Ω`;
+        document.getElementById('wire-cap-res').textContent = `C: ${total_c.toFixed(1)} fF`;
+    }
+
+    function calculateFanout() {
+        const t_base = parseFloat(document.getElementById('fanout-base').value) || 0;
+        const drive = parseFloat(document.getElementById('fanout-drive').value) || 0;
+        const count = parseFloat(document.getElementById('fanout-count').value) || 0;
+        const cap = parseFloat(document.getElementById('fanout-cap').value) || 0;
+        
+        const delay = t_base + (drive * (count * cap));
+        document.getElementById('fanout-result').textContent = delay.toFixed(2) + ' ps';
     }
 
     // --- 3. Reveal Animation (Intersection Observer) ---

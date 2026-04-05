@@ -10,6 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">
+    <!-- Elite UI Elements -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+    <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
+    <div id="toast-v" class="toast">Copied to Clipboard!</div>
+    
     <nav class="glass">
         <div class="nav-content">
             <a href="index.html" class="logo">PDX Hub</a>
@@ -142,6 +148,53 @@
                     <span class="result-value" id="rc-result">5.00 ps</span>
                 </div>
                 <div class="formula-box">Formula: τ = R * C</div>
+            </div>
+
+            <!-- Wire R&C Estimator (NEW) -->
+            <div class="tool-card glass reveal">
+                <h3>Wire R & C Estimator</h3>
+                <div class="input-group">
+                    <label>Wire Length (µm)</label>
+                    <input type="number" id="wire-len" value="100" step="10">
+                </div>
+                <div class="input-group">
+                    <label>Sheet Resistance (Ω/sq)</label>
+                    <input type="number" id="wire-res-sq" value="0.05" step="0.001">
+                </div>
+                <div class="input-group">
+                    <label>Capacitance per µm (fF)</label>
+                    <input type="number" id="wire-cap-um" value="0.2" step="0.01">
+                </div>
+                <div class="result-box" style="background: linear-gradient(135deg, #FF3B30 0%, #FF9500 100%);">
+                    <span id="wire-res-res">R: 50.0 Ω</span> | <span id="wire-cap-res">C: 20.0 fF</span>
+                </div>
+                <div class="formula-box">Estimates based on length and material properties.</div>
+            </div>
+
+            <!-- Fanout Delay Estimator (NEW) -->
+            <div class="tool-card glass reveal">
+                <h3>Fanout Delay Estimator</h3>
+                <div class="input-group">
+                    <label>Intrinsic Guard Delay (ps)</label>
+                    <input type="number" id="fanout-base" value="10" step="1">
+                </div>
+                <div class="input-group">
+                    <label>Drive Strength (ps/fF)</label>
+                    <input type="number" id="fanout-drive" value="2.5" step="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Fanout Count (No. of loads)</label>
+                    <input type="number" id="fanout-count" value="4" step="1">
+                </div>
+                <div class="input-group">
+                    <label>Avg Load Cap (fF)</label>
+                    <input type="number" id="fanout-cap" value="1.5" step="0.1">
+                </div>
+                <div class="result-box" style="background: #5856D6;">
+                    <span>Estimated Delay:</span><br>
+                    <span class="result-value" id="fanout-result">25.0 ps</span>
+                </div>
+                <div class="formula-box">Formula: T = T_intrinsic + (Drive * Total_Cap)</div>
             </div>
         </div>
     </main>

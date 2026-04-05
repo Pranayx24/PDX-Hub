@@ -39,6 +39,53 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     transition: background-color 0.5s ease;
+    cursor: none; /* Hide default cursor for custom one */
+}
+
+/* Custom Cursor */
+#custom-cursor {
+    width: 20px;
+    height: 20px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease-out;
+}
+
+#custom-cursor-follower {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--accent-color);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.15s ease-out;
+}
+
+/* Ambient Background Aura */
+.bg-aura {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.aura-blob {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 113, 227, 0.15) 0%, transparent 70%);
+    filter: blur(80px);
+    border-radius: 50%;
+    transition: transform 0.3s ease-out;
 }
 
 /* Glassmorphism Utility */
@@ -255,12 +302,25 @@ h1 {
     font-weight: 700;
 }
 
-.formula-box {
-    margin-top: 16px;
-    font-family: monospace;
-    font-size: 12px;
-    color: var(--text-secondary);
-    text-align: center;
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 980px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toast.visible {
+    transform: translateX(-50%) translateY(0);
 }
 
 /* Animations */
