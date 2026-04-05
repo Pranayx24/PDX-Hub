@@ -200,10 +200,6 @@ nav {
     100% { background-position: 100% 100%; }
 }
 
-@keyframes pulseBanner {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.002); opacity: 0.95; }
-}
 
 /* Logic Gate Visualizer Styles */
 .gate-node {
