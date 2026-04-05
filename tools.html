@@ -16,6 +16,46 @@
     <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
     <div id="toast-v" class="toast">Copied to Clipboard!</div>
     
+    <!-- Mastery Hub Modal (NEW) -->
+    <div id="profile-modal" onclick="closeProfile()">
+        <div class="modal-content glass" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeProfile()">×</div>
+            <h2 style="font-size: 32px; letter-spacing: -1px;">Engineering Identity</h2>
+            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">ACADEMY STATUS</div>
+                    <div id="modal-academy-pct" style="font-size: 24px; font-weight: 700;">0%</div>
+                </div>
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">MEDALS EARNED</div>
+                    <div id="modal-medals-count" style="font-size: 24px; font-weight: 700;">0/4</div>
+                </div>
+            </div>
+            <div id="medals-display" style="margin-top: 30px; display: flex; gap: 10px;"></div>
+            <button class="btn btn-primary" style="margin-top: 40px; width: 100%;" onclick="closeProfile()">Close Hub</button>
+        </div>
+    </div>
+    
+    <!-- Mastery Hub Modal (NEW) -->
+    <div id="profile-modal" onclick="closeProfile()">
+        <div class="modal-content glass" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeProfile()">×</div>
+            <h2 style="font-size: 32px; letter-spacing: -1px;">Engineering Identity</h2>
+            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">ACADEMY STATUS</div>
+                    <div id="modal-academy-pct" style="font-size: 24px; font-weight: 700;">0%</div>
+                </div>
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">MEDALS EARNED</div>
+                    <div id="modal-medals-count" style="font-size: 24px; font-weight: 700;">0/4</div>
+                </div>
+            </div>
+            <div id="medals-display" style="margin-top: 30px; display: flex; gap: 10px;"></div>
+            <button class="btn btn-primary" style="margin-top: 40px; width: 100%;" onclick="closeProfile()">Close Hub</button>
+        </div>
+    </div>
+    
 
     <nav class="glass">
         <div class="nav-content">

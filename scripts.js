@@ -326,7 +326,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     };
 
-    // Academy Progress Logic
+    // Mastery Hub (Profile Modal) Logic
+    window.openProfile = function() {
+        const modal = document.getElementById('profile-modal');
+        if (!modal) return;
+        
+        // Sync Data
+        const academyPct = localStorage.getItem('pdx_academy_progress') || '0';
+        const signoffCount = localStorage.getItem('pdx_signoff') || '0';
+        
+        document.getElementById('modal-academy-pct').innerText = academyPct + '%';
+        document.getElementById('modal-medals-count').innerText = (signoffCount > 0 ? '1' : '0') + '/4';
+        
+        // Render Medals
+        const container = document.getElementById('medals-display');
+        container.innerHTML = '';
+        if (signoffCount > 0) {
+            container.innerHTML += '<div class="glass" style="padding: 10px; border-radius: 50%; font-size: 20px;">🛡️</div>';
+        }
+        
+        modal.style.display = 'flex';
+        modal.classList.add('reveal-active');
+    }
+
+    window.closeProfile = function() {
+        const modal = document.getElementById('profile-modal');
+        if (modal) modal.style.display = 'none';
+    }
     window.updateAcademyProgress = function(pct) {
         const bar = document.getElementById('academy-progress-bar');
         const text = document.getElementById('academy-pct');

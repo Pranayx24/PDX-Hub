@@ -724,10 +724,76 @@ h1 {
     padding-left: 20px;
     margin: 20px 0;
 }
-.cell-card {
+/* Elite Expansive Footer */
+.glass-footer {
+    padding: 100px 40px;
+    background: rgba(10, 10, 12, 0.4);
+    backdrop-filter: blur(40px) saturate(180%);
+    border-top: 1px solid var(--border-color);
+    margin-top: 120px;
+    z-index: 100;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column h5 {
+    color: var(--accent-color);
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+.footer-column a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 12px;
     transition: var(--transition-smooth);
-    background: rgba(0,0,0,0.2);
+}
+
+.footer-column a:hover {
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+/* Mastery Hub Modal Hub */
+#profile-modal {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(20px);
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    width: 600px;
+    padding: 60px;
+    border-radius: 40px;
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+    font-size: 24px;
+    opacity: 0.5;
 }
 
 .cell-card:hover {

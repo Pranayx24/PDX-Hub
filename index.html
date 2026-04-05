@@ -18,6 +18,26 @@
         <div class="aura-blob" id="aura-blob"></div>
     </div>
     <div id="toast-v" class="toast">Copied to Clipboard!</div>
+    
+    <!-- Mastery Hub Modal (NEW) -->
+    <div id="profile-modal" onclick="closeProfile()">
+        <div class="modal-content glass" onclick="event.stopPropagation()">
+            <div class="modal-close" onclick="closeProfile()">×</div>
+            <h2 style="font-size: 32px; letter-spacing: -1px;">Engineering Identity</h2>
+            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">ACADEMY STATUS</div>
+                    <div id="modal-academy-pct" style="font-size: 24px; font-weight: 700;">0%</div>
+                </div>
+                <div class="card glass">
+                    <div style="font-size: 11px; color: var(--accent-color);">MEDALS EARNED</div>
+                    <div id="modal-medals-count" style="font-size: 24px; font-weight: 700;">0/4</div>
+                </div>
+            </div>
+            <div id="medals-display" style="margin-top: 30px; display: flex; gap: 10px;"></div>
+            <button class="btn btn-primary" style="margin-top: 40px; width: 100%;" onclick="closeProfile()">Close Hub</button>
+        </div>
+    </div>
 
 
     <nav class="glass">
@@ -229,14 +249,34 @@
         <button id="scroll-to-top" class="glass">↑</button>
     </main>
 
-    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
-        <div class="nav-content" style="margin: 0 auto 30px;">
-            <p>© 2026 PDX Hub. Engineered for Excellence.</p>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 20px;">
-            <a href="#" style="color: inherit; text-decoration: none;">Privacy Policy</a>
-            <a href="#" style="color: inherit; text-decoration: none;">Terms of Service</a>
-            <a href="#" style="color: inherit; text-decoration: none;">Support</a>
+    <!-- Universal Silicon Footer (UPGRADE) -->
+    <footer class="glass-footer">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">PLATFORM</h5>
+                <a href="index.html">Mastery Home</a>
+                <a href="visualizer.html">GDSII Visualizer</a>
+                <a href="lab.html">Tools Lab Pro</a>
+                <a href="learn.html">Academy Masterclass</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">RESOURCES</h5>
+                <a href="interview.html">Interview Hub</a>
+                <a href="tools.html">Physical Design Tools</a>
+                <a href="#">Tier-1 Checklists</a>
+                <a href="#">Foundry Specs</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">COMMUNITY</h5>
+                <a href="#">Global Leaderboard</a>
+                <a href="javascript:void(0)" onclick="openProfile()">Identity Modal</a>
+                <a href="#">Engineering Bot</a>
+            </div>
+            <div class="footer-column">
+                <h5 style="color: var(--accent-color);">PDX HUB IDENTITY</h5>
+                <div style="font-size: 13px; opacity: 0.7;">Physical Design Expert Hub – The elite educational ecosystem for Tier-1 Engineers.</div>
+                <div style="margin-top: 20px; font-weight: 700; font-size: 11px; letter-spacing: 2px;">© 2026 SILICON 2.0</div>
+            </div>
         </div>
     </footer>
 
