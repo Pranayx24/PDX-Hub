@@ -27,6 +27,9 @@
     <nav class="glass">
         <div class="nav-content">
             <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-search">
+                <input type="text" id="omni-search" placeholder="Search tools, lab, or concepts...">
+            </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="tools.html">Tools</a>
@@ -39,9 +42,26 @@
         </div>
     </nav>
 
-    <main class="section-container" style="padding-top: 100px;">
-        <h2 style="font-size: 40px; margin-bottom: 20px; text-align: center;">Interview Master Prep</h2>
-        <input type="text" id="search-interview" placeholder="Search questions (e.g., Slack, RC, Antennas)...">
+    <main class="section-container" style="padding-top: 130px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="font-size: 40px;">Interview Master Prep</h2>
+            <button id="start-sim" class="btn btn-primary" style="background: linear-gradient(135deg, #FF9500 0%, #FF3B30 100%);">Start Live Simulation</button>
+        </div>
+
+        <!-- Simulator Modal / Section -->
+        <div id="quiz-sim-container" class="card glass reveal" style="display: none; padding: 40px; margin-bottom: 40px; border: 2px solid var(--accent-color);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span id="quiz-timer" style="font-weight: 700; color: #ff3b30; font-size: 24px;">60s</span>
+                <span id="quiz-score" style="color: var(--text-secondary);">Score: 0/5</span>
+            </div>
+            <h4 id="quiz-question" style="font-size: 24px; margin-bottom: 30px;">Loading Question...</h4>
+            <div id="quiz-options" class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                <!-- Options populated by JS -->
+            </div>
+        </div>
+
+        <p style="color: var(--text-secondary); margin-bottom: 30px;">Search through the Top 50 questions or complete a live simulation to test your sign-off readiness.</p>
+        <input type="text" id="search-interview" placeholder="Quick search questions (e.g., Slack, RC, Antennas)..." style="width: 100%; padding: 16px 24px; border-radius: 980px; border: 1px solid var(--border-color); background: var(--surface-color); color: var(--text-primary); font-size: 18px; margin-bottom: 40px; box-shadow: var(--card-shadow);">
 
         <div id="accordion-container">
             <!-- Questions to be populated -->

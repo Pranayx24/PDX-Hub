@@ -114,6 +114,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const addStageBtn = document.getElementById('add-stage');
         if (addStageBtn) addStageBtn.addEventListener('click', addPathStage);
 
+        // Omni-Search Logic
+        const omniInput = document.getElementById('omni-search');
+        if (omniInput) {
+            omniInput.addEventListener('input', (e) => {
+                const val = e.target.value.toLowerCase();
+                // Site-wide filtering logic
+                document.querySelectorAll('.card, .tool-card, .cheat-item, .accordion-item, .learn-section, .btn').forEach(el => {
+                    const text = el.textContent.toLowerCase();
+                    el.style.display = text.includes(val) ? '' : 'none';
+                });
+            });
+        }
+
+        // Interview Simulator Logic
+        const startSimBtn = document.getElementById('start-sim');
+        if (startSimBtn) startSimBtn.addEventListener('click', startInterviewQuiz);
+
         // Copy-to-Clipboard logic for result boxes
         document.querySelectorAll('.result-box').forEach(box => {
             box.style.cursor = 'pointer';
@@ -339,4 +356,71 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initCalculators();
+
+    // --- 7. Interview Simulator Engine ---
+    let quizInterval;
+    let quizTime = 60;
+    let quizScore = 0;
+    const questions = [
+        { q: "What is the typical utilization target for a floorplan?", a: ["50-70%", "90-100%", "20-30%", "10%"], c: 0 },
+        { q: "Which violation cannot be fixed by reducing Frequency?", a: ["Setup", "Hold", "Power", "Area"], c: 1 },
+        { q: "What is the main goal of CTS?", a: ["Minimize area", "Minimize skew", "Add logic", "Routing"], c: 1 },
+        { q: "Antenna effect is a concern during which stage?", a: ["Synthesis", "Placement", "Routing", "Sign-off"], c: 2 },
+        { q: "H-Tree is used to achieve...?", a: ["Power savings", "Balanced Skew", "Area reduction", "Speed"], c: 1 }
+    ];
+
+    function startInterviewQuiz() {
+        const container = document.getElementById('quiz-sim-container');
+        const startBtn = document.getElementById('start-sim');
+        if (!container) return;
+
+        container.style.display = 'block';
+        startBtn.style.display = 'none';
+        quizScore = 0;
+        quizTime = 60;
+        
+        loadNextQuestion(0);
+        
+        quizInterval = setInterval(() => {
+            quizTime--;
+            document.getElementById('quiz-timer').textContent = quizTime + 's';
+            if (quizTime <= 0) endQuiz();
+        }, 1000);
+    }
+
+    function loadNextQuestion(idx) {
+        if (idx >= questions.length) return endQuiz();
+        
+        const q = questions[idx];
+        document.getElementById('quiz-question').textContent = q.q;
+        const optionsEl = document.getElementById('quiz-options');
+        optionsEl.innerHTML = '';
+        
+        q.a.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-secondary glass';
+            btn.style.textAlign = 'left';
+            btn.textContent = opt;
+            btn.onclick = () => {
+                if (i === q.c) quizScore++;
+                document.getElementById('quiz-score').textContent = `Score: ${quizScore}/5`;
+                loadNextQuestion(idx + 1);
+            };
+            optionsEl.appendChild(btn);
+        });
+    }
+
+    function endQuiz() {
+        clearInterval(quizInterval);
+        const container = document.getElementById('quiz-sim-container');
+        const level = quizScore >= 4 ? "SIGN-OFF READY" : "PD INTERN GRADE";
+        container.innerHTML = `
+            <h3 style="color:var(--accent-color)">Simulation Complete!</h3>
+            <p style="font-size:24px; margin:20px 0;">Final Score: ${quizScore}/5</p>
+            <div style="padding:15px; background:rgba(255,255,255,0.05); border-radius:12px;">
+                <span style="font-weight:700">Analysis:</span> ${level}
+            </div>
+            <button onclick="location.reload()" class="btn btn-primary" style="margin-top:20px;">Retry Simulation</button>
+        `;
+    }
 });

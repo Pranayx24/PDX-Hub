@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floorplan Visualizer Pro | PDX Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .canvas-area {
+            width: 600px;
+            height: 400px;
+            background: #111;
+            border-radius: 12px;
+            border: 2px solid var(--accent-color);
+            position: relative;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .macro-block {
+            padding: 10px;
+            background: var(--accent-color);
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .macro-block:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent-color); }
+        .placed-macro {
+            position: absolute;
+            background: rgba(0, 113, 227, 0.4);
+            border: 1px solid var(--accent-color);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            border-radius: 2px;
+            cursor: grab;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- Elite UI Elements -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+    <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
+    <div id="toast-v" class="toast">Copied!</div>
+    
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-search">
+                <input type="text" id="omni-search" placeholder="Search tools, lab, or concepts...">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="visualizer.html">Visualizer</a>
+                <a href="lab.html">Tools Lab</a>
+                <a href="learn.html">Learn</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="section-container" style="padding-top: 130px;">
+        <div style="display: flex; gap: 40px; align-items: flex-start;">
+            <!-- Toolbox -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                <h3 style="font-size: 28px;">Macro Workshop</h3>
+                <p style="color: var(--text-secondary); font-size: 14px;">Select components to place in the Die Area. Aim for ~70% utilization.</p>
+                
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="macro-block glass" onclick="addMacro('Memory', 100, 60)">+ Memory (RAM)</div>
+                    <div class="macro-block glass" onclick="addMacro('IP Core', 80, 80)">+ IP Core</div>
+                    <div class="macro-block glass" onclick="addMacro('Analog', 120, 40)">+ Analog IP</div>
+                    <div class="macro-block glass" onclick="addMacro('CPU-L2', 70, 50)">+ CPU Cache</div>
+                </div>
+
+                <div class="card glass" style="margin-top: 20px;">
+                    <h4>Die Statistics</h4>
+                    <div style="margin-top: 15px; font-size: 14px;">
+                        <div>Area: <span id="stat-area">240,000 µm²</span></div>
+                        <div>Utilized: <span id="stat-util-area">0 µm²</span></div>
+                        <div style="margin-top: 10px;">
+                            <div style="width:100%; height:8px; background:#444; border-radius:4px; overflow:hidden;">
+                                <div id="util-progress" style="width:0%; height:100%; background:var(--accent-color); transition: 0.3s all;"></div>
+                            </div>
+                            <div style="text-align:right; font-size:12px; margin-top:5px; color:var(--accent-color); font-weight:700;">Density: <span id="stat-util-pct">0%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas -->
+            <div style="flex: 2;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3>Chip Floorplan (Visual Canvas)</h3>
+                    <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 16px;" onclick="clearCanvas()">Clear Design</button>
+                </div>
+                <div class="canvas-area" id="fp-canvas">
+                    <!-- Macros rendered here -->
+                </div>
+                <div class="interview-tip" style="margin-top: 25px;">
+                    💡 Interview Tip: "Why keep utilization below 80% during Floorplanning?" - To leave space for standard cell placement, decoupling caps, and routing tracks.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
+        <p>© 2026 PDX Hub. Maximum Upgrade Version.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        let currentUtilization = 0;
+        const totalArea = 240000;
+        const canvas = document.getElementById('fp-canvas');
+
+        function addMacro(name, w, h) {
+            const m = document.createElement('div');
+            m.className = 'placed-macro glass reveal';
+            m.style.width = w + 'px';
+            m.style.height = h + 'px';
+            m.style.top = '20px';
+            m.style.left = '20px';
+            m.innerHTML = name;
+            
+            // Basic drag logic (simplified for frontend static)
+            let isDragging = false;
+            m.onmousedown = (e) => { isDragging = true; };
+            document.onmousemove = (e) => {
+                if (isDragging) {
+                    const rect = canvas.getBoundingClientRect();
+                    m.style.left = (e.clientX - rect.left - w/2) + 'px';
+                    m.style.top = (e.clientY - rect.top - h/2) + 'px';
+                }
+            };
+            document.onmouseup = () => { isDragging = false; };
+
+            canvas.appendChild(m);
+            updateStats(w * h * 10); // Simulated scale
+        }
+
+        function updateStats(newArea) {
+            currentUtilization += newArea;
+            const pct = Math.min((currentUtilization / totalArea) * 100, 100).toFixed(1);
+            document.getElementById('stat-util-area').textContent = currentUtilization.toLocaleString() + ' µm²';
+            document.getElementById('stat-util-pct').textContent = pct + '%';
+            document.getElementById('util-progress').style.width = pct + '%';
+        }
+
+        function clearCanvas() {
+            canvas.innerHTML = '';
+            currentUtilization = 0;
+            updateStats(0);
+        }
+    </script>
+</body>
+</html>
