@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 15: Sign-off Reliability | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 59, 48, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ff3b30; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase III: Advanced</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Sign-off Reliability</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The endurance of silicon. Analyzing EM and IR drop to ensure your chip doesn't burn out over time.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Electromigration (EM) Analysis</h3>
+            <p>EM is the literal transport of material caused by current flow. If a wire carries too much current, it will eventually "melt" or break, leading to silicon failure within years or even months.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #ff3b30;">EM Mitigation:</h4>
+                <p>Fixing EM violations requires increasing the wire width or adding more redundant vias to share the current load. Higher metal layers (thicker) are always used for high-current power nets.</p>
+            </div>
+
+            <h3>2. Dynamic IR Drop Sign-off</h3>
+            <p>Using specialized tools (e.g., Ansys RedHawk or Cadence Voltus) to model peak power switching. If IR drop exceeds ~10% of VDD, logic transitions become too slow, and timing paths will fail despite what STA says.</p>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ff3b30;">
+                <h4>Interview focus: EM vs IR Drop</h4>
+                "What is the difference between a Signal EM violation and a Power EM violation?"
+                <br><br>
+                <strong>Answer:</strong> Power EM is caused by steady DC current flowing through VDD/VSS rails. Signal EM is caused by high-frequency AC switching current in local interconnects. Both require wider wires or more vias but are analyzed by different tools.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Advanced Timing</h2>
+            <p>Reliability is confirmed. Now we look closer at noise. Ready for crosstalk?</p>
+            <a href="m16-advanced-timing.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 16: Advanced Timing</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

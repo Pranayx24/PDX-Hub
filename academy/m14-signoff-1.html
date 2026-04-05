@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 14: Sign-off Physical | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(52, 199, 89, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #34c759; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase III: Advanced</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Sign-off Physical</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The final gate. Physical verification (PV) ensures your layout is manufacturable and logically correct.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. DRC and LVS Verification</h3>
+            <p>Physical verification checks use industry-standard tools (like Mentor Calibre) to compare the final GDSII layout against the original netlist and silicon manufacturing rules.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #34c759;">The Verification Twins:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>DRC (Design Rule Check):</strong> Ensuring metal spacing, width, and via rules are honored to prevent shorts and opens during manufacturing.</li>
+                    <li><strong>LVS (Layout vs Schematic):</strong> Comparing the final layout connectivity against the pre-layout netlist to ensure no logic was broken during P&R.</li>
+                    <li><strong>ERC (Electrical Rule Check):</strong> Checking for floating gates, improper substrate taps, and latch-up potential.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #34c759;">
+                <h4>Interview focus: LVS Failure</h4>
+                "What kind of errors can cause an LVS mismatch?"
+                <br><br>
+                <strong>Answer:</strong> Typical LVS errors include missing connectivity, mismatched pin names, and shorted nets. Often, these arise from "soft connections" where pins aren't technically touching in the layout despite being logically connected in the tool.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Final Reliability</h2>
+            <p>Physical is clean. Now we check reliability. Ready for Sign-off 2?</p>
+            <a href="m15-signoff-2.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 15: Sign-off Reliability</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

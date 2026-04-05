@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 17: Low Power Design | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(88, 86, 214, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #5856d6; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase III: Advanced</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Low Power Design</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The art of efficiency. Using UPF, Clock Gating, and Multi-Voltage domains to minimize the power footprint of high-performance silicon.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Dynamic and Static Power reduction</h3>
+            <p>Power management is now a mandatory requirement for mobile and server chips alike. We optimize for power across both the architecture (UPF) and the implementation stages.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #5856d6;">Techniques Hierarchy:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Clock Gating:</strong> Disabling the clock to inactive flip-flops. Reduces dynamic power by up to 60%.</li>
+                    <li><strong>Power Gating (MTCMOS):</strong> Physically cutting off the VDD to a whole block using "Sleep Transistors". Eliminates static leakage.</li>
+                    <li><strong>Multi-Voltage (MSV):</strong> Running different blocks at different voltages (e.g., 0.8V for core, 1.2V for I/O). Requires Level Shifters.</li>
+                    <li><strong>Isolators:</strong> Required when an "off" block's output goes to an "on" block. Prevents crowbar current.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #5856d6;">
+                <h4>Interview focus: Level Shifter</h4>
+                "Why can't you directly connect a 0.8V signal to a 1.2V input gate?"
+                <br><br>
+                <strong>Answer:</strong> A 0.8V signal may not reach the threshold voltage (Vth) of a 1.2V transistor reliably, or it may leave the PMOS and NMOS both partially on, leading to massive short-circuit power dissipation. A Level Shifter ensures clear 0/1 logic levels between domains.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Automation</h2>
+            <p>Power is optimized. Now we automate the flow. Ready for TCL?</p>
+            <a href="m18-tcl-scripting.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 18: TCL Scripting</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

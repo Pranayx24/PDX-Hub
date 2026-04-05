@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 11: Routing Phase | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(0, 113, 227, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #0071e3; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Routing Phase</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The final interconnect. Creating millions of metal paths to connect logic Gates without DRC violations.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Global and Detailed Routing</h3>
+            <p>Routing occurs after CTS is finalized. The tool uses a grid-based Manhattan approach (vertical vs horizontal metal layers) to resolve billions of electrical net paths.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #0071e3;">Routing Stages:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Global Routing (GR):</strong> Assigns each net to a series of routing regions (G-Cells) while monitoring congestion. It doesn't create actual metal shapes.</li>
+                    <li><strong>Track Assignment:</strong> Assigns specific tracks for each net within the G-Cells.</li>
+                    <li><strong>Detail Routing (DR):</strong> Creates the actual metal geometries and vias. It works on a small window (10x10 tracks) at a time to satisfy all DRC rules.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="drc" style="margin-top: 80px;">
+            <h3>2. DRC (Design Rule Check) Violations</h3>
+            <p>Detail routing is considered complete only when zero DRC violations remain. Typical routing errors include:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Short:</strong> Two different nets occupy the same spot on a metal layer.</li>
+                <li><strong>Spacing:</strong> Two metals are closer than the foundry's minimum rule (e.g., < 40nm).</li>
+                <li><strong>Antenna Effect:</strong> A long metal wire accumulates static charge during manufacturing that can blow the gate oxide of the transistor it's connected to. Fix: Inserting an antenna diode.</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #0071e3;">
+                <h4>Interview focus: Routing Congestion</h4>
+                "What is a G-Cell, and how does the tool use it for routing?"
+                <br><br>
+                <strong>Answer:</strong> G-Cells (Global Cells) are virtual buckets the tool uses to estimate routing density across the chip. By checking the number of nets entering/exiting each G-Cell, the tool can identify congestion hotspots during global routing.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Physical Optimization</h2>
+            <p>Nets are routed. Now we fine-tune the PPA. Ready for Optimization?</p>
+            <a href="m12-optimizations.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 12: Optimization Tech</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

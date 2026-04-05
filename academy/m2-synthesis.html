@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Logic Synthesis | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .module-hero {
+            padding: 180px 0 100px;
+            background: radial-gradient(circle at top right, rgba(52, 199, 89, 0.05), transparent);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .deep-dive {
+            padding: 100px 0;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .deep-dive h3 {
+            color: var(--text-primary);
+            font-size: 28px;
+            margin: 40px 0 20px;
+        }
+        .tech-spec {
+            background: var(--surface-color);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+        .synthesis-diagram {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin: 40px 0;
+             gap: 20px;
+        }
+        .diag-box {
+            padding: 15px 25px;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- UI Elements -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+    <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
+    
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="module-hero">
+        <div class="section-container">
+            <span style="color: #34c759; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Foundations Phase</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Logic Synthesis (RTL → Netlist)</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The critical bridge between code and hardware. Learn how RTL becomes a gate-level structure optimized for PPA.</p>
+        </div>
+    </header>
+
+    <main class="section-container deep-dive">
+        <section id="basics">
+            <h3>1. The Synthesis Core Process</h3>
+            <p>Synthesis is the translation of behavioral Hardware Description Language (HDL), such as Verilog or VHDL, into a structural gate-level netlist. This gate-level netlist consists of standard cells from the target technology library.</p>
+            
+            <div class="synthesis-diagram">
+                <div class="diag-box">RTL (Verilog)</div>
+                <div>→</div>
+                <div class="diag-box" style="border-color: #34c759;">GTECH</div>
+                <div>→</div>
+                <div class="diag-box" style="border-color: #ff3b30;">Netlist (.v)</div>
+            </div>
+
+            <div class="tech-spec">
+                <strong>Key Insight:</strong> Logical Synthesis does not account for physical wires. It uses "Wire Load Models" (WLM) to estimate delays, which are often optimistic for sub-7nm designs. 
+                <br><br>
+                <em>Action: For modern designs, Physical-Aware Synthesis (e.g., Genus-iSpatial or DC-NXT) is used.</em>
+            </div>
+
+            <h3>2. Translation, Optimization, & Mapping</h3>
+            <p>The synthesis process is divided into three distinct phases:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Translation:</strong> Converting HDL to Generic technology cells (GTECH).</li>
+                <li><strong>Logic Optimization:</strong> Boolean logic simplification, eliminating redundant gates, and path restructuring.</li>
+                <li><strong>Technology Mapping:</strong> Replacing generic gates with actual standard cells from the foundry's .lib file that meet timing and area constraints.</li>
+            </ul>
+        </section>
+
+        <section id="constraints">
+            <h3>3. Synthesizing for PPA (SDC)</h3>
+            <p>Constraints govern the synthesis output. The Synopsys Design Constraints (SDC) file defines:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                <div class="card glass">
+                    <h4>Clock Definition</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Defining the operating frequency (create_clock). Everything depends on this period.</p>
+                </div>
+                <div class="card glass">
+                    <h4>Input/Output Delays</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Accounting for delays outside the chip at the PCB level.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #34c759;">
+                <h4>Interview focus: GTECH and Netlist</h4>
+                "Why is a netlist preferred over RTL for Physical Design tools?"
+                <br><br>
+                <strong>Answer:</strong> Physical Design tools require structural maps of actual foundry-provided cells (LEF/LIB). RTL is too abstract; a netlist provides specific gate drive strengths and Vt values needed for timing and power analysis.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Next Module</h2>
+            <p>Successful synthesis requires high-quality inputs. Ready for data prep?</p>
+            <a href="m3-data-prep.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 3: Data Preparation</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

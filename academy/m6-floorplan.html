@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 6: Floorplan Strategy | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(175, 82, 222, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #af52de; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Floorplan Strategy</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The chip's blueprint. Deciding die area, I/O placement, and macro positioning to minimize congestion.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Foundation: Core and Die Area</h3>
+            <p>Floorplanning defines the literal landscape of the silicon. Decisions made here are irreversible once implementation begins. A bad floorplan ensures timing failure or routing congestion.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #0071e3;">Core vs Die:</h4>
+                <p>The <strong>Die Area</strong> contains the whole chip, including the pads and seal ring. The <strong>Core Area</strong> is the internal region where standard cells and macros are placed.</p>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Aspect Ratio:</strong> Height / Width of the core. Usually 1.0 (square), but may change for long, rectangular chips.</li>
+                    <li><strong>Utilization:</strong> Ratio of total cell area to the core area. Typically target 60-70% to survive routing congestion.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="macros" style="margin-top: 80px;">
+            <h3>2. Macro Placement & Congestion</h3>
+            <p>Macros (RAM, ROM, Analog IPs) are large, non-standard-cell blocks. Placement rules:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li>Place macros along the edges to leave the center open for standard cell connectivity.</li>
+                <li>Ensure macros are placed far from I/O ports to avoid routing bottlenecks.</li>
+                <li>Add halo/keep-out zones around macros to prevent cells from competing for routing resources with macro pins.</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #af52de;">
+                <h4>Interview focus: Macro Placement</h4>
+                "What is a Halo / Keep-out zone, and why do we need it?"
+                <br><br>
+                <strong>Answer:</strong> Halos are regions around macros where standard cells cannot be placed. This prevents density hotspots and ensures that macro-pin routing has dedicated tracks without interference from local standard cell pins.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Power Integrity</h2>
+            <p>The blueprint is ready. Now we need to deliver the juice. Ready for power planning?</p>
+            <a href="m7-power-plan.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 7: Power Planning</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 9: Placement Engine | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(52, 199, 89, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #34c759; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Placement Engine</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The positioning of logic. Distributing millions of standard cells within the core to achieve optimal PPA.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Global vs Detailed Placement</h3>
+            <p>Placement occurs in two primary stages. The EDA tool uses force-directed algorithms to pull cells toward their logical neighbors while pushing them apart to avoid density hotspots.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #34c759;">Placement Stages:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Global Placement (GP):</strong> Cells are distributed uniformly, but they may overlap. The goal is to minimize total net wirelength.</li>
+                    <li><strong>Legalization:</strong> Snapping cells into "rows" and "sites" defined by the technology LEF. No overlaps allowed.</li>
+                    <li><strong>Detailed Placement (DP):</strong> Fine-tuning cell positions locally to reduce wirelength or congestion after legalization.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="congestion" style="margin-top: 80px;">
+            <h3>2. Congestion Mitigation</h3>
+            <p>Congestion happens when more wires need to pass through a region than there are available metal tracks. Mitigations include:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Padding:</strong> Adding virtual area around cells to force them further apart.</li>
+                <li><strong>Partial Blockage:</strong> Restricting cell placement in dense regions.</li>
+                <li><strong>Magnet Placement:</strong> Pulling cells closer to I/O ports or specific macros to shorten critical wires.</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #34c759;">
+                <h4>Interview focus: Congestion</h4>
+                "What is the difference between Pin Density and Cell Density?"
+                <br><br>
+                <strong>Answer:</strong> Cell Density refers to how much core area is occupied by cells. Pin Density refers to the concentration of connection points (pins). A region with low cell density but many high-pin-count cells (complex gates) can still have huge routing congestion.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Clock Tree Implementation</h2>
+            <p>Cells are placed. Now we balance the clock. Ready for CTS?</p>
+            <a href="m10-cts.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 10: Clock Tree Synthesis</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

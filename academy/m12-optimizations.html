@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 12: Optimization Tech | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 45, 85, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ff2d55; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase III: Advanced</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Optimization Tech</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The refinement of silicon. Using advanced techniques like Vt-swapping and gate-sizing to meet PPA targets.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Post-Route Optimization</h3>
+            <p>Once routing is complete, the tool has precise RC (Resistance-Capacitance) values for every wire. Optimization now focuses on surgical fixes to timing and power violations.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #ff2d55;">Power-Performance-Area (PPA) Levers:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Vt-Swapping:</strong> Changing a cell from High-Vt (Low Leakage, Slow) to Low-Vt (High Leakage, Fast) specifically on critical timing paths.</li>
+                    <li><strong>Gate Sizing:</strong> Increasing the drive strength of a gate to drive higher capacitance downstream net at the cost of area and power.</li>
+                    <li><strong>Buffer Insertion:</strong> Breaking long, high-RC wires by inserting buffers to restore signal integrity.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="power-reduction" style="margin-top: 80px;">
+            <h3>2. Leakage Power Recovery</h3>
+            <p>After timing is met, the tool performs "Leakage Recovery" by swapping Low-Vt cells back to High-Vt on paths with positive slack. This can reduce total power consumption by 20-30%.</p>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ff2d55;">
+                <h4>Interview focus: Vt Selection</h4>
+                "What is the disadvantage of using only Low-Vt (LVT) cells in your design?"
+                <br><br>
+                <strong>Answer:</strong> LVT cells have a very thin gate oxide, leading to high sub-threshold leakage current. A design using only LVT will exceed power specifications even when data is not switching.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Sign-off Readiness</h2>
+            <p>Optimization is complete. Now we account for realistic variation. Ready for variations?</p>
+            <a href="m13-process-variations.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 13: Process Variations</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

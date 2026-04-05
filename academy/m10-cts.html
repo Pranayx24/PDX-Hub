@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 10: Clock Tree Synthesis | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(90, 200, 250, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #5ac8fa; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Clock Tree Synthesis</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The heartbeat of the silicon. Balancing clock arrival to millions of registers for zero skew and low power.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Goal: Skew and Latency</h3>
+            <p>Clock Tree Synthesis (CTS) involves building the buffer network that distributes the clock signal from its source (PLL/Pad) to every flip-flop (sink) in the design.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #5ac8fa;">Key Performance Indicators (KPIs):</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Latency (Insertion Delay):</strong> The time it takes for the clock to travel from source to the furthest sink. Must be minimized for high performance.</li>
+                    <li><strong>Skew:</strong> The difference in clock arrival times between any two registers. Goal is zero (balanced) skew.</li>
+                    <li><strong>Slew (Transition Time):</strong> The slope of the clock edge. Too slow a slew leads to poor timing and high power.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="topologies" style="margin-top: 80px;">
+            <h3>2. Distribution Topologies</h3>
+            <p>We use specific structures to balance the clock signal across the die:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>H-Tree:</strong> A recursive "H" structure that ensures equal path length to every leaf. Most common for ASIC.</li>
+                <li><strong>Clock Mesh:</strong> A grid of clock wires that provides massive redundancy and extremely low skew but consumes huge power.</li>
+                <li><strong>Fishbone:</strong> Used for smaller designs or local distributions.</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #5ac8fa;">
+                <h4>Interview focus: Clock Skew</h4>
+                "Is positive skew good or bad for setup timing?"
+                <br><br>
+                <strong>Answer:</strong> Positive skew (where the capture clock arrives after the launch clock) helps setup timing but hurts hold timing. It effectively increases the available clock period for the data to travel.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Final Interconnect</h2>
+            <p>Clock is balanced. Now we route the signals. Ready for Routing?</p>
+            <a href="m11-routing.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 11: Routing Phase</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

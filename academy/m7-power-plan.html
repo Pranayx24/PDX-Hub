@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 7: Power Planning | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 204, 0, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ffcc00; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Power Planning</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The delivery of energy. Building the power grid (PDN) to sustain billions of switching transistors.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Power Distribution Network (PDN)</h3>
+            <p>Every chip needs VDD (Power) and VSS (Ground). Delivery of these rails must be uniform to prevent IR drop (voltage decay) and Electromigration (metal failure).</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #ffcc00;">The Three Hierarchy Levels:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Rings:</strong> Large peripheral metal bands around the core or macros that serve as the main power source.</li>
+                    <li><strong>Stripes:</strong> Vertical or horizontal metal bands across the core, typically on higher (thicker) metal layers (e.g., M7, M8).</li>
+                    <li><strong>Rails:</strong> Standard cell power and ground rails on the first layer (M1) that provide local power to every cell.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="integrity" style="margin-top: 80px;">
+            <h3>2. Dynamic and Static IR Drop</h3>
+            <p>IR Drop is the reduction in voltage between the power source and the transistor. Too much drop means slower switching and potential logic failure.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Static IR Drop:</strong> Caused by the DC resistance of the metal grid. Fixed by adding thicker/more stripes.</li>
+                <li><strong>Dynamic IR Drop:</strong> Caused by simultaneous switching of millions of transistors (peak current). Mitigated by adding Decoupling Capacitors (Decaps).</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ffcc00;">
+                <h4>Interview focus: Decoupling Cells</h4>
+                "What is a Decap cell, and why is it essential for Power Integrity?"
+                <br><br>
+                <strong>Answer:</strong> Decap cells are capacitors placed throughout the core that store local charge. During peak switching events, they discharge to provide current locally, preventing a sudden dip in the VDD rail (Dynamic IR drop).
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Timing Analysis</h2>
+            <p>Power is stable. Now we check the clock. Ready for STA?</p>
+            <a href="m8-sta-fundamentals.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 8: STA Fundamentals</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

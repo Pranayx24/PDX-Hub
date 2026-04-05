@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: CMOS & ASIC Design | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .module-hero {
+            padding: 180px 0 100px;
+            background: radial-gradient(circle at top right, rgba(0, 113, 227, 0.05), transparent);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .deep-dive {
+            padding: 100px 0;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .deep-dive h3 {
+            color: var(--text-primary);
+            font-size: 28px;
+            margin: 40px 0 20px;
+        }
+        .tech-spec {
+            background: var(--surface-color);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+    <!-- UI Elements -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+    <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
+    
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="module-hero">
+        <div class="section-container">
+            <span style="color: var(--accent-color); font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Foundations Phase</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">CMOS & ASIC Design</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The masterclass for Physical Design engineers. From semiconductor physics to high-performance ASIC methodology.</p>
+        </div>
+    </header>
+
+    <main class="section-container deep-dive">
+        <section id="basics">
+            <h3>1. The CMOS Transistor Basics</h3>
+            <p>CMOS (Complementary Metal-Oxide-Semiconductor) is the technology used to construct integrated circuits. It uses pairs of P-type and N-type MOSFETs (Metal-Oxide-Semiconductor Field-Effect Transistors) to perform logic functions.</p>
+            
+            <div class="tech-spec">
+                <strong>Key Insight:</strong> The "Complementary" nature means when one transistor type is ON, the other is OFF, resulting in negligible static power dissipation. 
+                <br><br>
+                <em>Formula: P_total = P_dynamic + P_static. In CMOS, P_static is nearly zero.</em>
+            </div>
+
+            <h3>2. Silicon Fabrication Flow</h3>
+            <p>ASIC manufacturing involves hundreds of lithography cycles on a silicon wafer. The process includes:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Wafer Preparation:</strong> Growth of pure silicon ingots sliced into thin wafers.</li>
+                <li><strong>Doping:</strong> Adding impurities (Phosphorus for N-type, Boron for P-type) to modify conductivity.</li>
+                <li><strong>Etching:</strong> Removing unwanted material to create paths and gate structures.</li>
+                <li><strong>Metallization:</strong> Connecting devices with Copper or Aluminum layers.</li>
+            </ul>
+        </section>
+
+        <section id="methodology">
+            <h3>3. ASIC vs FPGA Methodology</h3>
+            <p>While FPGAs are programmable on the field, ASICs are hardware-hardened at the foundry. The tradeoff involves NRE costs vs Performance.</p>
+            <div class="concept-grid">
+                <div class="card glass">
+                    <h4>Full-Custom Design</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Designing every transistor and net manually. Used for high-performance processors and analog blocks. Maximizes PPA but high effort.</p>
+                </div>
+                <div class="card glass">
+                    <h4>Semi-Custom (Cell-Based)</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Using pre-designed and pre-verified "Standard Cell Libraries". This is the standard path for modular ASIC design.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip">
+                <h4>Interview focus: CMOS Reliability</h4>
+                "Explain the body effect and how it impacts threshold voltage (Vth)."
+                <br><br>
+                <strong>Answer:</strong> The body effect occurs when the source-to-bulk voltage (Vsb) is non-zero, shifting Vth and potentially causing timing failures if not modeled during sign-off.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Next Module</h2>
+            <p>Ready to see how these CMOS gates are synthesized into logic?</p>
+            <a href="m2-synthesis.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 2: Synthesis</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

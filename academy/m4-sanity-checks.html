@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 4: Sanity Checks | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 149, 0, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ff9500; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Foundations Phase</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Sanity Checks</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The quality gate of Physical Design. Verifying inputs to prevent downstream catastrophes.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Why Sanity Checks Matter</h3>
+            <p>Garbage in, garbage out. If your initial netlist, constraints, or libraries have errors, the entire P&R flow will yield incorrect timing or silicon failure. Sanity checks are performed before and after data loading.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #ff9500;">The Three Pillars of Verification:</h4>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Netlist Consistency:</strong> Check for floating pins, multiple drivers, and unresolved instantiations that could cause LVS/logic failures.</li>
+                    <li><strong>Constraint Completeness (SDC):</strong> Check if all ports have defined delays and every flip-flop is clocked. Unconstrained paths are "invisible" to tools.</li>
+                    <li><strong>Library Matching:</strong> Ensuring every logical (.lib) cell has a corresponding physical (.lef) footprint with matching pin names and count.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ff9500;">
+                <h4>Interview focus: The check_timing Command</h4>
+                "What kind of warnings do you expect from a check_timing report?"
+                <br><br>
+                <strong>Answer:</strong> Typical warnings include unconstrained ports, unclocked endpoints, and loops. Tools will ignore these paths during optimization, often leading to timing violations in the final silicon.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Next Module</h2>
+            <p>Ready to look at the big picture?</p>
+            <a href="m5-pd-flow.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 5: PD Flow & Terminology</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

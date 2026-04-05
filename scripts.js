@@ -34,13 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'PDN Analyzer', url: 'lab.html', category: 'Lab' },
         { title: 'Foundry Academy', url: 'learn_new.html', category: 'Learning' },
         { title: 'Interview Hub', url: 'interview.html', category: 'Career' },
-        { title: 'CMOS Design', url: 'learn_new.html#m1', category: 'Module' },
-        { title: 'Logic Synthesis', url: 'learn_new.html#m2', category: 'Module' },
-        { title: 'Floorplanning', url: 'learn_new.html#m6', category: 'Module' },
-        { title: 'Static Timing Analysis', url: 'learn_new.html#m8', category: 'Module' },
-        { title: 'Clock Tree Synthesis', url: 'learn_new.html#m10', category: 'Module' },
-        { title: 'Low Power Design', url: 'learn_new.html#m17', category: 'Module' },
-        { title: 'TCL Scripting', url: 'learn_new.html#m18', category: 'Module' }
+        { title: 'CMOS Design', url: 'academy/m1-cmos-asic.html', category: 'Module' },
+        { title: 'Logic Synthesis', url: 'academy/m2-synthesis.html', category: 'Module' },
+        { title: 'Floorplanning', url: 'academy/m6-floorplan.html', category: 'Module' },
+        { title: 'Static Timing Analysis', url: 'academy/m8-sta-fundamentals.html', category: 'Module' },
+        { title: 'Clock Tree Synthesis', url: 'academy/m10-cts.html', category: 'Module' },
+        { title: 'Low Power Design', url: 'academy/m17-low-power.html', category: 'Module' },
+        { title: 'TCL Scripting', url: 'academy/m18-tcl-scripting.html', category: 'Module' }
     ];
 
     const omniSearch = document.getElementById('omni-search');

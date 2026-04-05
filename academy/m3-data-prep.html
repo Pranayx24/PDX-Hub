@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Data Preparation | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 59, 48, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ff3b30; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Foundations Phase</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">Data Preparation</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The first step in any Physical Design project. Mastering the inputs that drive the EDA tool flow.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="inputs">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Logical & Physical Inputs</h3>
+            <p>Every PD tool (Innovus/IC Compiler II) requires two distinct sets of data to define your chip:</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+                <div class="card glass" style="border-top: 3px solid #0071e3;">
+                    <h4 style="color: #0071e3;">Logical View (.lib / .db)</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Contains timing, power, and area information for every standard cell. Defines input capacitance, output drive strength, and leakage power.</p>
+                </div>
+                <div class="card glass" style="border-top: 3px solid #34c759;">
+                    <h4 style="color: #34c759;">Physical View (.lef)</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Contains cell dimensions (width/height), pin locations, and metal layer obstruction info (antenna properties). Crucial for placement and routing.</p>
+                </div>
+            </div>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <strong>Required Files Checklist:</strong>
+                <ul style="margin-top: 20px;">
+                    <li><strong>Gate Level Netlist (.v):</strong> The logic description output from synthesis.</li>
+                    <li><strong>Technology File (.tf/.itf):</strong> Defines the metal layers, thickness, and resistance properties for the process node (e.g., TSMC 7nm).</li>
+                    <li><strong>SDC File (.sdc):</strong> Timing constraints defining clock frequency and I/O limits.</li>
+                    <li><strong>UPF File (.upf):</strong> For multi-voltage designs where some blocks need level shifters or isolation cells.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ff3b30;">
+                <h4>Interview focus: SDC and Timing</h4>
+                "What is the difference between a create_clock and a create_generated_clock?"
+                <br><br>
+                <strong>Answer:</strong> create_clock is used for primary input clock source (PLL output or external pad), while create_generated_clock is used when an internal circuit (like a divider) derives a clock from a master source.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to Next Module</h2>
+            <p>Data is loaded. Now we verify it. Ready for sanity checks?</p>
+            <a href="m4-sanity-checks.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 4: Sanity Checks</a>
+        </section>
+    </main>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>

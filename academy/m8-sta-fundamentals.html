@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 8: STA Fundamentals | PDX Hub Academy</title>
+    <link rel="stylesheet" href="../styles.css?v=2.5">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="../learn_new.html">← Back to Academy</a>
+                <a href="../lab.html">Tools Lab</a>
+                <a href="../interview.html">Interview Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <header role="banner" style="padding: 180px 0 100px; background: radial-gradient(circle at top right, rgba(255, 59, 48, 0.05), transparent); border-bottom: 1px solid var(--border-color);">
+        <div class="section-container">
+            <span style="color: #ff3b30; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;">Phase II: Execution</span>
+            <h1 style="font-size: 72px; margin-top: 20px; letter-spacing: -3px;">STA Fundamentals</h1>
+            <p style="font-size: 20px; max-width: 800px; margin-top: 30px; opacity: 0.8;">The gatekeeper of frequency. Static Timing Analysis (STA) ensures every path on your chip meets timing requirements.</p>
+        </div>
+    </header>
+
+    <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
+        <section id="basics">
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Setup and Hold Timing</h3>
+            <p>STA verifies that signals arrive at registers within the necessary windows around clock edges. Unlike dynamic simulation, it doesn't need vectors—it checks every path mathematically.</p>
+            
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
+                <h4 style="color: #ff3b30;">The Fundamental Formulas:</h4>
+                <div style="font-family: monospace; font-size: 18px; margin-top: 20px; background: #000; padding: 20px; border-radius: 12px; color: #fff;">
+                    Setup Slack = (T_period + T_capture_clock) - (T_launch_clock + T_data_delay + T_setup_time)<br><br>
+                    Hold Slack = (T_launch_clock + T_data_delay) - (T_capture_clock + T_hold_time)
+                </div>
+            </div>
+        </section>
+
+        <section id="path-types" style="margin-top: 80px;">
+            <h3>2. Timing Path Types</h3>
+            <p>We analyze four primary paths in Physical Design:</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Reg-to-Reg:</strong> Most common. Launch flip-flop to capture flip-flop. Clock period dependent.</li>
+                <li><strong>In-to-Reg:</strong> Input pad to internal register. Delay must be balanced for set-up.</li>
+                <li><strong>Reg-to-Out:</strong> Internal register to output pad. Delay must be balanced for hold.</li>
+                <li><strong>In-to-Out:</strong> Direct combinatorial paths from input to output. Also called "Feedthroughs".</li>
+            </ul>
+        </section>
+
+        <section id="interview" style="margin-top: 80px;">
+            <div class="interview-tip" style="border-color: #ff3b30;">
+                <h4>Interview focus: Clock Skew & Slack</h4>
+                "Can a Hold violation be fixed by decreasing the clock frequency?"
+                <br><br>
+                <strong>Answer:</strong> No. Since the clock period (T_period) does not appear in the hold formula, frequency has no impact on hold violations. Only adding data delay (buffers) or modifying the clock skew can fix it.
+            </div>
+        </section>
+
+        <section id="action" style="margin-top: 100px; text-align: center;">
+            <h2>Advance to実装 Phase</h2>
+            <p>Timing is understood. Now we place the cells. Ready for implementation?</p>
+            <a href="m9-placement.html" class="btn btn-primary" style="margin-top: 40px; display: inline-block;">Explore Module 9: Placement Engine</a>
+        </section>
+    </main>
+
+    <footer class="glass-footer">
+        <div class="section-container" style="text-align: center; opacity: 0.6; font-size: 12px;">
+            © 2026 PDX HUB ACADEMY | MISSION CRITICAL VLSI EDUCATION
+        </div>
+    </footer>
+
+    <script src="../scripts.js"></script>
+</body>
+</html>
