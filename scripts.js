@@ -327,7 +327,71 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Logic Propagation
-    let isPropagating = false;
+    // MOSFET Explorer Logic
+    function initMOSFETExplorer() {
+        const canvas = document.getElementById('mos-canvas');
+        if (!canvas) return;
+        updateMOSFETPlot();
+    }
+
+    window.updateMOSFETPlot = function() {
+        const canvas = document.getElementById('mos-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const vgs = parseFloat(document.getElementById('mos-vgs').value);
+        const vth = 0.4;
+        const kn = 50; // process gain
+
+        document.getElementById('vgs-val').innerText = vgs.toFixed(1) + 'V';
+        
+        ctx.clearRect(0,0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#0071e3';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, 180);
+
+        let region = 'CUTOFF';
+        let id_val = 0;
+
+        for(let vds=0; vds <= 1.8; vds += 0.05) {
+            let id = 0;
+            if (vgs <= vth) {
+                region = 'CUTOFF';
+            } else if (vds <= (vgs - vth)) {
+                id = kn * ((vgs - vth)*vds - (vds*vds)/2);
+                region = 'LINEAR';
+            } else {
+                id = 0.5 * kn * (vgs - vth) * (vgs - vth);
+                region = 'SATURATION';
+            }
+            id_val = id;
+            ctx.lineTo((vds / 1.8) * 400, 180 - (id / 40) * 180);
+        }
+        ctx.stroke();
+        document.getElementById('mos-region').innerText = region;
+        document.getElementById('mos-id-val').innerText = '~' + (id_val / 20).toFixed(2) + ' mA';
+    }
+
+    // Multi-Corner Sign-Off Engine
+    window.runMultiCornerAnalysis = function() {
+        const corners = ['SS_125C', 'TT_25C', 'FF_-40C'];
+        const resultsEl = document.getElementById('corner-results');
+        if (!resultsEl) return;
+
+        resultsEl.innerHTML = '';
+        corners.forEach(c => {
+            const slack = (Math.random() * (0.5 - (-0.2)) + (-0.2)).toFixed(3);
+            const color = slack < 0 ? '#ff3b30' : '#34c759';
+            resultsEl.innerHTML += `
+                <div class="glass" style="padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: left;">
+                    <div style="font-size: 11px; opacity: 0.7;">${c}</div>
+                    <div style="font-size: 16px; font-weight: 700; color: ${color};">Slack: ${slack} ns</div>
+                </div>
+            `;
+        });
+        localStorage.setItem('pdx_signoff', (parseInt(localStorage.getItem('pdx_signoff') || 0) + 1));
+        updateHomeDashboard();
+    }
     window.propagateSignal = function() {
         if (isPropagating) return;
         isPropagating = true;

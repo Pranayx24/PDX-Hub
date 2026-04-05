@@ -91,7 +91,24 @@
         </section>
 
         <!-- Sign-Off Dashboard (NEW) -->
-        <section class="grid reveal" style="margin-top: 50px;">
+        <!-- Multi-Corner Sign-Off (NEW) -->
+        <section class="section-container reveal" style="margin-top: 50px;">
+            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(0,113,227,0.1) 0%, rgba(255,255,255,0.02) 100%);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3>Multi-Corner Sign-Off Lab</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">STA across PVT (Process, Voltage, Temperature) corners.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="runMultiCornerAnalysis()" style="padding: 10px 20px; font-size: 13px;">Simulate Corners</button>
+                </div>
+                <div id="corner-results" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px;">
+                    <!-- Population by JS -->
+                    <div style="grid-column: span 3; text-align: center; color: var(--text-secondary); font-style: italic;">
+                        Click Simulate to see multi-variation slack data.
+                    </div>
+                </div>
+            </div>
+        </section>
             <div class="tool-card glass" style="grid-column: span 1;">
                 <h3 style="margin-bottom: 20px;">🛡️ Final Sign-Off Checklist</h3>
                 <div class="checklist-item">
