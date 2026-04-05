@@ -255,6 +255,26 @@
                     <span class="result-value" id="unit-result">1000 nm</span>
                 </div>
             </div>
+
+            <!-- Logical Effort Pro (NEW) -->
+            <div class="tool-card glass reveal">
+                <h3>Logical Effort Pro</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="input-group">
+                        <label>Electrical Effort (F)</label>
+                        <input type="number" id="eff-f" value="64">
+                    </div>
+                    <div class="input-group">
+                        <label>Logic Effort (G)</label>
+                        <input type="number" id="eff-g" value="1.0">
+                    </div>
+                </div>
+                <div class="result-box" style="background: linear-gradient(135deg, #1D1D1F 0%, #34C759 100%);">
+                    <span>Target Stage Effort (f):</span><br>
+                    <span id="eff-stage" class="result-value">4.00</span>
+                </div>
+                <div class="formula-box">Optimal N = ln(F*G) / ln(4)</div>
+            </div>
         </div>
 
         <!-- Dynamic Timing Path Visualizer (TRAFFIC MAGNET) -->

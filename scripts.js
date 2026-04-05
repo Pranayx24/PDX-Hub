@@ -131,6 +131,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const startSimBtn = document.getElementById('start-sim');
         if (startSimBtn) startSimBtn.addEventListener('click', startInterviewQuiz);
 
+        // Logical Effort
+        ['eff-f', 'eff-g'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateLogicEffort);
+        });
+
+        // Sign-off Checklist
+        document.querySelectorAll('.signoff-check').forEach(check => {
+            check.addEventListener('change', updateSignoffStatus);
+        });
+
+        // Initialize Home Dashboard
+        updateHomeDashboard();
+
         // Copy-to-Clipboard logic for result boxes
         document.querySelectorAll('.result-box').forEach(box => {
             box.style.cursor = 'pointer';
@@ -236,6 +250,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const result = (val * ratios[from]) / ratios[to];
         document.getElementById('unit-result').textContent = result.toLocaleString() + ' ' + to;
+    }
+
+    function calculateLogicEffort() {
+        const F = parseFloat(document.getElementById('eff-f').value) || 1;
+        const G = parseFloat(document.getElementById('eff-g').value) || 1;
+        const effortSum = F * G;
+        const n_opt = Math.max(1, Math.round(Math.log(effortSum) / Math.log(4))); // 4 is typical delay/stage opt
+        const f_opt = Math.pow(effortSum, 1/n_opt);
+        
+        document.getElementById('eff-stage').textContent = f_opt.toFixed(2);
+    }
+
+    function updateSignoffStatus() {
+        const checks = document.querySelectorAll('.signoff-check');
+        const checkedCount = Array.from(checks).filter(c => c.checked).length;
+        const statusEl = document.getElementById('signoff-status');
+        if (statusEl) {
+            if (checkedCount === checks.length) {
+                statusEl.textContent = 'READY FOR MASK TAPE-OUT!';
+                statusEl.style.color = '#34c759';
+            } else {
+                statusEl.textContent = 'NOT READY (' + (checks.length - checkedCount) + ' PENDING)';
+                statusEl.style.color = '#ff3b30';
+            }
+        }
+        localStorage.setItem('pdx_signoff', checkedCount);
+        updateHomeDashboard();
+    }
+
+    function updateHomeDashboard() {
+        const circle = document.getElementById('dash-circle');
+        const text = document.getElementById('dash-pct');
+        if (!circle || !text) return;
+
+        const signoff = parseInt(localStorage.getItem('pdx_signoff') || 0);
+        const tools = 1; // dummy for now
+        const total = 5; // total nodes
+        const pct = Math.round(((signoff + tools) / total) * 100);
+        
+        const offset = 163.36 - (163.36 * pct / 100);
+        circle.style.strokeDashoffset = offset;
+        text.textContent = pct + '%';
     }
 
     let stageCount = 0;

@@ -40,12 +40,30 @@
 
     <main>
         <section class="hero reveal">
-            <div class="chip-3d">
-                <div class="chip-inner">
-                    <span style="color: var(--accent-color); font-weight: 700; font-size: 24px;">PDX-1</span>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 30px;">
+                <div class="chip-3d">
+                    <div class="chip-inner">
+                        <span style="color: var(--accent-color); font-weight: 700; font-size: 24px;">PDX-1</span>
+                    </div>
+                </div>
+
+                <!-- Circular Progress -->
+                <div class="card glass" style="display: flex; align-items: center; gap: 20px; padding: 15px 25px; border-radius: 980px;">
+                    <div class="progress-ring">
+                        <svg>
+                            <circle cx="30" cy="30" r="26" stroke="#444"></circle>
+                            <circle id="dash-circle" cx="30" cy="30" r="26" stroke="var(--accent-color)" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
+                        </svg>
+                        <span id="dash-pct" style="position: absolute; font-size: 12px; font-weight: 700;">0%</span>
+                    </div>
+                    <div style="text-align: left;">
+                        <span style="display: block; font-size: 11px; font-weight: 600; color: var(--accent-color);">HUB MASTERY</span>
+                        <span style="font-size: 13px; color: var(--text-secondary);">Pro Dashboard</span>
+                    </div>
                 </div>
             </div>
-            <h1 style="margin-top: 30px;">Master VLSI Physical Design</h1>
+
+            <h1>Master VLSI Physical Design</h1>
             <p class="subheading">Silicon-grade interactives, timing lab, and enterprise prep.</p>
             <div class="cta-group">
                 <a href="visualizer.html" class="btn btn-primary">Try Floorplan Visualizer</a>
