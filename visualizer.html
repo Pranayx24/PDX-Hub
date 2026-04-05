@@ -102,7 +102,16 @@
                 <h3 style="font-size: 28px;">Macro Workshop</h3>
                 <p style="color: var(--text-secondary); font-size: 14px;">Select components to place in the Die Area. Aim for ~70% utilization.</p>
                 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                <!-- Manual Macro Selection -->
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <div class="macro-block glass" onclick="addMacro('Memory', 100, 60)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ Memory (RAM)</div>
+                    <div class="macro-block glass" onclick="addMacro('IP Core', 80, 80)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ IP Core</div>
+                    <div class="macro-block glass" onclick="addMacro('Analog', 120, 40)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ Analog IP</div>
+                    <div class="macro-block glass" onclick="addMacro('CPU-L2', 70, 50)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ CPU Cache</div>
+                </div>
+
+                <!-- Pro Simulation Controls -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 20px;">
                     <button class="btn btn-primary" style="font-size: 11px; padding: 10px;" onclick="window.simulatePlacement()">Auto-Place Cells</button>
                     <button class="btn btn-secondary" style="font-size: 11px; padding: 10px;" onclick="window.toggleRuler()">DRC Ruler</button>
                     <button class="btn btn-secondary" style="font-size: 11px; padding: 10px; grid-column: span 2;" onclick="window.toggle3DView()">Toggle 3D Perspective</button>
