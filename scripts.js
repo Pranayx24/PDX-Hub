@@ -741,10 +741,49 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modal) modal.innerText = status + '/4';
     }
 
-    // DRC Collision Detection Engine
+    // Global Manhattan Routing Engine
+    window.runGlobalRoute = function() {
+        const svg = document.getElementById('routing-layer');
+        const macros = document.querySelectorAll('.placed-macro');
+        if (!svg || macros.length < 2) return;
+        
+        svg.innerHTML = '';
+        for (let i = 0; i < macros.length - 1; i++) {
+            const r1 = macros[i].getBoundingClientRect();
+            const r2 = macros[i+1].getBoundingClientRect();
+            const canvasRect = svg.getBoundingClientRect();
+            
+            const x1 = r1.left - canvasRect.left + r1.width/2;
+            const y1 = r1.top - canvasRect.top + r1.height/2;
+            const x2 = r2.left - canvasRect.left + r2.width/2;
+            const y2 = r2.top - canvasRect.top + r2.height/2;
+            
+            // Create Manhattan Path (L-shape)
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", `M ${x1} ${y1} L ${x1} ${y2} L ${x2} ${y2}`);
+            path.setAttribute("stroke", "#0071e3");
+            path.setAttribute("stroke-width", "2");
+            path.setAttribute("fill", "none");
+            path.setAttribute("stroke-dasharray", "1000");
+            path.setAttribute("stroke-dashoffset", "1000");
+            path.style.animation = "dash 2s linear forwards";
+            svg.appendChild(path);
+        }
+    }
+
+    // VCD Waveform Simulator Logic
+    window.toggleWaveformSignal = function(signal) {
+        const line = document.getElementById(`wave-${signal}`);
+        if (!line) return;
+        const current = line.style.strokeDashoffset === "0" ? "20" : "0";
+        line.style.strokeDashoffset = current;
+    }
+
+    // Calibre-Style Error Report Logic
     window.checkDRCCollision = function() {
         const macros = document.querySelectorAll('.placed-macro');
         let violation = false;
+        let errorCode = '';
         macros.forEach(m1 => {
             const r1 = m1.getBoundingClientRect();
             m1.style.borderColor = 'var(--border-color)';
@@ -753,6 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const r2 = m2.getBoundingClientRect();
                     if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
                         violation = true;
+                        errorCode = `CALIBRE ERROR: [M1.S.1] MIN_SPACING < 0.04µm @ (${r1.left.toFixed(0)}, ${r1.top.toFixed(0)})`;
                         m1.style.borderColor = '#ff3b30';
                         m2.style.borderColor = '#ff3b30';
                     }
@@ -762,12 +802,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const statusEl = document.getElementById('layer-status');
         if (statusEl) {
-            statusEl.innerText = violation ? 'DRC VIOLATION: MACRO OVERLAP' : 'DRC CLEAN: SIGN-OFF READY';
+            statusEl.innerText = violation ? errorCode : 'DRC CLEAN: [GDSII_SIGN-OFF_00a]';
             statusEl.style.color = violation ? '#ff3b30' : '#34c759';
-        }
-        
-        if (!violation && macros.length > 3) {
-            window.updateSignoffBadge(2); // Award Badge for Clean Flow
         }
     }
 });
