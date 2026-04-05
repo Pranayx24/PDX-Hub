@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLSI Tools Lab | PDX Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="dark">
+    <!-- Elite UI Elements -->
+    <div id="custom-cursor"></div>
+    <div id="custom-cursor-follower"></div>
+    <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
+    <div id="toast-v" class="toast">Copied to Clipboard!</div>
+    
+    <nav class="glass">
+        <div class="nav-content">
+            <a href="index.html" class="logo">PDX Hub</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="tools.html">Tools</a>
+                <a href="lab.html">Tools Lab</a>
+                <a href="learn.html">Learn</a>
+                <a href="interview.html">Interview</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="section-container" style="padding-top: 120px;">
+        <h2 style="font-size: 40px; margin-bottom: 20px; text-align: center;">VLSI Lab: Tools Lab</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 50px;">Practice professional design scripts and timing analysis in a simulated environment.</p>
+
+        <!-- DC Shell Simulator Section -->
+        <section class="reveal" style="margin-bottom: 80px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 15px;">
+                <div>
+                    <h3 style="font-size: 28px;">💻 DC Shell Simulator</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Try commands: read_verilog, compile, report_timing, help, clear</p>
+                </div>
+            </div>
+            <div class="terminal-window" id="terminal-output">
+                <div class="terminal-line">PDX Hub Simulator [Version 1.0.4]</div>
+                <div class="terminal-line">Ready. Type 'help' to see available commands.</div>
+            </div>
+            <div class="terminal-input-row glass" style="padding: 15px; border-radius: 12px;">
+                <span class="prompt">dc_shell></span>
+                <input type="text" id="terminal-input" placeholder="Enter command here..." autofocus>
+            </div>
+        </section>
+
+        <!-- Command Cheat Sheet -->
+        <section class="reveal" style="margin-bottom: 80px;">
+            <h3 style="font-size: 28px; margin-bottom: 25px;">📘 Design Compiler Cheat Sheet</h3>
+            <input type="text" id="search-cmds" placeholder="Search commands (e.g. timing, compile)..." class="glass" style="width:100%; padding: 15px 25px; border-radius: 980px; margin-bottom: 30px;">
+            
+            <div class="cheat-grid" id="cheat-sheet-list">
+                <!-- Command items -->
+                <div class="cheat-item">
+                    <span class="cmd-code">read_verilog file.v</span>
+                    <p class="cmd-desc">Reads Verilog source files into memory for synthesis.</p>
+                    <div style="font-size:11px; margin-top:5px; color:var(--accent-color);">Example: read_verilog design.v</div>
+                </div>
+                <div class="cheat-item">
+                    <span class="cmd-code">compile -ultra</span>
+                    <p class="cmd-desc">Performs advanced synthesis optimizations for best area/timing.</p>
+                    <div style="font-size:11px; margin-top:5px; color:var(--accent-color);">Example: compile_ultra</div>
+                </div>
+                <div class="cheat-item">
+                    <span class="cmd-code">set_clock_uncertainty</span>
+                    <p class="cmd-desc">Defines clock skew and jitter for timing analysis.</p>
+                    <div style="font-size:11px; margin-top:5px; color:var(--accent-color); font-family: monospace;">set_clock_uncertainty 0.1 clk</div>
+                </div>
+                <div class="cheat-item">
+                    <span class="cmd-code">report_timing</span>
+                    <p class="cmd-desc">Generates a detailed report of the worst timing paths.</p>
+                </div>
+                <div class="cheat-item">
+                    <span class="cmd-code">check_design</span>
+                    <p class="cmd-desc">Verifies that the design is complete and has no major connectivity issues.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lab Tool Integration Cards -->
+        <section class="grid reveal">
+            <div class="tool-card glass" style="grid-column: span 2;">
+                <h3>🛡️ Lab Integration: Timing Analyzer Pro</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">
+                    <div>
+                        <div class="input-group">
+                            <label>Design Path Delay (ps)</label>
+                            <input type="number" id="lab-data" value="450">
+                        </div>
+                        <div class="input-group">
+                            <label>Clock Target (MHz)</label>
+                            <input type="number" id="lab-freq" value="1000">
+                        </div>
+                        <div class="result-box">
+                            <span id="lab-slack">Slack: +550 ps</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent-color);">Engineering Deep Dive</h4>
+                        <p style="font-size: 14px; margin-bottom: 10px; line-height: 1.4;"><strong>Concept:</strong> Slack represents the margin between required time and arrival time of a signal.</p>
+                        <p style="font-size: 14px; margin-bottom: 10px; line-height: 1.4;"><strong>PD Flow:</strong> Used in every step from Synthesis to ECO to ensure sign-off timing closure.</p>
+                        <div style="background: rgba(0,113,227,0.1); padding: 10px; border-radius: 8px; font-size: 13px; color: var(--accent-color);">
+                            <strong>Interview Tip:</strong> "Negative Slack in Post-Layout? Check for high local congestion or IR drop preventing cells from running at speed."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AdSense Placeholder Side -->
+        <div class="ads-placeholder" style="margin-top: 60px;">AD SENSE (PRO LAB FEED)</div>
+    </main>
+
+    <footer style="padding: 60px 20px; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-secondary); font-size: 14px;">
+        <p>© 2026 PDX Hub. Engineered for Excellence. <br> <a href="#" class="btn-secondary" style="font-size: 12px; margin-top: 10px; display: inline-block;">Download Physical Design Notes (₹199)</a></p>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script src="simulator.js"></script>
+</body>
+</html>
