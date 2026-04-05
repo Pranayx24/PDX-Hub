@@ -19,6 +19,11 @@
     </div>
     <div id="toast-v" class="toast">Copied to Clipboard!</div>
 
+    <!-- Ultra-Max Banner (NEW) -->
+    <div id="announcement-banner" style="background: linear-gradient(90deg, #FF9500 0%, #FF3B30 100%); color: white; padding: 10px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 1px; animation: pulseBanner 4s infinite;">
+        🚨 TAPE-OUT SEASON 2026: NEW AUTOMATED DRC LITE SIMULATOR IS NOW LIVE IN THE LAB!
+    </div>
+
     <nav class="glass">
         <div class="nav-content">
             <button class="theme-toggle" id="theme-toggle">
@@ -116,7 +121,48 @@
             </div>
         </section>
 
-        <!-- Scroll Progress -->
+        <!-- Mastery Leaderboard (NEW) -->
+        <section class="section-container reveal" style="margin-top: 100px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+                <div>
+                    <h2 style="font-size: 32px;">Masters of Silicon</h2>
+                    <p style="color: var(--text-secondary);">Top platform practitioners ranking by DRC-Success & Timing Mastery.</p>
+                </div>
+                <button class="btn btn-secondary" style="font-size: 14px;">View All Practitioners</button>
+            </div>
+            <div class="card glass" style="padding: 0; overflow: hidden;">
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead style="background: rgba(0, 113, 227, 0.1);">
+                        <tr>
+                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">RANK</th>
+                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">PRACTITIONER</th>
+                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">EXPERTISE</th>
+                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">HUB SCORE</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 14px;">
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 20px; font-weight: 700; color: #FFD700;">#1</td>
+                            <td style="padding: 20px; font-weight: 600;">Arjun V. (Intel)</td>
+                            <td style="padding: 20px; color: var(--text-secondary);">Timing Closure & ECO</td>
+                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,850</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 20px; font-weight: 700; color: #C0C0C0;">#2</td>
+                            <td style="padding: 20px; font-weight: 600;">Sara M. (NVIDIA)</td>
+                            <td style="padding: 20px; color: var(--text-secondary);">Complex Floorplanning</td>
+                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,720</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 20px; font-weight: 700; color: #CD7F32;">#3</td>
+                            <td style="padding: 20px; font-weight: 600;">Li Wei (Qualcomm)</td>
+                            <td style="padding: 20px; color: var(--text-secondary);">Power Optimization</td>
+                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,540</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
         <div id="scroll-progress"></div>
         <button id="scroll-to-top" class="glass">↑</button>
     </main>

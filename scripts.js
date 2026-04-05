@@ -285,13 +285,87 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!circle || !text) return;
 
         const signoff = parseInt(localStorage.getItem('pdx_signoff') || 0);
-        const tools = 1; // dummy for now
-        const total = 5; // total nodes
-        const pct = Math.round(((signoff + tools) / total) * 100);
+        const drcSuccess = parseInt(localStorage.getItem('pdx_drc_success') || 0);
+        const total = 10; // total milestones
+        const pct = Math.min(100, Math.round(((signoff + drcSuccess) / total) * 100));
         
         const offset = 163.36 - (163.36 * pct / 100);
         circle.style.strokeDashoffset = offset;
         text.textContent = pct + '%';
+    }
+
+    // DRC Lite Simulator
+    window.runDRCSimulation = function() {
+        const consoleEl = document.getElementById('drc-console');
+        const resultsEl = document.getElementById('drc-results');
+        if (!consoleEl) return;
+
+        consoleEl.innerHTML = '[INFO] Starting DRC Verification at 7nm Node...<br>';
+        resultsEl.innerHTML = '';
+
+        const logs = [
+            'Checking Metal 1 spacing...',
+            'Checking Via orientation...',
+            'CRITICAL: Metal 2 short detected at [142, 590]',
+            'Checking Antenna rules...',
+            'LVS Comparison: Netlist Match',
+            'Verification Complete. 1 Error found.'
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < logs.length) {
+                consoleEl.innerHTML += `> ${logs[i]}<br>`;
+                i++;
+                consoleEl.scrollTop = consoleEl.scrollHeight;
+            } else {
+                clearInterval(interval);
+                localStorage.setItem('pdx_drc_success', (parseInt(localStorage.getItem('pdx_drc_success') || 0) + 1));
+                updateHomeDashboard();
+            }
+        }, 800);
+    };
+
+    // Logic Propagation
+    let isPropagating = false;
+    window.propagateSignal = function() {
+        if (isPropagating) return;
+        isPropagating = true;
+        const gateNodes = document.querySelectorAll('.gate-node');
+        const wires = document.querySelectorAll('.path-wire');
+        const delayVal = document.getElementById('prop-val');
+        const statusEl = document.getElementById('prop-status');
+
+        let totalDelay = 0;
+        let step = 0;
+
+        const animateStep = () => {
+            if (step < gateNodes.length) {
+                gateNodes[step].style.boxShadow = '0 0 20px #0071e3';
+                gateNodes[step].style.borderColor = '#0071e3';
+                totalDelay += 15.5; // dummy delay
+                delayVal.innerText = (totalDelay / 10).toFixed(2) + ' ns';
+                
+                if (step < wires.length) {
+                    wires[step].style.width = '40px';
+                    wires[step].style.background = '#0071e3';
+                }
+                
+                step++;
+                setTimeout(animateStep, 600);
+            } else {
+                statusEl.innerText = 'FINISHED (1)';
+                statusEl.style.color = '#34c759';
+                isPropagating = false;
+            }
+        };
+        
+        // Reset and start
+        gateNodes.forEach(n => { n.style.boxShadow = 'none'; n.style.borderColor = 'var(--border-color)'; });
+        wires.forEach(w => { w.style.width = '0'; });
+        statusEl.innerText = 'BUSY...';
+        statusEl.style.color = '#ff9500';
+        animateStep();
     }
 
     let stageCount = 0;

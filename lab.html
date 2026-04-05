@@ -127,7 +127,24 @@
                 </div>
             </div>
 
-            <!-- Existing tool integration card -->
+        <!-- DRC Lite Simulator (NEW) -->
+        <section class="section-container reveal" style="margin-top: 50px;">
+            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(255,255,255,0.05) 100%);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3>DRC Lite Simulator</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">Automated Manufacturing Rule Check (7nm/5nm).</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="runDRCSimulation()" style="padding: 10px 20px; font-size: 13px;">Run DRC Analysis</button>
+                </div>
+                <div id="drc-console" style="background: rgba(0,0,0,0.5); border-radius: 12px; padding: 20px; font-family: monospace; font-size: 12px; height: 160px; overflow-y: auto; border: 1px solid var(--border-color); color: #34c759;">
+                    [INFO] DRC Engine Initialized... Standing by for input layout...
+                </div>
+                <div id="drc-results" style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <!-- Population by JS -->
+                </div>
+            </div>
+        </section>
             <div class="tool-card glass" style="grid-column: span 1;">
                 <h3>🛡️ Lab Integration: Timing Analyzer Pro</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px;">

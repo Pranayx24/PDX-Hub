@@ -200,6 +200,34 @@ nav {
     100% { background-position: 100% 100%; }
 }
 
+@keyframes pulseBanner {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.002); opacity: 0.95; }
+}
+
+/* Logic Gate Visualizer Styles */
+.gate-node {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--surface-color);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.path-wire {
+    width: 0;
+    height: 4px;
+    background: var(--border-color);
+    transition: width 0.5s ease;
+    border-radius: 2px;
+}
+
 body::before {
     animation: siliconPulse 60s linear infinite;
 }
