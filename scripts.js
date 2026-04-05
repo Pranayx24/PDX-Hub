@@ -326,7 +326,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     };
 
-    // Logic Propagation
+    // GDSII Layer Toggling Logic
+    window.toggleGDSLayer = function(layer) {
+        const statuses = {
+            'metal1': 'Metal 1 Visibility Toggled',
+            'poly': 'Polysilicon Mask Toggled',
+            'diff': 'Active Diffusion Toggled'
+        };
+        const statusEl = document.getElementById('layer-status');
+        if (statusEl) {
+            statusEl.innerText = statuses[layer] || 'MULTILAYER VIEW';
+        }
+        
+        // Notify the user via the custom toast system
+        const toast = document.getElementById('toast-v');
+        if (toast) {
+            toast.innerText = `GDSII: ${statuses[layer]}`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+    }
     // MOSFET Explorer Logic
     function initMOSFETExplorer() {
         const canvas = document.getElementById('mos-canvas');
@@ -372,7 +391,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('mos-id-val').innerText = '~' + (id_val / 20).toFixed(2) + ' mA';
     }
 
-    // Multi-Corner Sign-Off Engine
+    // PDN Power Grid Analyzer
+    window.runPDNAnalysis = function() {
+        const resultsEl = document.getElementById('pdn-results');
+        if (!resultsEl) return;
+
+        resultsEl.innerHTML = `
+            <div style="grid-column: span 2; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border-color); text-align: left;">
+                <div style="font-size: 11px; color: #FF9500; font-weight: 700;">STATIC IR DROP ANALYSIS</div>
+                <div style="font-size: 20px; font-weight: 700; margin-top: 10px;">Max V-Drop: 12.4mV</div>
+                <div style="font-size: 12px; color: #34c759; margin-top: 5px;">✓ Status: Within 2% Budget (0.8V VDD)</div>
+            </div>
+            <div class="glass" style="padding: 10px; font-size: 11px;">Strap-Resistance: 140 mΩ</div>
+            <div class="glass" style="padding: 10px; font-size: 11px;">Via-Array: PASS (Electromigration safe)</div>
+        `;
+        localStorage.setItem('pdx_signoff', (parseInt(localStorage.getItem('pdx_signoff') || 0) + 1));
+        updateHomeDashboard();
+    }
     window.runMultiCornerAnalysis = function() {
         const corners = ['SS_125C', 'TT_25C', 'FF_-40C'];
         const resultsEl = document.getElementById('corner-results');

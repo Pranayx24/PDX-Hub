@@ -16,6 +16,11 @@
     <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
     <div id="toast-v" class="toast">Copied to Clipboard!</div>
     
+    <!-- Ultra-Max Banner (NEW) -->
+    <div id="announcement-banner" style="background: linear-gradient(90deg, #FF9500 0%, #FF3B30 100%); color: white; padding: 10px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 1px; animation: pulseBanner 4s infinite;">
+        🚨 TAPE-OUT SEASON 2026: NEW AUTOMATED DRC LITE SIMULATOR IS NOW LIVE IN THE LAB!
+    </div>
+
     <nav class="glass">
         <div class="nav-content">
             <button class="theme-toggle" id="theme-toggle">
@@ -91,7 +96,23 @@
         </section>
 
         <!-- Sign-Off Dashboard (NEW) -->
-        <!-- Multi-Corner Sign-Off (NEW) -->
+        <!-- PDN Power Analyzer (NEW) -->
+        <section class="section-container reveal" style="margin-top: 50px;">
+            <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(255,149,0,0.1) 0%, rgba(255,255,255,0.02) 100%);">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h3>Automated PDN Analyzer</h3>
+                        <p style="color: var(--text-secondary); margin-bottom: 20px;">IR Drop & Power Grid robustness verification.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="runPDNAnalysis()" style="padding: 10px 20px; font-size: 13px; background: #FF9500;">Analyze Power Grid</button>
+                </div>
+                <div id="pdn-results" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                    <div style="grid-column: span 2; padding: 20px; background: rgba(0,0,0,0.1); border-radius: 12px; border: 1px dashed var(--border-color); text-align: center; color: var(--text-secondary);">
+                        Power Mesh: Standby for Grid Extraction...
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="section-container reveal" style="margin-top: 50px;">
             <div class="tool-card glass" style="grid-column: span 1; background: linear-gradient(135deg, rgba(0,113,227,0.1) 0%, rgba(255,255,255,0.02) 100%);">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">

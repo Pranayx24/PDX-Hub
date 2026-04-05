@@ -55,6 +55,11 @@
     <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
     <div id="toast-v" class="toast">Copied!</div>
     
+    <!-- Ultra-Max Banner (NEW) -->
+    <div id="announcement-banner" style="background: linear-gradient(90deg, #FF9500 0%, #FF3B30 100%); color: white; padding: 10px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 1px; animation: pulseBanner 4s infinite;">
+        🚨 TAPE-OUT SEASON 2026: NEW AUTOMATED DRC LITE SIMULATOR IS NOW LIVE IN THE LAB!
+    </div>
+
     <nav class="glass">
         <div class="nav-content">
             <button class="theme-toggle" id="theme-toggle">
@@ -99,6 +104,28 @@
                             </div>
                             <div style="text-align:right; font-size:12px; margin-top:5px; color:var(--accent-color); font-weight:700;">Density: <span id="stat-util-pct">0%</span></div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- GDSII Layer Dashboard (NEW) -->
+                <div class="card glass" style="margin-top: 20px; border-left: 4px solid var(--accent-color);">
+                    <h4>GDSII Layer Manager</h4>
+                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" checked onchange="toggleGDSLayer('metal1')"> 
+                            <span style="color: #0071e3; font-weight: 600;">Metal 1 (Line)</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" checked onchange="toggleGDSLayer('poly')"> 
+                            <span style="color: #ff3b30; font-weight: 600;">Polysilicon (Gate)</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
+                            <input type="checkbox" checked onchange="toggleGDSLayer('diff')"> 
+                            <span style="color: #34c759; font-weight: 600;">Active Diffusion</span>
+                        </label>
+                    </div>
+                    <div style="margin-top: 15px; font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">
+                        Status: <span id="layer-status" style="color: var(--accent-color);">MULTILAYER VIEW</span>
                     </div>
                 </div>
             </div>

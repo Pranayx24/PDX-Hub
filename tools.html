@@ -16,6 +16,11 @@
     <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
     <div id="toast-v" class="toast">Copied to Clipboard!</div>
     
+    <!-- Ultra-Max Banner (NEW) -->
+    <div id="announcement-banner" style="background: linear-gradient(90deg, #FF9500 0%, #FF3B30 100%); color: white; padding: 10px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 1px; animation: pulseBanner 4s infinite;">
+        🚨 TAPE-OUT SEASON 2026: NEW AUTOMATED DRC LITE SIMULATOR IS NOW LIVE IN THE LAB!
+    </div>
+
     <nav class="glass">
         <div class="nav-content">
             <button class="theme-toggle" id="theme-toggle">
@@ -296,7 +301,61 @@
                     <span>Id: <span id="mos-id-val"> ~14.4 mA</span></span>
                 </div>
             </div>
+        <!-- Logic Propagation Visualizer (NEW) -->
+        <div class="tool-card glass reveal" style="grid-column: span 2; margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h3>Logic Propagation Visualizer</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Interactive path delay ripple through gate chains.</p>
+                </div>
+                <button class="btn btn-primary" onclick="propagateSignal()" style="padding: 10px 20px; font-size: 13px;">Drive Input (0 → 1)</button>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-around; margin: 40px 0; padding: 20px; background: rgba(0,0,0,0.2); border-radius: 20px; border: 1px solid var(--border-color);">
+                <div class="gate-node" id="gate-1">INV</div>
+                <div class="path-wire" id="wire-1"></div>
+                <div class="gate-node" id="gate-2">NAND</div>
+                <div class="path-wire" id="wire-2"></div>
+                <div class="gate-node" id="gate-3">NOR</div>
+                <div class="path-wire" id="wire-3"></div>
+                <div class="gate-node" id="gate-4" style="border-style: dashed;">OUT</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary);">
+                <span>Propagation Delay: <strong id="prop-val" style="color: var(--accent-color);">0.00 ns</strong></span>
+                <span>Status: <strong id="prop-status">IDLE (0)</strong></span>
+            </div>
         </div>
+
+        <!-- Standard Cell Library Explorer (NEW) -->
+        <div class="tool-card glass reveal" style="grid-column: span 2; margin-top: 40px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
+                <div>
+                    <h3>Standard Cell Library Explorer (7nm)</h3>
+                    <p style="color: var(--text-secondary);">Interactive data explorer for foundry library specs.</p>
+                </div>
+            </div>
+            <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div class="cell-card glass" style="text-align: center; padding: 20px; border-radius: 12px;">
+                    <span style="font-size: 24px;">INV</span>
+                    <h4 style="margin-top: 10px;">Inverter Cell</h4>
+                    <div style="font-size: 11px; opacity: 0.7; margin-top: 10px;">Width: 0.18µm | Height: 0.54µm</div>
+                    <div style="color: var(--accent-color); font-weight: 700; margin-top: 10px;">9-Track Library</div>
+                </div>
+                <div class="cell-card glass" style="text-align: center; padding: 20px; border-radius: 12px;">
+                    <span style="font-size: 24px;">NAND2</span>
+                    <h4 style="margin-top: 10px;">NAND 2-Input</h4>
+                    <div style="font-size: 11px; opacity: 0.7; margin-top: 10px;">Width: 0.36µm | Height: 0.54µm</div>
+                    <div style="color: var(--accent-color); font-weight: 700; margin-top: 10px;">9-Track Library</div>
+                </div>
+                <div class="cell-card glass" style="text-align: center; padding: 20px; border-radius: 12px;">
+                    <span style="font-size: 24px;">DFF</span>
+                    <h4 style="margin-top: 10px;">D-Flip-Flop</h4>
+                    <div style="font-size: 11px; opacity: 0.7; margin-top: 10px;">Width: 1.08µm | Height: 0.54µm</div>
+                    <div style="color: var(--accent-color); font-weight: 700; margin-top: 10px;">9-Track Library</div>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 25px; font-size: 13px; color: var(--text-secondary);">Analyze behavior in the <strong>Propagation Lab</strong> above.</p>
+        </div>
+    </div>
 
         <!-- Dynamic Timing Path Visualizer (TRAFFIC MAGNET) -->
         <div class="tool-card glass reveal" style="margin-top: 40px; grid-column: span 2;">

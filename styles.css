@@ -676,8 +676,38 @@ h1 {
     display: block;
 }
 
-@media (max-width: 768px) {
-    h1 { font-size: 40px; }
-    .hero { padding-top: 80px; }
-    .tool-grid { grid-template-columns: 1fr; }
+/* Achievement Medal Styles */
+.medal-card {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 20px;
+    transition: var(--transition-smooth);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+}
+
+.medal-card:hover { 
+    transform: translateY(-10px); 
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 40px rgba(0, 113, 227, 0.2);
+}
+
+.medal-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.medal-card:hover .medal-icon { transform: scale(1.1) rotate(10deg); }
+
+.cell-card {
+    transition: var(--transition-smooth);
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color);
+}
+
+.cell-card:hover {
+    background: var(--surface-color);
+    border-color: var(--accent-color);
+    transform: translateY(-5px);
 }
