@@ -1244,6 +1244,19 @@ h1 {
             display: block !important;
             order: 3;
         }
+
+        .mobile-hide {
+            display: none !important;
+        }
+
+        .hero-section {
+            padding: 80px 20px 40px !important;
+        }
+        
+        .hero-section h1 {
+            font-size: 40px !important;
+            letter-spacing: -2px !important;
+        }
     }
 
     table {
