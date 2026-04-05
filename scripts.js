@@ -806,4 +806,31 @@ document.addEventListener('DOMContentLoaded', () => {
             statusEl.style.color = violation ? '#ff3b30' : '#34c759';
         }
     }
+    // Foundry OS Notification Engine
+    window.showFoundryOS = function(msg) {
+        const toast = document.createElement('div');
+        toast.className = 'foundry-toast show'; // Immediately visible to bypass transition lag
+        toast.innerHTML = `<div class="foundry-toast-icon"></div><span>${msg}</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400);
+        }, 3000);
+    }
+
+    // Tape-out Process Wizard
+    window.startTapeout = function() {
+        const steps = ['Verifying Netlist...', 'Running Floorplan DRC...', 'CTS Analysis...', 'Initiating Photolithography...', 'Sign-off complete!'];
+        let step = 0;
+        const interval = setInterval(() => {
+            if (step >= steps.length) {
+                clearInterval(interval);
+                window.showFoundryOS('GDSII TAPE-OUT: SUCCESS [V2.5]');
+                if (window.updateSignoffBadge) window.updateSignoffBadge(4); 
+                return;
+            }
+            window.showFoundryOS(steps[step].toUpperCase());
+            step++;
+        }, 1500);
+    }
 });
