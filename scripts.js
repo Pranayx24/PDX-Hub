@@ -33,7 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { title: 'Timing Analyzer Pro', url: 'lab.html', category: 'Lab' },
         { title: 'PDN Analyzer', url: 'lab.html', category: 'Lab' },
         { title: 'Foundry Academy', url: 'learn_new.html', category: 'Learning' },
-        { title: 'Interview Hub', url: 'interview.html', category: 'Career' }
+        { title: 'Interview Hub', url: 'interview.html', category: 'Career' },
+        { title: 'CMOS Design', url: 'learn_new.html#m1', category: 'Module' },
+        { title: 'Logic Synthesis', url: 'learn_new.html#m2', category: 'Module' },
+        { title: 'Floorplanning', url: 'learn_new.html#m6', category: 'Module' },
+        { title: 'Static Timing Analysis', url: 'learn_new.html#m8', category: 'Module' },
+        { title: 'Clock Tree Synthesis', url: 'learn_new.html#m10', category: 'Module' },
+        { title: 'Low Power Design', url: 'learn_new.html#m17', category: 'Module' },
+        { title: 'TCL Scripting', url: 'learn_new.html#m18', category: 'Module' }
     ];
 
     const omniSearch = document.getElementById('omni-search');
@@ -881,16 +888,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // Academy Verification Quiz
     window.startModuleQuiz = function(moduleName) {
         const quizData = {
-            'basics': 'Question: What is the main charge carrier in N-type silicon? (Electrons/Holes)',
-            'flow': 'Question: Which step comes after Floorplanning? (Placement/Routing/CTS)',
-            'signoff': 'Question: What is the maximum allowed IR drop (mV)? (10/50/100)'
+            'm1': { q: 'Question: What is the main charge carrier in N-type silicon? (Electrons/Holes)', a: 'electrons' },
+            'm2': { q: 'Question: Which stage converts RTL to functional gates? (Synthesis/Routing)', a: 'synthesis' },
+            'm3': { q: 'Question: Which file contains physical cell info? (LEF/LIB)', a: 'lef' },
+            'm6': { q: 'Question: What is the ratio of cell area to core area called? (Utilization/Density)', a: 'utilization' },
+            'm8': { q: 'Question: Violation caused by data arriving too early? (Setup/Hold)', a: 'hold' },
+            'm10': { q: 'Question: Main goal of balancing clock arrival? (Skew/Latency)', a: 'skew' },
+            'm17': { q: 'Question: Which Vt cell has lowest leakage? (HVT/LVT)', a: 'hvt' },
+            'm18': { q: 'Question: Language used for EDA automation? (TCL/Python)', a: 'tcl' },
+            'basics': { q: 'Question: Silicon is what type of material? (Conductor/Semiconductor)', a: 'semiconductor' },
+            'flow': { q: 'Question: Which step follows Floorplanning? (Placement/CTS)', a: 'placement' },
+            'signoff': { q: 'Question: Final layout check against netlist? (DRC/LVS)', a: 'lvs' }
         };
-        const answer = prompt(quizData[moduleName]);
-        if (answer && (answer.toLowerCase() === 'electrons' || answer.toLowerCase() === 'placement' || answer.toLowerCase() === '50')) {
-            window.showFoundryOS(`MODULE PASS: ${moduleName.toUpperCase()} VERIFIED`);
-            window.updateSignoffBadge(3); // Award Quiz Badge
+        
+        const quiz = quizData[moduleName] || quizData['basics'];
+        const answer = prompt(quiz.q);
+        if (answer && answer.toLowerCase().trim() === quiz.a) {
+            window.showFoundryOS(`VERIFICATION PASSED: ${moduleName.toUpperCase()} MASTERED`);
+            window.updateSignoffBadge(3);
         } else {
-            window.showFoundryOS('QUIZ FAILED: RE-READ MODULE DATA');
+            window.showFoundryOS('VERIFICATION FAILED: REVIEW MODULE CONTENT');
         }
     }
 });

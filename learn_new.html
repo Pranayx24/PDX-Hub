@@ -98,104 +98,326 @@
     </nav>
 
     <main class="section-container" style="padding-top: 130px; display: flex; gap: 40px; align-items: flex-start;">
-        <!-- Academy Roadmap (FORCE-REFRESH V2.3) -->
-        <aside class="glass" style="width: 280px; padding: 100px 25px 40px !important; border-radius: 28px; position: sticky; top: 120px; z-index: 100 !important; display: flex !important; flex-direction: column !important; gap: 0 !important;">
-            <div style="margin-bottom: 50px !important;">
-                <h5 style="font-size: 11px; letter-spacing: 3px; color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Silicon Hub - v2.3</h5>
-                <div style="font-size: 9px; opacity: 0.5; margin-top: 5px;">Build: 02:30 AM Sync</div>
+        <!-- Academy Roadmap (FORCE-REFRESH V2.5) -->
+        <aside class="glass" style="width: 320px; padding: 100px 25px 40px !important; border-radius: 28px; position: sticky; top: 120px; z-index: 100 !important; max-height: 80vh; overflow-y: auto;">
+            <div style="margin-bottom: 30px !important;">
+                <h5 style="font-size: 11px; letter-spacing: 3px; color: var(--accent-color); font-weight: 700; text-transform: uppercase;">Curriculum - v2.5</h5>
+                <div style="font-size: 9px; opacity: 0.5; margin-top: 5px;">23 Professional Materials Sync</div>
             </div>
-            <nav style="display: flex; flex-direction: column; gap: 12px;">
-                <a href="#basics" class="roadmap-node" style="padding: 12px 16px; border-radius: 12px; color: var(--text-primary); text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s;" onclick="updateAcademyProgress(25)">1. Silicon Basics</a>
-                <a href="#flow" class="roadmap-node" style="padding: 12px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: 0.3s;" onclick="updateAcademyProgress(65)">2. The P&R Flow</a>
-                <a href="#signoff" class="roadmap-node" style="padding: 12px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: 0.3s;" onclick="updateAcademyProgress(100)">3. Final Sign-off</a>
+            <nav style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE I: FOUNDATIONS</div>
+                <a href="#m1" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-primary); text-decoration: none; font-size: 13px; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(5)"><span>01</span> CMOS & ASIC Design</a>
+                <a href="#m2" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(10)"><span>02</span> Synthesis (1-3)</a>
+                <a href="#m3" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(15)"><span>03</span> Data Preparation</a>
+                <a href="#m4" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(20)"><span>04</span> Sanity Checks</a>
+                <a href="#m5" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(25)"><span>05</span> PD Flow & Terminology</a>
+
+                <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE II: EXECUTION</div>
+                <a href="#m6" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(35)"><span>06</span> Floorplan Strategy</a>
+                <a href="#m7" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(40)"><span>07</span> Power Planning</a>
+                <a href="#m8" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(45)"><span>08</span> STA Fundamentals</a>
+                <a href="#m9" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(55)"><span>09</span> Placement Engine</a>
+                <a href="#m10" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(65)"><span>10</span> Clock Tree (CTS)</a>
+                <a href="#m11" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(75)"><span>11</span> Routing Phase</a>
+
+                <div style="font-size: 10px; color: var(--accent-color); font-weight: 700; margin: 15px 0 5px 10px; opacity: 0.6;">PHASE III: ADVANCED</div>
+                <a href="#m12" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(80)"><span>12</span> Optimization Tech</a>
+                <a href="#m13" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(85)"><span>13</span> Process Variations</a>
+                <a href="#m14" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(90)"><span>14</span> Signoff - I</a>
+                <a href="#m15" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(92)"><span>15</span> Signoff - II</a>
+                <a href="#m16" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(95)"><span>16</span> Adv Timing Concepts</a>
+                <a href="#m17" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(98)"><span>17</span> Low Power Design</a>
+                <a href="#m18" class="roadmap-node" style="padding: 10px 16px; border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 10px;" onclick="updateAcademyProgress(100)"><span>18</span> TCL Scripting</a>
             </nav>
             <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-                <div style="font-size: 11px; opacity: 0.7;">Academy Progress: <span id="academy-pct">25%</span></div>
+                <div style="font-size: 11px; opacity: 0.7;">Academy Progress: <span id="academy-pct">5%</span></div>
                 <div style="width: 100%; height: 6px; background: #222; border-radius: 3px; margin-top: 5px;">
-                    <div id="academy-progress-bar" style="width: 25%; height: 100%; background: var(--accent-color); border-radius: 3px; transition: width 0.5s;"></div>
+                    <div id="academy-progress-bar" style="width: 5%; height: 100%; background: var(--accent-color); border-radius: 3px; transition: width 0.5s;"></div>
                 </div>
             </div>
         </aside>
 
         <!-- Masterclass Content Hub -->
-        <div style="flex: 1; display: flex; flex-direction: column; gap: 100px;">
-            <!-- Module 1: Silicon Basics -->
-            <section id="basics" class="module-section reveal">
-                <span style="font-size: 12px; font-weight: 700; color: var(--accent-color); letter-spacing: 2px; text-transform: uppercase;">Module 1: Fundamental Physics</span>
-                <h2 style="font-size: 48px; margin-top: 10px;">The Silicon Atom to CMOS</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
-                    Every chip begins with the manipulation of silicon. From P-type and N-type doping, we create the CMOS inverter—the basic building block of all digital logic.
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 120px; padding-bottom: 200px;">
+            
+            <!-- Module 1: CMOS and ASIC Design -->
+            <section id="m1" class="module-section reveal">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 12px; font-weight: 700; color: var(--accent-color); letter-spacing: 2px; text-transform: uppercase;">Module 1</span>
+                    <span class="glass" style="padding: 5px 12px; border-radius: 20px; font-size: 10px; opacity: 0.6;">Theory + Fundamentals</span>
+                </div>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">CMOS & ASIC Design</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 18px; max-width: 850px;">
+                    The bedrock of modern electronics. Understanding the transition from the Silicon atom to complex CMOS (Complementary Metal-Oxide-Semiconductor) logic gates and the distinction between Full-Custom and Semi-Custom (ASIC) design methodologies.
                 </p>
-                
-                <div class="card glass" style="margin-top: 40px; padding: 40px;">
-                <div class="grid">
-                        <div>
-                            <h4>Dynamic Switching Theory</h4>
-                            <p style="font-size: 14px; opacity: 0.8; margin-top: 10px;">CMOS logic consumes zero static power. Energy is only dissipated during the switching (0 → 1 or 1 → 0) phase.</p>
-                            <div class="interview-tip" style="margin-top: 20px;">💡 Concept: Threshold Voltage (Vth) - The gate-source voltage required to create a conduction path between source and drain.</div>
+
+                <div class="grid" style="margin-top: 50px;">
+                    <div class="card glass" style="grid-column: span 2;">
+                        <h3 style="font-size: 24px; margin-bottom: 15px;">ASIC Design vs FPGA</h3>
+                        <p style="font-size: 15px; opacity: 0.8; line-height: 1.6;">ASICs (Application Specific Integrated Circuits) offer superior performance, lower power, and smaller area compared to FPGAs, but involve higher NRE (Non-Recurring Engineering) costs and longer time-to-market.</p>
+                        <ul style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; opacity: 0.7;">
+                            <li>• High Performance (GHz+)</li>
+                            <li>• High Volume Profitability</li>
+                            <li>• Custom Layout Density</li>
+                            <li>• Optimized Power Profile</li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" style="margin-top:40px; width:100%;" onclick="window.startModuleQuiz('m1')">Verify Module 1 Knowledge</button>
+            </section>
+
+            <!-- Module 2: Synthesis -->
+            <section id="m2" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #34c759; letter-spacing: 2px; text-transform: uppercase;">Module 2</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Logic Synthesis (1-3)</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 18px; max-width: 850px;">
+                    Synthesis is the process of converting High-Level (RTL) code—Verilog or VHDL—into a Gate-Level Netlist while optimizing for Power, Performance, and Area (PPA).
+                </p>
+
+                <div class="grid" style="margin-top: 50px;">
+                    <div class="card glass">
+                        <div style="font-size: 11px; color: var(--accent-color); margin-bottom: 10px;">STAGE 1</div>
+                        <h4>Translation</h4>
+                        <p style="font-size: 14px; opacity: 0.7; margin-top: 10px;">Converting HDL into GTECH (Generic Technology) format. The design is mapped to functional architectural blocks.</p>
+                    </div>
+                    <div class="card glass">
+                        <div style="font-size: 11px; color: var(--accent-color); margin-bottom: 10px;">STAGE 2</div>
+                        <h4>Logic Optimization</h4>
+                        <p style="font-size: 14px; opacity: 0.7; margin-top: 10px;">Applying Boolean reductions and restructuring to minimize gate count and path delays based on user constraints.</p>
+                    </div>
+                    <div class="card glass" style="grid-column: span 2;">
+                        <div style="font-size: 11px; color: var(--accent-color); margin-bottom: 10px;">STAGE 3</div>
+                        <h4>Technology Mapping</h4>
+                        <p style="font-size: 14px; opacity: 0.7; margin-top: 10px;">Selecting the final cells from the Foundry Library (.lib) to replace GTECH gates, ensuring the netlist adheres to physical DRC rules.</p>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" style="margin-top:40px; width:100%;" onclick="window.startModuleQuiz('m2')">Verify Synthesis Knowledge</button>
+            </section>
+
+            <!-- Module 3: Data Preparation -->
+            <section id="m3" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ff3b30; letter-spacing: 2px; text-transform: uppercase;">Module 3</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Data Preparation</h2>
+                <div class="card glass" style="margin-top: 40px; border-left: 5px solid var(--accent-color);">
+                    <h4 style="margin-bottom: 20px;">Required Input Ecosystem:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="glass" style="padding: 15px;">
+                            <div style="font-weight: 700;">Logical (LD)</div>
+                            <div style="font-size: 12px; opacity: 0.6;">.lib, .db, SDC, Netlist</div>
                         </div>
-                        <div style="background: rgba(0,113,227,0.05); border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 30px;">
-                            <!-- High-Fidelity SVG Restored CMOS Visual -->
-                            <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--accent-color));"><path d="M12 2v20"/><path d="M17 5H7"/><path d="M17 19H7"/><path d="M17 12H7"/><circle cx="12" cy="8" r="3"/><circle cx="12" cy="16" r="3"/></svg>
+                        <div class="glass" style="padding: 15px;">
+                            <div style="font-weight: 700;">Physical (PD)</div>
+                            <div style="font-size: 12px; opacity: 0.6;">LEF, Technology File (tf), GDSII</div>
+                        </div>
+                        <div class="glass" style="padding: 15px;">
+                            <div style="font-weight: 700;">Power (UPF)</div>
+                            <div style="font-size: 12px; opacity: 0.6;">Unified Power Format for Multi-Voltage</div>
+                        </div>
+                        <div class="glass" style="padding: 15px;">
+                            <div style="font-weight: 700;">Extraction (RC)</div>
+                            <div style="font-size: 12px; opacity: 0.6;">RC Tech File (captable/itf)</div>
                         </div>
                     </div>
-                    <button class="btn btn-secondary" style="margin-top:40px; width:100%;" onclick="window.startModuleQuiz('basics')">Verify Module 1 Knowledge</button>
+                </div>
+                <button class="btn btn-secondary" style="margin-top:40px; width:100%;" onclick="window.startModuleQuiz('m3')">Verify Input Knowledge</button>
+            </section>
+
+            <!-- Module 4: Sanity Checks -->
+            <section id="m4" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ff9500; letter-spacing: 2px; text-transform: uppercase;">Module 4</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Sanity Checks</h2>
+                <div class="summary-box">
+                    <p style="font-size: 16px;">Before starting the P&R flow, "Garbage In, Garbage Out" must be avoided. The following checks are mandatory:</p>
+                    <ul style="list-style: none; padding: 0; display: grid; gap: 15px; margin-top: 20px;">
+                        <li style="display: flex; gap: 10px; align-items: start;">✅ <strong>Check Netlist:</strong> Verifying floating pins, multiple drivers, and unresolved references.</li>
+                        <li style="display: flex; gap: 10px; align-items: start;">✅ <strong>Check Timing:</strong> Ensuring SDC constraints correctly cover all Reg-to-Reg and I/O paths.</li>
+                        <li style="display: flex; gap: 10px; align-items: start;">✅ <strong>Check Library:</strong> Matching logical (.lib) and physical (LEF) pins exactly.</li>
+                    </ul>
                 </div>
             </section>
 
-            <!-- Module 2: The Physical Design Flow -->
-            <section id="flow" class="module-section reveal">
-                <span style="font-size: 12px; font-weight: 700; color: #34c759; letter-spacing: 2px; text-transform: uppercase;">Module 2: Netlist-to-GDSII</span>
-                <h2 style="font-size: 48px; margin-top: 10px;">The Physical Design Flow</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
-                    This is the core process of chipmaking. Transforming the synthesized netlist into a manufacturable physical layout follows a strict, multi-stage pipeline.
-                </p>
+            <!-- Module 5: PD Flow and Terminology -->
+            <section id="m5" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: var(--accent-color); letter-spacing: 2px; text-transform: uppercase;">Module 5</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">PD Flow & Terminology</h2>
+                <div class="interview-tip">
+                    "Know the jargon or get rejected." Below is the critical vocabulary for a Tier-1 PD Engineer.
+                </div>
+                <div class="grid" style="margin-top: 30px;">
+                    <div class="card glass">
+                        <h4>WNS / TNS</h4>
+                        <p style="font-size: 12px; opacity: 0.6; margin-top: 5px;">Worst Negative Slack (The single worst violation) vs Total Negative Slack (Sum of all violations).</p>
+                    </div>
+                    <div class="card glass">
+                        <h4>Skew / Latency</h4>
+                        <p style="font-size: 12px; opacity: 0.6; margin-top: 5px;">Clock skew (diff in arrival times) vs Clock latency (delay from source to sink).</p>
+                    </div>
+                    <div class="card glass">
+                        <h4>Utilization</h4>
+                        <p style="font-size: 12px; opacity: 0.6; margin-top: 5px;">Ratio of standard cell area to core area. Ideally 60-70% for routability.</p>
+                    </div>
+                </div>
+            </section>
 
+            <!-- Module 6: Floorplan -->
+            <section id="m6" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #af52de; letter-spacing: 2px; text-transform: uppercase;">Module 6</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Floorplan Strategy</h2>
+                <div class="diagram-container">
+                    <div class="floorplan-macro" style="top: 20px; left: 20px; width: 80px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;">RAM_1</div>
+                    <div class="floorplan-macro" style="top: 20px; right: 20px; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700;">ROM</div>
+                    <div style="border: 2px dashed var(--accent-color); width: 200px; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; opacity: 0.3;">CORE AREA</div>
+                </div>
+                <p style="margin-top: 30px; font-size: 16px; opacity: 0.8;">Floorplanning defines the chip's physical limits and internal partition boundaries. Key decisions include Aspect Ratio (w/h), Core/Die sizing, and Macro placement while avoiding congestion near I/O pins.</p>
+            </section>
+
+            <!-- Module 7: Power Planning -->
+            <section id="m7" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ffcc00; letter-spacing: 2px; text-transform: uppercase;">Module 7</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Power Planning</h2>
+                <div class="card glass" style="margin-top: 40px; background: repeating-linear-gradient(90deg, rgba(255,204,0,0.05) 0px, rgba(255,204,0,0.05) 40px, transparent 40px, transparent 80px);">
+                    <h4>The Power Grid (Vanguard of Integrity)</h4>
+                    <p style="margin-top: 15px; font-size: 15px; opacity: 0.8;">Ensuring uniform power distribution across the die using Rings, Stripes (on higher metal layers), and Rails (on M1). Goal: Minimize Static and Dynamic IR drop through robust PDN (Power Distribution Network) design.</p>
+                </div>
+            </section>
+
+            <!-- Module 8: STA 1 -->
+            <section id="m8" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ff3b30; letter-spacing: 2px; text-transform: uppercase;">Module 8</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">STA Fundamentals</h2>
+                <div style="background: var(--surface-color); padding: 40px; border-radius: 24px; border: 1px solid var(--border-color); margin-top: 40px;">
+                    <div style="font-family: 'Courier New', Courier, monospace; color: var(--accent-color); font-size: 14px; margin-bottom: 20px;">// SETUP Formula</div>
+                    <div style="font-size: 18px; font-weight:600;">T_data < T_clk + T_period - T_setup</div>
+                    <div style="font-family: 'Courier New', Courier, monospace; color: #ff3b30; font-size: 14px; margin: 30px 0 20px;">// HOLD Formula</div>
+                    <div style="font-size: 18px; font-weight:600;">T_data > T_clk + T_hold</div>
+                </div>
+                <p style="margin-top: 40px; font-size: 16px; opacity: 0.8;">STA (Static Timing Analysis) checks every path for timing compliance without requiring test vectors. It is the most critical sign-off metric for frequency targets.</p>
+            </section>
+
+            <!-- Module 9: Placement -->
+            <section id="m9" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #34c759; letter-spacing: 2px; text-transform: uppercase;">Module 9</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Placement Engine</h2>
                 <div class="grid" style="margin-top: 40px;">
                     <div class="card glass">
-                        <h4 style="color: var(--accent-color);">1. Floorplanning</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">The chip's blueprint. Deciding die area, I/O placement, and macro positioning to minimize congestion and IR drop.</p>
+                        <h4>Global Placement</h4>
+                        <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">Distributes cells uniformly across rows, ignoring overlaps to minimize total net wirelength.</p>
                     </div>
                     <div class="card glass">
-                        <h4 style="color: var(--accent-color);">2. Placement</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Positioning millions of standard cells within row boundaries. Aim: Minimized wirelength and timing satisfaction.</p>
-                    </div>
-                    <div class="card glass">
-                        <h4 style="color: var(--accent-color);">3. Clock Tree (CTS)</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Building the H-Tree or Mesh to deliver clock signals to all registers with minimum global skew and latency.</p>
-                    </div>
-                    <div class="card glass">
-                        <h4 style="color: var(--accent-color);">4. Routing</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Final metal interconnect design. Global and Detail routing phases that fulfill all logical net requirements.</p>
+                        <h4>Detailed Placement</h4>
+                        <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">Snaps cells to the site grid, resolves all overlaps, and prepares the design for CTS.</p>
                     </div>
                 </div>
-                <button class="btn btn-secondary" style="margin-top:20px; width:100%;" onclick="window.startModuleQuiz('flow')">Verify Module 2 Knowledge</button>
             </section>
 
-            <!-- Module 3: Sign-off Verification -->
-            <section id="signoff" class="module-section reveal">
-                <span style="font-size: 12px; font-weight: 700; color: #ff9500; letter-spacing: 2px; text-transform: uppercase;">Module 3: The Goal</span>
-                <h2 style="font-size: 48px; margin-top: 10px;">Tape-out & Verification</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-top: 25px; font-size: 16px;">
-                    The final stage. Before manufacturing, the design must undergo rigorous sign-off checks to ensure it will function correctly and have high yield.
-                </p>
-                
-                <div class="grid" style="margin-top: 40px;">
-                    <div class="card glass" style="border-left: 4px solid #34c759;">
-                        <h4>PV: Physical Verification</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">DRC (Rule checks), LVS (Layout matched to Netlist), and ERC (Electrical checks).</p>
-                    </div>
-                    <div class="card glass" style="border-left: 4px solid #ff3b30;">
-                        <h4>STA: Static Timing</h4>
-                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px;">Verifying setup and hold times across all corners to ensure operating frequency targets.</p>
-                    </div>
+            <!-- Module 10: CTS -->
+            <section id="m10" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #5ac8fa; letter-spacing: 2px; text-transform: uppercase;">Module 10</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Clock Tree Synthesis</h2>
+                <div class="interview-tip">
+                    Q: Why not route clocks during the routing phase?<br>
+                    A: Clocks require minimum skew and latency; routing handles signals with less stringent requirements.
                 </div>
-                <button class="btn btn-secondary" style="margin-top:20px; width:100%;" onclick="window.startModuleQuiz('signoff')">Verify Module 3 Knowledge</button>
-                
-                <div class="interview-tip" style="margin-top: 40px; border: 1px dashed var(--accent-color); background: rgba(0,113,227,0.05);">
-                    🚀 Mastery Path: "Every person visiting this site must get full knowledge from basics to advanced." Use our <strong>Visualizer</strong> and <strong>Tools Lab</strong> to apply these concepts in real-time.
+                <div class="card glass" style="margin-top: 30px;">
+                    <h4>H-Tree vs Fishbone</h4>
+                    <p style="font-size: 15px; opacity: 0.8; margin-top: 10px;">Building the distribution network to millions of flip-flops while managing power consumption (the clock consumes ~40% of chip power).</p>
                 </div>
             </section>
+
+            <!-- Module 11: Routing -->
+            <section id="m11" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #0071e3; letter-spacing: 2px; text-transform: uppercase;">Module 11</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Routing Phase</h2>
+                <div class="grid" style="margin-top: 40px;">
+                    <div class="card glass">
+                        <h4>Global Routing</h4>
+                        <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">Allocates net paths across G-Cells (Global segments) to plan density.</p>
+                    </div>
+                    <div class="card glass">
+                        <h4>Detail Routing</h4>
+                        <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">Actual metal shape creation on manufacture tracks, ensuring zero DRC violations.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Module 12: Optimization Tech -->
+            <section id="m12" class="module-section reveal">
+                <span style="font-size: 12px; font-weight: 700; color: #ff2d55; letter-spacing: 2px; text-transform: uppercase;">Module 12</span>
+                <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Optimization Tech</h2>
+                <div class="summary-box" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="glass" style="padding: 15px;">
+                        <strong>Vt Swapping:</strong> Changing cells to Low-Vt for speed or High-Vt for power.
+                    </div>
+                    <div class="glass" style="padding: 15px;">
+                        <strong>Gate Sizing:</strong> Modifying drive strength to fix drive capability issues.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Module 13-18: Advanced Phases -->
+            <div id="advanced-modules" style="display: flex; flex-direction: column; gap: 120px;">
+                <!-- Module 13 -->
+                <section id="m13" class="module-section reveal">
+                    <span style="font-size: 12px; font-weight: 700; color: #8e8e93; letter-spacing: 2px; text-transform: uppercase;">Module 13</span>
+                    <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Process Variations</h2>
+                    <p style="font-size: 18px; opacity: 0.7; margin-top: 20px;">Understanding PVT (Process, Voltage, Temperature) corners and the impact of OCV (On-Chip Variation) on sub-7nm designs.</p>
+                </section>
+
+                <!-- Module 14 & 15 -->
+                <section id="m14" class="module-section reveal">
+                    <span style="font-size: 12px; font-weight: 700; color: #34c759; letter-spacing: 2px; text-transform: uppercase;">Module 14 & 15</span>
+                    <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Signoff - I & II</h2>
+                    <div class="grid" style="margin-top: 40px;">
+                        <div class="card glass">
+                            <h4>Physical (PV)</h4>
+                            <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">DRC (Design Rule Check), LVS (Layout Vs Schematic), Antenna Checks.</p>
+                        </div>
+                        <div class="card glass">
+                            <h4>Reliability</h4>
+                            <p style="font-size: 13px; opacity: 0.6; margin-top: 10px;">EM (Electromigration), IR Drop, and Soft Error Analysis.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Module 16 -->
+                <section id="m16" class="module-section reveal">
+                    <span style="font-size: 12px; font-weight: 700; color: #0071e3; letter-spacing: 2px; text-transform: uppercase;">Module 16</span>
+                    <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Adv Timing Concepts</h2>
+                    <p style="font-size: 18px; opacity: 0.7; margin-top: 20px;">Deep dive into Crosstalk-induced delay (Aggressor vs Victim) and Signal Integrity (SI).</p>
+                </section>
+
+                <!-- Module 17 -->
+                <section id="m17" class="module-section reveal">
+                    <span style="font-size: 12px; font-weight: 700; color: #5856d6; letter-spacing: 2px; text-transform: uppercase;">Module 17</span>
+                    <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">Low Power Design</h2>
+                    <div class="card glass" style="margin-top: 40px; border-left: 4px solid #5856d6;">
+                        <ul style="list-style: none; padding: 0; line-height: 2;">
+                            <li>• <strong>Multi-Vt:</strong> Using HVT, RVT, and LVT mix.</li>
+                            <li>• <strong>Clock Gating:</strong> Dynamic power reduction.</li>
+                            <li>• <strong>Power Gating:</strong> MTCMOS for static power.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Module 18 -->
+                <section id="m18" class="module-section reveal">
+                    <span style="font-size: 12px; font-weight: 700; color: #ff9500; letter-spacing: 2px; text-transform: uppercase;">Module 18</span>
+                    <h2 style="font-size: 56px; margin-top: 10px; letter-spacing: -2px;">TCL Scripting</h2>
+                    <div class="card glass" style="margin-top: 40px;">
+                        <div style="font-family: 'Courier New', Courier, monospace; background: #000; padding: 20px; border-radius: 12px; font-size: 13px;">
+                            <span style="color: #66d9ef;">set</span> cells [get_cells -hier <span style="color: #e6db74;">"*"</span>]<br>
+                            <span style="color: #f92672;">foreach</span> cell <span style="color: #ae81ff;">$cells</span> {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;echo <span style="color: #e6db74;">"Optimizing $cell..."</span><br>
+                            }
+                        </div>
+                        <p style="margin-top: 20px; font-size: 14px; opacity: 0.7;">TCL is the standard language for EDA tool automation. Master these loops and variables to increase workflow efficiency by 10x.</p>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top:80px; width:100%;" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to Curriculum Start</button>
+                    <div class="interview-tip" style="margin-top: 40px; border: 1px dashed var(--accent-color); background: rgba(0,113,227,0.05);">
+                        🚀 Mastery Path: "Every person visiting this site must get full knowledge from basics to advanced." Use our <strong>Visualizer</strong> and <strong>Tools Lab</strong> to apply these concepts in real-time.
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
