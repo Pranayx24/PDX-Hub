@@ -30,21 +30,31 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Post-Route Optimization</h3>
-            <p>Once routing is complete, the tool has precise RC (Resistance-Capacitance) values for every wire. Optimization now focuses on surgical fixes to timing and power violations.</p>
+            <p>Once routing is complete, the tool has precise RC (Resistance-Capacitance) values for every wire. Optimization now focuses on surgical fixes to timing and power violations without disturbing the whole layout.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #ff2d55;">Power-Performance-Area (PPA) Levers:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Vt-Swapping:</strong> Changing a cell from High-Vt (Low Leakage, Slow) to Low-Vt (High Leakage, Fast) specifically on critical timing paths.</li>
-                    <li><strong>Gate Sizing:</strong> Increasing the drive strength of a gate to drive higher capacitance downstream net at the cost of area and power.</li>
-                    <li><strong>Buffer Insertion:</strong> Breaking long, high-RC wires by inserting buffers to restore signal integrity.</li>
+                <h4 style="color: #ff2d55;">Advanced PPA Levers:</h4>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Footprint Swapping:</strong> Replacing a cell with a different Vt variant (LVT, RVT, HVT) that occupies the exact same physical space. This fixes timing with 0 core area cost.</li>
+                    <li><strong>Gate Sizing:</strong> Modifying drive strength. Large cells are needed to drive long, high-RC nets but consume more dynamic power.</li>
+                    <li><strong>Decap Insertion:</strong> Adding decoupling capacitors to regions with high dynamic switching to maintain local voltage stability.</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec">
+                <strong>ULVT (Ultra Low Vt) Usage</strong>
+                <p style="font-size: 14px; margin-top: 10px;">ULVT cells are the "racecars" of the chip. They provide maximum speed but have massive leakage power. The optimizer only uses these on the top 1% of the most critical timing paths to close WNS.</p>
             </div>
         </section>
 
-        <section id="power-reduction" style="margin-top: 80px;">
-            <h3>2. Leakage Power Recovery</h3>
-            <p>After timing is met, the tool performs "Leakage Recovery" by swapping Low-Vt cells back to High-Vt on paths with positive slack. This can reduce total power consumption by 20-30%.</p>
+        <section id="eco" style="margin-top: 80px;">
+            <h3>2. The ECO Flow (Engineering Change Order)</h3>
+            <p>At the end of the project, if a logic bug is found or a tiny timing violation remains, we don't re-run the whole P&R flow. We use an **ECO (Engineering Change Order)**.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Manual Patching:</strong> Modifying the netlist with TCL scripts to delete a gate or insert a buffer.</li>
+                <li><strong>Eco Route:</strong> Rerouting only the nets impacted by the change while keeping everything else frozen.</li>
+                <li><strong>Metal-Only ECO:</strong> A cost-saving ECO where only the top metal layers are changed, reused existing base layer silicon masks (much cheaper for foundry).</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

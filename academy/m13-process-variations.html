@@ -33,18 +33,23 @@
             <p>Silicon never matches the ideal model exactly. We analyze the design at extreme "Corners" (Worst Case, Best Case) to ensure it works across all manufacturing tolerances.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #8e8e93;">The PVT Hierarchy:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>SS Core (Slow-Slow):</strong> Minimum voltage, maximum temperature, and slowest transistors. Primary for Setup verification.</li>
-                    <li><strong>FF Core (Fast-Fast):</strong> Maximum voltage, minimum temperature, and fastest transistors. Primary for Hold verification.</li>
-                    <li><strong>Temperature Inversion:</strong> A phenomenon at sub-28nm where delay actually increases as temperature decreases.</li>
+                <h4 style="color: #8e8e93;">Types of Variation:</h4>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Global Variation (D2D):</strong> Across different wafers or different chips on the same wafer. Modeled by PVT Corners (SS, FF).</li>
+                    <li><strong>Local Variation (WID):</strong> Between two identical transistors 1μm apart on the same chip. Modeled by <strong>OCV Derates</strong>.</li>
+                    <li><strong>Monte Carlo Simulation:</strong> Running random statistical simulations to find the "6-Sigma" failure point of a circuit. Used primarily for memory (SRAM) design.</li>
                 </ul>
             </div>
         </section>
 
         <section id="ocv" style="margin-top: 80px;">
-            <h3>2. OCV (On-Chip Variation)</h3>
-            <p>OCV accounts for localized variations within the same die. Modern signs use POCV (Parametric OCV) that models timing as a statistical distribution (Sigma-based) rather than fixed derates.</p>
+            <h3>2. From OCV to POCV (Statistical Analysis)</h3>
+            <p>Older designs used fixed derates (e.g., +10% delay for every path). This led to over-design and wasted power. Modern tools use **SSTA (Statistical Static Timing Analysis)**.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>POCV (Parametric OCV):</strong> Modeling each gate's delay as a Gaussian distribution (Mean + Sigma) rather than a single number.</li>
+                <li><strong>Spatial Correlation:</strong> Recognizing that cells close to each other on the die suffer from the same process shifts and therefore should have correlated derates.</li>
+                <li><strong>Path-Depth Effect:</strong> In a long combinatorial path, random variations tend to "average out", allowing for more optimistic (realistic) timing vs the pessimistic "worst-case-sum" model.</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

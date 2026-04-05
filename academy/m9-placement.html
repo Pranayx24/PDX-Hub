@@ -34,22 +34,27 @@
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #34c759;">Placement Stages:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Global Placement (GP):</strong> Cells are distributed uniformly, but they may overlap. The goal is to minimize total net wirelength.</li>
-                    <li><strong>Legalization:</strong> Snapping cells into "rows" and "sites" defined by the technology LEF. No overlaps allowed.</li>
-                    <li><strong>Detailed Placement (DP):</strong> Fine-tuning cell positions locally to reduce wirelength or congestion after legalization.</li>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Global Placement (GP):</strong> Distributes cells to minimize wirelength; allows cells to overlap temporarily.</li>
+                    <li><strong>Detailed Placement (DP/Legalize):</strong> Snaps cells to rows and ensures zero overlaps. This is where <strong>Tie-Cells</strong> are inserted to handle floating pins.</li>
+                    <li><strong>Scan Reordering:</strong> Optimizing the physical sequence of flip-flops in a scan chain to reduce overall congestion. This effectively "re-wires" the DFT logic to match the physical proximity.</li>
                 </ul>
             </div>
         </section>
 
         <section id="congestion" style="margin-top: 80px;">
-            <h3>2. Congestion Mitigation</h3>
-            <p>Congestion happens when more wires need to pass through a region than there are available metal tracks. Mitigations include:</p>
+            <h3>2. Advanced Placement Tactics</h3>
+            <p>Placement isn't just about cells; it's about wires. If nets can't be routed later, the placement is useless.</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Padding:</strong> Adding virtual area around cells to force them further apart.</li>
-                <li><strong>Partial Blockage:</strong> Restricting cell placement in dense regions.</li>
-                <li><strong>Magnet Placement:</strong> Pulling cells closer to I/O ports or specific macros to shorten critical wires.</li>
+                <li><strong>Magnet Placement:</strong> Manually pulling specific cells closer to I/O ports or fixed macros using tool attributes to minimize critical path delay.</li>
+                <li><strong>Region-Based Placement:</strong> Forcing related logic into a specific core geometry (e.g., <code>create_bounds</code>) to improve performance and local density.</li>
+                <li><strong>Cell Swelling:</strong> Artificially increasing the area of a cell to reduce local routing density without using explicit routing blockages.</li>
             </ul>
+            
+            <div class="tech-spec" style="border-color: #34c759;">
+                <strong>The Congestion Map</strong>
+                <p style="font-size: 14px; margin-top: 10px;">Post-placement, the tool generates a heat map showing "Overflows". If the G-cell overflow is > 1-2%, the design is likely unroutable and needs more cell padding or a better macro arrangement.</p>
+            </div>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

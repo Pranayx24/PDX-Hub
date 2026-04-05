@@ -29,26 +29,31 @@
 
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
-            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Goal: Skew and Latency</h3>
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Goal: Skew, Latency, and Power</h3>
             <p>Clock Tree Synthesis (CTS) involves building the buffer network that distributes the clock signal from its source (PLL/Pad) to every flip-flop (sink) in the design.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #5ac8fa;">Key Performance Indicators (KPIs):</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Latency (Insertion Delay):</strong> The time it takes for the clock to travel from source to the furthest sink. Must be minimized for high performance.</li>
-                    <li><strong>Skew:</strong> The difference in clock arrival times between any two registers. Goal is zero (balanced) skew.</li>
-                    <li><strong>Slew (Transition Time):</strong> The slope of the clock edge. Too slow a slew leads to poor timing and high power.</li>
+                <ul style="margin-top: 20px; font-size: 13px;">
+                    <li><strong>Latency (Insertion Delay):</strong> Time from clock source to the furthest sink. High latency leads to massive variation in PVT corners.</li>
+                    <li><strong>Skew (Global):</strong> The arrival time difference across the whole chip. <strong>Local Skew</strong> (between logically connected registers) is much more important for meeting timing.</li>
+                    <li><strong>Power:</strong> The clock tree typically accounts for 40-50% of a chip's total dynamic power. Power reduction is achieved via <strong>Integrated Clock Gates (ICG)</strong>.</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec" style="border-left-color: #5ac8fa;">
+                <strong>Useful Skew (Post-CTS Optimization)</strong>
+                <p style="font-size: 14px; margin-top: 10px;">While the goal is Zero Skew, we can intentionally add "Useful Skew" to help a critical data path. By delaying the capture clock by 50ps, we give 50ps more time for the data to travel, fixing negative setup slack without changing the logic.</p>
             </div>
         </section>
 
         <section id="topologies" style="margin-top: 80px;">
-            <h3>2. Distribution Topologies</h3>
-            <p>We use specific structures to balance the clock signal across the die:</p>
+            <h3>2. Distribution & NDR Rules</h3>
+            <p>We use specific metal rules for clock nets to ensure signal integrity:</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>H-Tree:</strong> A recursive "H" structure that ensures equal path length to every leaf. Most common for ASIC.</li>
-                <li><strong>Clock Mesh:</strong> A grid of clock wires that provides massive redundancy and extremely low skew but consumes huge power.</li>
-                <li><strong>Fishbone:</strong> Used for smaller designs or local distributions.</li>
+                <li><strong>H-Tree:</strong> Ensuring synchronous arrival through physical symmetry.</li>
+                <li><strong>NDR (Non-Default Rules):</strong> Using 2x width and 2x spacing for clock wires to reduce resistance and increase performance.</li>
+                <li><strong>Shielding (VSS-Guarding):</strong> Routing ground wires on both sides of a clock net to prevent it from coupling with (and corrupting) nearby sensitive data nets.</li>
             </ul>
         </section>
 

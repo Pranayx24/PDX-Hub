@@ -65,45 +65,59 @@
     <main class="section-container deep-dive">
         <section id="basics">
             <h3>1. The CMOS Transistor Basics</h3>
-            <p>CMOS (Complementary Metal-Oxide-Semiconductor) is the technology used to construct integrated circuits. It uses pairs of P-type and N-type MOSFETs (Metal-Oxide-Semiconductor Field-Effect Transistors) to perform logic functions.</p>
+            <p>CMOS (Complementary Metal-Oxide-Semiconductor) is the technology used to construct integrated circuits. It uses pairs of P-type and N-type MOSFETs to perform logic functions. As we move to nodes below 22nm, traditional planar MOSFETs have given way to 3D structures like <strong>FinFETs</strong> and <strong>GAAFETs</strong> (Gate-All-Around).</p>
             
             <div class="tech-spec">
-                <strong>Key Insight:</strong> The "Complementary" nature means when one transistor type is ON, the other is OFF, resulting in negligible static power dissipation. 
-                <br><br>
-                <em>Formula: P_total = P_dynamic + P_static. In CMOS, P_static is nearly zero.</em>
+                <strong>Advanced Device Physics: FinFET vs Planar</strong>
+                <p style="font-size: 14px; margin-top: 10px;">In planar MOSFETs, short-channel effects (SCE) lead to significant leakage as the gate loses control over the channel. FinFETs wrap the gate around three sides of a vertical "fin" channel, providing superior electrostatic control and enabling lower VDD operation.</p>
             </div>
 
-            <h3>2. Silicon Fabrication Flow</h3>
-            <p>ASIC manufacturing involves hundreds of lithography cycles on a silicon wafer. The process includes:</p>
+            <div class="tech-spec" style="border-color: var(--accent-color);">
+                <strong>Power Analysis Formulas:</strong>
+                <ul style="margin-top: 15px; font-family: monospace; font-size: 14px; list-style: none;">
+                    <li>P_dynamic = α · C · VDD² · f (Switching Power)</li>
+                    <li>P_short_circuit = I_peak · VDD · (t_rise + t_fall) / 2</li>
+                    <li>P_leakage = I_leak · VDD (Sub-threshold + Gate Leakage)</li>
+                </ul>
+                <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">α = Switching activity factor, C = Load capacitance, f = Frequency.</p>
+            </div>
+
+            <h3>2. Silicon Fabrication Flow (FEOL to BEOL)</h3>
+            <p>ASIC manufacturing is split into two major phases:</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Wafer Preparation:</strong> Growth of pure silicon ingots sliced into thin wafers.</li>
-                <li><strong>Doping:</strong> Adding impurities (Phosphorus for N-type, Boron for P-type) to modify conductivity.</li>
-                <li><strong>Etching:</strong> Removing unwanted material to create paths and gate structures.</li>
-                <li><strong>Metallization:</strong> Connecting devices with Copper or Aluminum layers.</li>
+                <li><strong>FEOL (Front-End-of-Line):</strong> Formation of individual transistors directly on the silicon. Includes well formation, gate stacking, and source/drain engineering.</li>
+                <li><strong>BEOL (Back-End-of-Line):</strong> Creation of interconnects (Metal layers and Vias) that connect the transistors. This is where Physical Design plays its largest role.</li>
+                <li><strong>WLP (Wafer Level Packaging):</strong> Modern techniques like TSV (Through Silicon Vias) for 3D-IC stacking.</li>
             </ul>
         </section>
 
         <section id="methodology">
-            <h3>3. ASIC vs FPGA Methodology</h3>
-            <p>While FPGAs are programmable on the field, ASICs are hardware-hardened at the foundry. The tradeoff involves NRE costs vs Performance.</p>
+            <h3>3. ASIC Methodology & Lifecycle</h3>
+            <p>Developing an ASIC follows a "V-Model" or iterative loop from Spec to Tape-out.</p>
             <div class="concept-grid">
                 <div class="card glass">
-                    <h4>Full-Custom Design</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Designing every transistor and net manually. Used for high-performance processors and analog blocks. Maximizes PPA but high effort.</p>
+                    <h4>Pre-Silicon Phase</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">RTL Design, Functional Verification, Synthesis, and Physical Design (P&R). This is where the virtual model is perfected.</p>
                 </div>
                 <div class="card glass">
-                    <h4>Semi-Custom (Cell-Based)</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Using pre-designed and pre-verified "Standard Cell Libraries". This is the standard path for modular ASIC design.</p>
+                    <h4>Post-Silicon Phase</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Wafer testing, Packaging, and Bench validation. Ensuring the manufactured chip meets the power and speed targets simulated in the Cadence/Synopsys tools.</p>
                 </div>
             </div>
         </section>
 
         <section id="interview" style="margin-top: 80px;">
             <div class="interview-tip">
-                <h4>Interview focus: CMOS Reliability</h4>
-                "Explain the body effect and how it impacts threshold voltage (Vth)."
+                <h4>Interview focus: Advanced CMOS</h4>
+                "Why can't we keep scaling VDD linearly with transistor size?"
                 <br><br>
-                <strong>Answer:</strong> The body effect occurs when the source-to-bulk voltage (Vsb) is non-zero, shifting Vth and potentially causing timing failures if not modeled during sign-off.
+                <strong>Answer:</strong> Sub-threshold leakage increases exponentially as threshold voltage (Vth) is lowered to maintain performance. VDD must stay high enough above Vth to provide sufficient drive current, creating a "Power Wall".
+            </div>
+            <div class="interview-tip" style="margin-top: 20px;">
+                <h4>Interview focus: Body Effect</h4>
+                "How does the Body Effect impact a NAND gate vs an Inverter?"
+                <br><br>
+                <strong>Answer:</strong> In 2-input NAND gates, the NMOS transistors are stacked. The source of the top NMOS is not connected to ground, creating a non-zero Vsb (Source-to-Body voltage). This increases the Vth of the top NMOS, making the gate slower than a simple inverter.
             </div>
         </section>
 

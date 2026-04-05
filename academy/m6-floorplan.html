@@ -33,12 +33,17 @@
             <p>Floorplanning defines the literal landscape of the silicon. Decisions made here are irreversible once implementation begins. A bad floorplan ensures timing failure or routing congestion.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #0071e3;">Core vs Die:</h4>
+                <h4 style="color: #0071e3;">Core vs Die & Aspect Ratio:</h4>
                 <p>The <strong>Die Area</strong> contains the whole chip, including the pads and seal ring. The <strong>Core Area</strong> is the internal region where standard cells and macros are placed.</p>
                 <ul style="margin-top: 20px;">
-                    <li><strong>Aspect Ratio:</strong> Height / Width of the core. Usually 1.0 (square), but may change for long, rectangular chips.</li>
-                    <li><strong>Utilization:</strong> Ratio of total cell area to the core area. Typically target 60-70% to survive routing congestion.</li>
+                    <li><strong>Aspect Ratio (H/W):</strong> A square chip (1.0) is easiest to route. Rectangular chips (0.5 or 2.0) are often used in mobile to fit specific form factors but create asymmetrical timing.</li>
+                    <li><strong>Utilization:</strong> Ratio of total cell area to the core area. Typically target 60-70%. If utilization is too low, you waste silicon; if too high, you can't route the nets.</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec">
+                <strong>Pin Placement Strategy</strong>
+                <p style="font-size: 14px; margin-top: 10px;">I/O pins must be placed on specific metal layers (e.g., M3 or M4) with a specific <strong>Pitch</strong> (distance between pins). Placing pins too close together creates local routing congestion (hotspots) right at the boundary.</p>
             </div>
         </section>
 
@@ -46,9 +51,9 @@
             <h3>2. Macro Placement & Congestion</h3>
             <p>Macros (RAM, ROM, Analog IPs) are large, non-standard-cell blocks. Placement rules:</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li>Place macros along the edges to leave the center open for standard cell connectivity.</li>
-                <li>Ensure macros are placed far from I/O ports to avoid routing bottlenecks.</li>
-                <li>Add halo/keep-out zones around macros to prevent cells from competing for routing resources with macro pins.</li>
+                <li><strong>Along Edges:</strong> Place macros along core boundaries to leave the center open for standard cell connectivity.</li>
+                <li><strong>Macro Halos (Keep-outs):</strong> A placement blockage around the macro to prevent standard cells from being placed too close, ensuring space for macro-pin routing.</li>
+                <li><strong>Routing Blockages:</strong> Specific regions where the tool is forbidden from routing tracks (e.g., above an analog macro to prevent noise coupling).</li>
             </ul>
         </section>
 

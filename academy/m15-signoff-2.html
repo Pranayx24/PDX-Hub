@@ -30,15 +30,24 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Electromigration (EM) Analysis</h3>
-            <p>EM is the literal transport of material caused by current flow. If a wire carries too much current, it will eventually "melt" or break, leading to silicon failure within years or even months.</p>
+            <p>EM is the transportation of metal atoms caused by current flow. It is modeled by **Black's Equation**, which relates the Mean Time to Failure (MTTF) to current density and temperature.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #ff3b30;">EM Mitigation:</h4>
-                <p>Fixing EM violations requires increasing the wire width or adding more redundant vias to share the current load. Higher metal layers (thicker) are always used for high-current power nets.</p>
+                <h4 style="color: #ff3b30;">EM Rule of Thumb:</h4>
+                <p>MTTF ∝ 1 / J² · exp(Ea / kT)</p>
+                <p style="font-size: 13px; margin-top: 10px;">Temperature is the biggest enemy. A 10°C rise in chip temperature can cut the wire's lifespan by 50% due to EM.</p>
+                <p style="font-size: 13px; margin-top: 10px;"><strong>Self-Heating Effects (SHE):</strong> In FinFET nodes, the 3D fin structure is surrounded by insulating oxide (low thermal conductivity). This traps heat in the channel, significantly exacerbating EM risks compared to flat planar nodes.</p>
             </div>
+        </section>
 
-            <h3>2. Dynamic IR Drop Sign-off</h3>
-            <p>Using specialized tools (e.g., Ansys RedHawk or Cadence Voltus) to model peak power switching. If IR drop exceeds ~10% of VDD, logic transitions become too slow, and timing paths will fail despite what STA says.</p>
+        <section id="iv-drop" style="margin-top: 80px;">
+            <h3>2. Dynamic IR Drop & Decap Strategy</h3>
+            <p>Dynamic voltage drop (DvD) occurs at the clock edge. We solve this by placing **Decap Cells** (Decoupling Capacitors) throughout the core.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Local Reservoirs:</strong> Decaps act as local energy storage. When a gate switches, it pulls current from the decap instead of the distant power strap.</li>
+                <li><strong>Frequency Response:</strong> Decaps must be distributed uniformly to handle the GHz-scale transients of modern processors.</li>
+                <li><strong>Power Grid Robustness:</strong> Every power segments must meet the threshold of IR drop defined in the chip's power budget (typically < 10% VDD).</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

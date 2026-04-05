@@ -34,13 +34,23 @@
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #5856d6;">Techniques Hierarchy:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Clock Gating:</strong> Disabling the clock to inactive flip-flops. Reduces dynamic power by up to 60%.</li>
-                    <li><strong>Power Gating (MTCMOS):</strong> Physically cutting off the VDD to a whole block using "Sleep Transistors". Eliminates static leakage.</li>
-                    <li><strong>Multi-Voltage (MSV):</strong> Running different blocks at different voltages (e.g., 0.8V for core, 1.2V for I/O). Requires Level Shifters.</li>
-                    <li><strong>Isolators:</strong> Required when an "off" block's output goes to an "on" block. Prevents crowbar current.</li>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Clock Gating:</strong> Disabling the clock toggle. #1 source of dynamic power savings.</li>
+                    <li><strong>MTCMOS (Multi-Threshold CMOS):</strong> Using a High-Vt transistor as a "Header" or "Footer" to cut off the supply from Low-Vt logic. This eliminates leakage power.</li>
+                    <li><strong>MSV (Multi-Supply Voltage):</strong> Lowering VDD for non-critical blocks (e.g., 0.6V for a timer) while keeping 1.0V for the main core.</li>
+                    <li><strong>DVFS (Dynamic Voltage & Frequency Scaling):</strong> Scaling VDD/f in real-time based on the workload (like your phone's processor).</li>
                 </ul>
             </div>
+        </section>
+
+        <section id="upf" style="margin-top: 80px;">
+            <h3>2. UPF 2.0: Power State Tables & State Retention</h3>
+            <p>The **Unified Power Format (UPF)** is a script that tells the P&R tool how the power grid should behave logically.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Retention Registers:</strong> Specialized flip-flops that have an "always-on" backup supply. They "save" their logic state before a power domain is switched off and "restore" it after power-on.</li>
+                <li><strong>Isolation Strategy:</strong> Forcing a constant 0 or 1 at the boundary of a powered-down domain to prevent the receiving domain from detecting a "floating" or indeterminate logic level.</li>
+                <li><strong>PST (Power State Table):</strong> A matrix defining which domains can be ON or OFF simultaneously. The tool uses this to automatically insert the correct level shifters and isolators.</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

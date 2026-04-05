@@ -30,25 +30,29 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Why TCL for EDA?</h3>
-            <p>Every major tool from Synopsys (Design Compiler, IC Compiler II) and Cadence (Genus, Innovus) uses Tool Command Language (TCL) as its primary interface. It allows for complex design exploration that would be impossible via GUI.</p>
+            <p>Every major tool From Synopsys (Design Compiler, IC Compiler II) and Cadence (Genus, Innovus) uses Tool Command Language (TCL) as its primary interface. It allows for complex design exploration that would be impossible via GUI.</p>
             
-            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #ff9500;">Critical TCL Built-ins for PD:</h4>
-                <div style="font-family: 'Courier New', Courier, monospace; background: #000; padding: 20px; border-radius: 12px; color: #fff; line-height: 1.8;">
-                    # To get all pins of a cell:<br>
-                    <span style="color: #66d9ef;">set</span> all_pins [get_pins -of_objects MY_CELL_01]<br>
-                    <br>
-                    # To iterate and optimize:<br>
-                    <span style="color: #f92672;">foreach</span> pin <span style="color: #ae81ff;">$all_pins</span> {<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #66d9ef;">echo</span> <span style="color: #e6db74;">"Processing $pin..."</span><br>
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 30px 0;">
+                <h4 style="color: #ff9500;">High-Performance Collections:</h4>
+                <p style="font-size: 14px; margin-top: 10px;">EDA tools handle millions of instances. Using standard TCL lists is too slow. Instead, we use <strong>EDA Collections</strong>.</p>
+                <div style="font-family: 'Courier New', Courier, monospace; background: #000; padding: 20px; border-radius: 12px; color: #fff; line-height: 1.8; font-size: 13px; margin-top: 15px;">
+                    # Efficiently iterating over millions of cells:<br>
+                    <span style="color: #f92672;">foreach_in_collection</span> cell [get_cells -hier *] {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #66d9ef;">set</span> area [<span style="color: #f92672;">get_attribute</span> <span style="color: #ae81ff;">$cell</span> area]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #f92672;">if</span> {<span style="color: #ae81ff;">$area</span> > 10.0} { <span style="color: #66d9ef;">echo</span> <span style="color: #e6db74;">"Cell is large!"</span> }<br>
                     }
                 </div>
             </div>
         </section>
 
         <section id="apis" style="margin-top: 80px;">
-            <h3>2. Mastering Tool-Specific APIs</h3>
-            <p>While standard TCL provides logic (loops, if/else), EDA companies add their own "Collection" APIs (get_cells, get_nets) that are optimized for searching through millions of physical objects in memory.</p>
+            <h3>2. Mastering Attributes & Custom Reporting</h3>
+            <p>Every object in an EDA tool (Net, Pin, Cell) has dozens of <strong>Attributes</strong>. Understanding how to query and modify these is the "Superpower" of a PD engineer.</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>get_attribute:</strong> Extracting real-time data like <code>is_clock_used</code>, <code>slack</code>, or <code>location</code>.</li>
+                <li><strong>set_attribute:</strong> Manually overriding the tool's behavior (e.g., <code>set_attribute [get_cells ...] is_fixed true</code> to freeze placement).</li>
+                <li><strong>Custom Scripting:</strong> Designing personal timing reports that filter paths based on specific hierarchy or pin-types, helping you find root causes faster than the standard tool report.</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

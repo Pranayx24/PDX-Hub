@@ -35,10 +35,15 @@
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #ff9500;">The Three Pillars of Verification:</h4>
                 <ul style="margin-top: 20px;">
-                    <li><strong>Netlist Consistency:</strong> Check for floating pins, multiple drivers, and unresolved instantiations that could cause LVS/logic failures.</li>
-                    <li><strong>Constraint Completeness (SDC):</strong> Check if all ports have defined delays and every flip-flop is clocked. Unconstrained paths are "invisible" to tools.</li>
+                    <li><strong>Netlist Consistency (check_design):</strong> Verifying that there are no floating pins (inputs without drivers) or multiple drivers (short circuits) in the synthesis netlist.</li>
+                    <li><strong>Constraint Completeness (check_timing):</strong> Ensuring every flip-flop is clocked and every I/O port has a defined delay. Unconstrained paths are "invisible" to tools and won't be optimized.</li>
                     <li><strong>Library Matching:</strong> Ensuring every logical (.lib) cell has a corresponding physical (.lef) footprint with matching pin names and count.</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec">
+                <strong>Log File Mastering</strong>
+                <p style="font-size: 14px; margin-top: 10px;">A Physical Design engineer spends 50% of their time reading logs. Always grep for <code>(ERROR|FATAL|WARNING)</code>. Some "Warnings" can be safely ignored (e.g., missing wireload models in physical synthesis), but most <code>warning: [TIM-11]</code> errors indicate a fatal floorplan flaw.</p>
             </div>
         </section>
 
@@ -48,6 +53,12 @@
                 "What kind of warnings do you expect from a check_timing report?"
                 <br><br>
                 <strong>Answer:</strong> Typical warnings include unconstrained ports, unclocked endpoints, and loops. Tools will ignore these paths during optimization, often leading to timing violations in the final silicon.
+            </div>
+            <div class="interview-tip" style="margin-top: 20px; border-color: #ff9500;">
+                <h4>Interview focus: Floating Pins</h4>
+                "Is a floating output pin as dangerous as a floating input pin?"
+                <br><br>
+                <strong>Answer:</strong> Floating inputs are much more dangerous. They can capture noise and cause the gate to toggle rapidly, leading to massive dynamic power or even physical damage. Floating outputs are generally harmless but should be cleaned to avoid LVS warnings.
             </div>
         </section>
 

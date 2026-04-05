@@ -72,7 +72,7 @@
     <main class="section-container deep-dive">
         <section id="basics">
             <h3>1. The Synthesis Core Process</h3>
-            <p>Synthesis is the translation of behavioral Hardware Description Language (HDL), such as Verilog or VHDL, into a structural gate-level netlist. This gate-level netlist consists of standard cells from the target technology library.</p>
+            <p>Synthesis is the translation of behavioral Hardware Description Language (HDL) into a structural gate-level netlist. Modern synthesis is "Physical-Aware", meaning it uses a preliminary floorplan and RC models to ensure the resulting netlist is routable.</p>
             
             <div class="synthesis-diagram">
                 <div class="diag-box">RTL (Verilog)</div>
@@ -83,41 +83,52 @@
             </div>
 
             <div class="tech-spec">
-                <strong>Key Insight:</strong> Logical Synthesis does not account for physical wires. It uses "Wire Load Models" (WLM) to estimate delays, which are often optimistic for sub-7nm designs. 
-                <br><br>
-                <em>Action: For modern designs, Physical-Aware Synthesis (e.g., Genus-iSpatial or DC-NXT) is used.</em>
+                <strong>Advanced Concept: Logical Effort</strong>
+                <p style="font-size: 14px; margin-top: 10px;">The method of Logical Effort helps designers estimate the delay of a logic gate by splitting it into three factors: <strong>d = g·h + p</strong>.</p>
+                <ul style="font-size: 13px; margin-top: 10px;">
+                    <li><strong>g (Logical Effort):</strong> Intrinsic complexity of the gate (e.g., NAND2 > Inverter).</li>
+                    <li><strong>h (Electrical Effort):</strong> External load capacitance / Input capacitance (Fan-out).</li>
+                    <li><strong>p (Parasitic Delay):</strong> Internal capacitance of the gate itself.</li>
+                </ul>
             </div>
 
-            <h3>2. Translation, Optimization, & Mapping</h3>
-            <p>The synthesis process is divided into three distinct phases:</p>
+            <h3>2. Advanced Optimization Techniques</h3>
+            <p>The synthesis tool doesn't just map gates; it performs surgery on the logic to meet SDC constraints:</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Translation:</strong> Converting HDL to Generic technology cells (GTECH).</li>
-                <li><strong>Logic Optimization:</strong> Boolean logic simplification, eliminating redundant gates, and path restructuring.</li>
-                <li><strong>Technology Mapping:</strong> Replacing generic gates with actual standard cells from the foundry's .lib file that meet timing and area constraints.</li>
+                <li><strong>Clock Gating Insertion:</strong> Automatically adding ICG (Integrated Clock Gate) cells to disable the clock tree for registers when their enable signal is low. This is the #1 method for dynamic power reduction.</li>
+                <li><strong>Retiming:</strong> Moving flip-flops across combinatorial boundaries (pushing/pulling through gates) to balance slack on either side of the register.</li>
+                <li><strong>Deglitching:</strong> Restructuring logic trees to reduce switching activity caused by race conditions in combinatorial paths.</li>
             </ul>
         </section>
 
         <section id="constraints">
-            <h3>3. Synthesizing for PPA (SDC)</h3>
-            <p>Constraints govern the synthesis output. The Synopsys Design Constraints (SDC) file defines:</p>
+            <h3>3. MCMM (Multi-Corner Multi-Mode) Synthesis</h3>
+            <p>In modern nodes, synthesis must satisfy timing across multiple "scenarios" simultaneously.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
                 <div class="card glass">
-                    <h4>Clock Definition</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Defining the operating frequency (create_clock). Everything depends on this period.</p>
+                    <h4>Modes</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Functional Mode, Scan Shift Mode, Capture Mode, and Sleep Mode. Each has its own SDC constraints.</p>
                 </div>
                 <div class="card glass">
-                    <h4>Input/Output Delays</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Accounting for delays outside the chip at the PCB level.</p>
+                    <h4>Corners</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">PVT (Process, Voltage, Temperature) combinations like SSG (Slow-Slow Global) or FFG (Fast-Fast Global).</p>
                 </div>
             </div>
+            <p style="margin-top: 20px; font-size: 14px;">The synthesis engine must ensure that the <strong>Worst Negative Slack (WNS)</strong> is minimized across all scenarios without creating a massive area penalty.</p>
         </section>
 
         <section id="interview" style="margin-top: 80px;">
             <div class="interview-tip" style="border-color: #34c759;">
-                <h4>Interview focus: GTECH and Netlist</h4>
-                "Why is a netlist preferred over RTL for Physical Design tools?"
+                <h4>Interview focus: Synthesis Optimization</h4>
+                "What is the difference between Flattening and Structuring in logic optimization?"
                 <br><br>
-                <strong>Answer:</strong> Physical Design tools require structural maps of actual foundry-provided cells (LEF/LIB). RTL is too abstract; a netlist provides specific gate drive strengths and Vt values needed for timing and power analysis.
+                <strong>Answer:</strong> Flattening converts combinatorial logic into a Sum-of-Products (SOP) form to minimize delay (critical path). Structuring identifies shared logic sub-expressions to reduce area (total gate count).
+            </div>
+            <div class="interview-tip" style="margin-top: 20px; border-color: #34c759;">
+                <h4>Interview focus: Retiming</h4>
+                "When would you NOT want to use retiming during synthesis?"
+                <br><br>
+                <strong>Answer:</strong> Retiming changes the number of registers between two points and their names. It should be avoided on boundary registers (I/Os) or logic that must match a golden reference for formal verification (LEC) unless the LEC tool supports retiming checks.
             </div>
         </section>
 

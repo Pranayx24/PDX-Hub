@@ -33,22 +33,23 @@
             <p>Routing occurs after CTS is finalized. The tool uses a grid-based Manhattan approach (vertical vs horizontal metal layers) to resolve billions of electrical net paths.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #0071e3;">Routing Stages:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Global Routing (GR):</strong> Assigns each net to a series of routing regions (G-Cells) while monitoring congestion. It doesn't create actual metal shapes.</li>
-                    <li><strong>Track Assignment:</strong> Assigns specific tracks for each net within the G-Cells.</li>
-                    <li><strong>Detail Routing (DR):</strong> Creates the actual metal geometries and vias. It works on a small window (10x10 tracks) at a time to satisfy all DRC rules.</li>
+                <h4 style="color: #0071e3;">The Grid Concept:</h4>
+                <p>The core is divided into <strong>G-Cells</strong> (Gridges). Tracks are the literal "railway lines" that metal must follow.</p>
+                <ul style="margin-top: 20px; font-size: 13px;">
+                    <li><strong>Global Routing (GR):</strong> Assigns each net to a series of G-Cells to check if wire resources are available.</li>
+                    <li><strong>Track Assignment:</strong> Binds each net to a literal metal track (X/Y coordinate).</li>
+                    <li><strong>Detail Routing (DR):</strong> Resolves local violations (spacing, width, min-area) by performing surgery at the track level.</li>
                 </ul>
             </div>
         </section>
 
         <section id="drc" style="margin-top: 80px;">
-            <h3>2. DRC (Design Rule Check) Violations</h3>
-            <p>Detail routing is considered complete only when zero DRC violations remain. Typical routing errors include:</p>
+            <h3>2. Signal Integrity & Reliability</h3>
+            <p>At 7nm and below, wires are so close that they behave like capacitors, leading to <strong>Crosstalk</strong>.</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Short:</strong> Two different nets occupy the same spot on a metal layer.</li>
-                <li><strong>Spacing:</strong> Two metals are closer than the foundry's minimum rule (e.g., < 40nm).</li>
-                <li><strong>Antenna Effect:</strong> A long metal wire accumulates static charge during manufacturing that can blow the gate oxide of the transistor it's connected to. Fix: Inserting an antenna diode.</li>
+                <li><strong>SI-Crosstalk:</strong> When an aggressor net switches, it induces a glitch on a victim net, changing its delay or even flipping its state.</li>
+                <li><strong>Redundant Vias (Double Vias):</strong> Detail routing prioritizes adding two vias per connection. If one via fails due to manufacturing defects, the net survives.</li>
+                <li><strong>Antenna Diodes:</strong> Inserting a reverse-biased diode close to the input pin of a gate to drain static charge accumulated during the plasma etching of metal.</li>
             </ul>
         </section>
 

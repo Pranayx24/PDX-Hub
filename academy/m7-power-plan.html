@@ -29,25 +29,31 @@
 
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
-            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Power Distribution Network (PDN)</h3>
-            <p>Every chip needs VDD (Power) and VSS (Ground). Delivery of these rails must be uniform to prevent IR drop (voltage decay) and Electromigration (metal failure).</p>
+            <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Power Delivery Network (PDN)</h3>
+            <p>Power Planning translates the UPF power intent into a physical mesh of metal. Unlike signal nets, power nets must carry massive current (Amperes) across the whole chip without losing voltage.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #ffcc00;">The Three Hierarchy Levels:</h4>
+                <h4 style="color: #ff9500;">PDN Hierarchy:</h4>
                 <ul style="margin-top: 20px;">
-                    <li><strong>Rings:</strong> Large peripheral metal bands around the core or macros that serve as the main power source.</li>
-                    <li><strong>Stripes:</strong> Vertical or horizontal metal bands across the core, typically on higher (thicker) metal layers (e.g., M7, M8).</li>
-                    <li><strong>Rails:</strong> Standard cell power and ground rails on the first layer (M1) that provide local power to every cell.</li>
+                    <li><strong>Power Ring:</strong> A continuous ring around the chip or macros to distribute VDD/VSS.</li>
+                    <li><strong>Power Straps (Mesh):</strong> Vertical and horizontal stripes across the core. Wider straps solve voltage drop but create more routing blockage for signal nets.</li>
+                    <li><strong>Standard Cell Rails:</strong> Continuous metal (usually M1) inside the rows where standard cell VDD/VSS pins connect directly.</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec">
+                <strong>Static vs Dynamic IR Drop</strong>
+                <p style="font-size: 14px; margin-top: 10px;">The voltage arriving at a gate's pin is always less than the supply (VDD). <strong>Static IR</strong> drop is caused by the average current flow through the resistance of the metal. <strong>Dynamic IR</strong> drop is caused by millions of gates switching at the exact same time (like the clock edge), resulting in massive transient current spikes that can cause gates to fail to switch correctly.</p>
             </div>
         </section>
 
-        <section id="integrity" style="margin-top: 80px;">
-            <h3>2. Dynamic and Static IR Drop</h3>
-            <p>IR Drop is the reduction in voltage between the power source and the transistor. Too much drop means slower switching and potential logic failure.</p>
+        <section id="em" style="margin-top: 80px;">
+            <h3>2. Electromigration (EM) Criticality</h3>
+            <p>Electromigration occurs when current density is so high that metal atoms are physically pushed away, creating "voids" (opens) or "hillocks" (shorts).</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Static IR Drop:</strong> Caused by the DC resistance of the metal grid. Fixed by adding thicker/more stripes.</li>
-                <li><strong>Dynamic IR Drop:</strong> Caused by simultaneous switching of millions of transistors (peak current). Mitigated by adding Decoupling Capacitors (Decaps).</li>
+                <li><strong>Fix:</strong> Increase the width of the strap or the number of vias connecting metal layers.</li>
+                <li><strong>Current Density (J):</strong> J = I / Area. Power planning ensures J < J_foundry_limit across all metal segments.</li>
+                <li><strong>RedHawk Analysis:</strong> Using industry-standard power sign-off tools to identify weak spots in the mesh before tape-out.</li>
             </ul>
         </section>
 

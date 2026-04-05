@@ -30,8 +30,18 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="flow">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Macro-Flow: Netlist to GDSII</h3>
-            <p>Physical Design (PD) is an iterative process. Each stage builds on the previous one to transform an abstract netlist into a physical layout.</p>
+            <p>Physical Design (PD) is an iterative process. Each stage builds on the previous one, and design decisions often flow backwards (e.g., routing congestion might force a floorplan change).</p>
             
+            <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 30px 0;">
+                <h4 style="color: var(--accent-color);">Primary PD Objectives:</h4>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Floorplanning:</strong> Determine the best core shape and pin locations.</li>
+                    <li><strong>Placement:</strong> Map cells with minimal wirelength and zero overlap.</li>
+                    <li><strong>CTS (Clock Tree Synthesis):</strong> Deliver the clock to every pin with zero skew and minimum insertion delay.</li>
+                    <li><strong>Routing:</strong> Perform physical metal connections without DRC violations.</li>
+                </ul>
+            </div>
+
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 40px 0;">
                 <div class="card glass" style="text-align: center;"><strong>1. Floorplan</strong><br><small>Die Sizing & I/O</small></div>
                 <div class="card glass" style="text-align: center;"><strong>2. Power Plan</strong><br><small>Vanguard of Power</small></div>
@@ -40,16 +50,24 @@
                 <div class="card glass" style="text-align: center;"><strong>5. Routing</strong><br><small>Final Interconnect</small></div>
                 <div class="card glass" style="text-align: center;"><strong>6. Sign-off</strong><br><small>DRC/LVS Verification</small></div>
             </div>
-            <p>Each step generates specialized timing (SDC/SPEF) and physical (GDSII/OASIS) files used for downstream verification.</p>
         </section>
 
         <section id="terminology" style="margin-top: 80px;">
             <h3>2. Key Academic Jargon for a PD Engineer</h3>
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 30px 0;">
                 <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 15px;"><strong>WNS (Worst Negative Slack):</strong> The single worst timing violation in the whole chip. Fixing this is priority #1.</li>
-                    <li style="margin-bottom: 15px;"><strong>TNS (Total Negative Slack):</strong> The sum of all violations in a timing path. High TNS usually indicates poor floorplanning or high congestion.</li>
-                    <li style="margin-bottom: 15px;"><strong>Density / Utilization:</strong> The ratio of total cell area to the total core area. Typically limited to 60-70% to ensure enough space for routing and power stripes.</li>
+                    <li style="margin-bottom: 25px;">
+                        <strong>WNS (Worst Negative Slack):</strong> 
+                        Refers to the most severe timing violation in the design. If clock frequency is 1GHz (1ns) and the longest path is 1.2ns, your WNS is -200ps.
+                    </li>
+                    <li style="margin-bottom: 25px;">
+                        <strong>TNS (Total Negative Slack):</strong> 
+                        The sum of all slacks that are negative. This is the indicator of how 'messy' your design's timing is. A high TNS with a low WNS suggests a few small fixes are needed on many paths.
+                    </li>
+                    <li style="margin-bottom: 25px;">
+                        <strong>Utilization (Core Efficiency):</strong> 
+                        Standard cell area / core area. High utilization (75%+) means the chip is smaller and cheaper, but it creates "Routing Congestion" where there aren't enough metal tracks to connect the cells.
+                    </li>
                 </ul>
             </div>
         </section>

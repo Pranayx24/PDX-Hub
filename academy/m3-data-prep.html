@@ -30,26 +30,36 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="inputs">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. The Logical & Physical Inputs</h3>
-            <p>Every PD tool (Innovus/IC Compiler II) requires two distinct sets of data to define your chip:</p>
+            <p>Every PD tool requires two distinct sets of data. Beyond the basic .lib and .lef, we need to define the <strong>Power Intent</strong> and <strong>Parasitic Models</strong>.</p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
                 <div class="card glass" style="border-top: 3px solid #0071e3;">
-                    <h4 style="color: #0071e3;">Logical View (.lib / .db)</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Contains timing, power, and area information for every standard cell. Defines input capacitance, output drive strength, and leakage power.</p>
+                    <h4 style="color: #0071e3;">Logical View & Corners</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Libraries are provided for multiple <strong>PVT Corners</strong>:</p>
+                    <ul style="font-size: 12px; margin-top: 10px; opacity: 0.6;">
+                        <li><strong>SS (Slow-Slow):</strong> Max Temp, Min Voltage. Used for Setup.</li>
+                        <li><strong>FF (Fast-Fast):</strong> Min Temp, Max Voltage. Used for Hold.</li>
+                        <li><strong>TT (Typical):</strong> Average conditions for power estimation.</li>
+                    </ul>
                 </div>
                 <div class="card glass" style="border-top: 3px solid #34c759;">
-                    <h4 style="color: #34c759;">Physical View (.lef)</h4>
-                    <p style="font-size: 14px; opacity: 0.7;">Contains cell dimensions (width/height), pin locations, and metal layer obstruction info (antenna properties). Crucial for placement and routing.</p>
+                    <h4 style="color: #34c759;">Physical View (LEF/GDS)</h4>
+                    <p style="font-size: 14px; opacity: 0.7;">Technology LEF defines the metal stack (M1-M11), routing tracks, and via rules. Cell LEF defines the physical boundary of the logic.</p>
                 </div>
             </div>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <strong>Required Files Checklist:</strong>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Gate Level Netlist (.v):</strong> The logic description output from synthesis.</li>
-                    <li><strong>Technology File (.tf/.itf):</strong> Defines the metal layers, thickness, and resistance properties for the process node (e.g., TSMC 7nm).</li>
-                    <li><strong>SDC File (.sdc):</strong> Timing constraints defining clock frequency and I/O limits.</li>
-                    <li><strong>UPF File (.upf):</strong> For multi-voltage designs where some blocks need level shifters or isolation cells.</li>
+                <h4 style="color: var(--accent-color);">Advanced Power Intent: UPF</h4>
+                <p style="font-size: 14px; margin-top: 10px;">The Unified Power Format (UPF) script defines the power architecture of the chip:</p>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>Power Domains:</strong> Grouping logic into different voltage islands.</li>
+                    <li><strong>Isolation Cells:</strong> Ensuring that an "off" domain doesn't pass floating signals to an "on" domain.</li>
+                    <li><strong>Level Shifters:</strong> Translating logic levels between domains running at different voltages (e.g., 0.8V to 1.2V).</li>
                 </ul>
+            </div>
+
+            <div class="tech-spec">
+                <strong>Parasitic Modeling: SPEF and TLU+</strong>
+                <p style="font-size: 14px; margin-top: 10px;">The tool uses RC Tech Files (itf/tlu+) to calculate the resistance and capacitance of wires. The output of extraction is a **Standard Parasitic Exchange Format (SPEF)** file, which is then used by STA tools for timing calculation.</p>
             </div>
         </section>
 
@@ -59,6 +69,12 @@
                 "What is the difference between a create_clock and a create_generated_clock?"
                 <br><br>
                 <strong>Answer:</strong> create_clock is used for primary input clock source (PLL output or external pad), while create_generated_clock is used when an internal circuit (like a divider) derives a clock from a master source.
+            </div>
+            <div class="interview-tip" style="margin-top: 20px; border-color: #ff3b30;">
+                <h4>Interview focus: Libraries</h4>
+                "Why do foundries provide multiple Vt variants (LVT, RVT, HVT)?"
+                <br><br>
+                <strong>Answer:</strong> LVT (Low Vt) cells are fast but have high leakage. HVT (High Vt) cells are slow but have nearly zero leakage. By mixing them, we can use LVT only on critical paths and HVT elsewhere to save power.
             </div>
         </section>
 

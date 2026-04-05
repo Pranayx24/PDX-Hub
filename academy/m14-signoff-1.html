@@ -34,12 +34,21 @@
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #34c759;">The Verification Twins:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>DRC (Design Rule Check):</strong> Ensuring metal spacing, width, and via rules are honored to prevent shorts and opens during manufacturing.</li>
-                    <li><strong>LVS (Layout vs Schematic):</strong> Comparing the final layout connectivity against the pre-layout netlist to ensure no logic was broken during P&R.</li>
-                    <li><strong>ERC (Electrical Rule Check):</strong> Checking for floating gates, improper substrate taps, and latch-up potential.</li>
+                <ul style="margin-top: 15px; font-size: 13px;">
+                    <li><strong>DRC (Design Rule Check):</strong> Ensuring metal spacing, width, and via rules are honored. At 7nm, this includes <strong>Multi-Patterning (LELE)</strong> rules.</li>
+                    <li><strong>LVS (Layout vs Schematic):</strong> Confirming that the physical transistors and connections in the layout match the logical netlist.</li>
+                    <li><strong>Density & Dummy Fill:</strong> Ensuring every region of the die has a minimum concentration of metal (e.g., 20-30%) to prevent "CMP (Chemical Mechanical Polishing)" variations. The tool inserts "Dummies" (floating small square metal shapes) to reach this limit.</li>
                 </ul>
             </div>
+        </section>
+
+        <section id="esd" style="margin-top: 80px;">
+            <h3>2. Reliability: ESD and Latch-up</h3>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>ESDProtection:</strong> Every I/O pad must have high-current diodes to drain electrostatic discharge (static electricity) before it blows the internal transistors.</li>
+                <li><strong>Latch-up Prevention:</strong> "Tap Cells" or substrate/well taps must be placed every ~30μm in the regular cell rows to prevent the formation of parasitic thyristors and silicon meltdown.</li>
+                <li><strong>OASIS Format:</strong> Modern alternative to GDSII that uses advanced compression to handle the massive terabyte-scale layout files for sub-7nm chips.</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">

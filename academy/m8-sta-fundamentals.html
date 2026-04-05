@@ -30,25 +30,29 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Setup and Hold Timing</h3>
-            <p>STA verifies that signals arrive at registers within the necessary windows around clock edges. Unlike dynamic simulation, it doesn't need vectors—it checks every path mathematically.</p>
+            <p>Static Timing Analysis (STA) verifies the timing of every path without needing functional simulation vectors. It evaluates the "worst-case" scenario across billions of possible paths.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
                 <h4 style="color: #ff3b30;">The Fundamental Formulas:</h4>
-                <div style="font-family: monospace; font-size: 18px; margin-top: 20px; background: #000; padding: 20px; border-radius: 12px; color: #fff;">
-                    Setup Slack = (T_period + T_capture_clock) - (T_launch_clock + T_data_delay + T_setup_time)<br><br>
-                    Hold Slack = (T_launch_clock + T_data_delay) - (T_capture_clock + T_hold_time)
+                <div style="font-family: monospace; font-size: 15px; margin-top: 20px; background: #000; padding: 20px; border-radius: 12px; color: #fff;">
+                    Setup Slack = (T_period + T_capture_clock_min) - (T_launch_clock_max + T_data_delay_max + T_setup_time)<br><br>
+                    Hold Slack = (T_launch_clock_min + T_data_delay_min) - (T_capture_clock_max + T_hold_time)
                 </div>
+            </div>
+
+            <div class="tech-spec" style="border-left-color: #ff3b30;">
+                <strong>Clock Uncertainty: Skew & Jitter</strong>
+                <p style="font-size: 14px; margin-top: 10px;">The tool subtracts a "Safety Margin" from the slack to account for random timing variations. <strong>Skew</strong> is the systematic difference in wire length; <strong>Jitter</strong> is the random temporal variation in the PLL output itself.</p>
             </div>
         </section>
 
         <section id="path-types" style="margin-top: 80px;">
-            <h3>2. Timing Path Types</h3>
-            <p>We analyze four primary paths in Physical Design:</p>
+            <h3>2. Advanced Constraints: FP & MCP</h3>
+            <p>Many paths reported by the tool aren't functionally active. SDC allows us to ignore them:</p>
             <ul style="margin-top: 20px; padding-left: 20px;">
-                <li><strong>Reg-to-Reg:</strong> Most common. Launch flip-flop to capture flip-flop. Clock period dependent.</li>
-                <li><strong>In-to-Reg:</strong> Input pad to internal register. Delay must be balanced for set-up.</li>
-                <li><strong>Reg-to-Out:</strong> Internal register to output pad. Delay must be balanced for hold.</li>
-                <li><strong>In-to-Out:</strong> Direct combinatorial paths from input to output. Also called "Feedthroughs".</li>
+                <li><strong>False Path (FP):</strong> A path that logic cannot physically transition (e.g., across asynchronous clock domains). Fix: <code>set_false_path</code>.</li>
+                <li><strong>Multicycle Path (MCP):</strong> A path where logic takes more than 1 clock cycle to resolve (e.g., in a complex divider). Fix: <code>set_multicycle_path</code>.</li>
+                <li><strong>OCV Derates:</strong> Applying 5-10% extra delay to "late" paths and subtracting 5-10% from "early" paths to model on-chip process variation.</li>
             </ul>
         </section>
 

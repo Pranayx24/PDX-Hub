@@ -30,20 +30,27 @@
     <main class="section-container" style="padding: 100px 0; line-height: 1.8; color: var(--text-secondary);">
         <section id="basics">
             <h3 style="color: var(--text-primary); font-size: 28px; margin: 40px 0 20px;">1. Crosstalk Delay (SI)</h3>
-            <p>Signal Integrity (SI) issues are caused by the coupling capacitance between adjacent wires. When an "Aggressor" net switches, it can inject charge into a neighboring "Victim" net.</p>
+            <p>Signal Integrity (SI) is driven by the coupling capacitance (Cc) between adjacent metal lines. This lead to the **Miller Effect**, where the effective capacitance of a net depends on the switching of its neighbor.</p>
             
             <div style="background: var(--surface-color); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin: 60px 0;">
-                <h4 style="color: #0071e3;">Crosstalk Outcomes:</h4>
-                <ul style="margin-top: 20px;">
-                    <li><strong>Crosstalk Delay:</strong> Switching in the opposite direction (Aggressor ↑, Victim ↓) increases delay. Switching in the same direction (Aggressor ↑, Victim ↑) decreases delay.</li>
-                    <li><strong>Crosstalk Glitch:</strong> A switching aggressor induces a voltage spike on a static victim net. If large enough, this can flip a gate's state erroneously.</li>
+                <h4 style="color: #0071e3;">Crosstalk Logic:</h4>
+                <ul style="margin-top: 20px; font-size: 13px;">
+                    <li><strong>Miller Factor (1.0 vs 2.0):</strong> If the aggressor is static, Cf = Cc. If the aggressor switches in the opposite direction, Cf = 2·Cc, creating a massive delay hit.</li>
+                    <li><strong>Timing Windows:</strong> Crosstalk only occurs if the Aggressor and Victim transit at the same time. STA tools use "Timing Windows" to filter out noise that happens while the victim's logic is held stable.</li>
+                    <li><strong>Crosstalk Glitch:</strong> A noise spike that occurs on a net that is supposed to be at a stable logic level. If this glitch passes through a register, it can flip the stored data.</li>
                 </ul>
             </div>
         </section>
 
         <section id="mitigation" style="margin-top: 80px;">
-            <h3>2. Signal Integrity Mitigation</h3>
-            <p>We solve crosstalk by increasing the space between critical nets or adding ground shielding. For high-switching nets (like clocks), shielding with VSS wires on both sides is mandatory.</p>
+            <h3>2. Signal Integrity Mitigation & PrimeTime-SI</h3>
+            <p>Solving SI is achieved by reducing the Coupling Capacitance (Cc) relative to the Ground Capacitance (Cg).</p>
+            <ul style="margin-top: 20px; padding-left: 20px;">
+                <li><strong>Upsizing Victim:</strong> Making the victim gate stronger to "resist" the charge injection from the aggressor.</li>
+                <li><strong>Spacing:</strong> Increasing the distance between nets. Since Cc ∝ 1/d, doubling the space significantly reduces noise.</li>
+                <li><strong>Layer Hopping:</strong> Moving one of the two coupled nets to a different metal layer entirely.</li>
+                <li><strong>PrimeTime-SI:</strong> The industry-standard sign-off tool that accounts for crosstalk windows and accurately calculates the SI-impact on WNS.</li>
+            </ul>
         </section>
 
         <section id="interview" style="margin-top: 80px;">
