@@ -102,11 +102,10 @@
                 <h3 style="font-size: 28px;">Macro Workshop</h3>
                 <p style="color: var(--text-secondary); font-size: 14px;">Select components to place in the Die Area. Aim for ~70% utilization.</p>
                 
-                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <div class="macro-block glass" onclick="addMacro('Memory', 100, 60)">+ Memory (RAM)</div>
-                    <div class="macro-block glass" onclick="addMacro('IP Core', 80, 80)">+ IP Core</div>
-                    <div class="macro-block glass" onclick="addMacro('Analog', 120, 40)">+ Analog IP</div>
-                    <div class="macro-block glass" onclick="addMacro('CPU-L2', 70, 50)">+ CPU Cache</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                    <button class="btn btn-primary" style="font-size: 11px; padding: 10px;" onclick="window.simulatePlacement()">Auto-Place Cells</button>
+                    <button class="btn btn-secondary" style="font-size: 11px; padding: 10px;" onclick="window.toggleRuler()">DRC Ruler</button>
+                    <button class="btn btn-secondary" style="font-size: 11px; padding: 10px; grid-column: span 2;" onclick="window.toggle3DView()">Toggle 3D Perspective</button>
                 </div>
 
                 <div class="card glass" style="margin-top: 20px;">
@@ -152,8 +151,11 @@
                     <h3>Chip Floorplan (Visual Canvas)</h3>
                     <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 16px;" onclick="clearCanvas()">Clear Design</button>
                 </div>
-                <div class="canvas-area" id="fp-canvas">
-                    <!-- Macros rendered here -->
+                <div id="canvas-stage" style="perspective: 1000px; transition: 0.8s all;">
+                    <div class="canvas-area glass" id="fp-canvas" style="transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
+                        <!-- Macros rendered here -->
+                        <div id="ruler-line" style="position: absolute; height: 1px; background: var(--accent-color); display: none; z-index: 100;"></div>
+                    </div>
                 </div>
                 <div class="interview-tip" style="margin-top: 25px;">
                     💡 Interview Tip: "Why keep utilization below 80% during Floorplanning?" - To leave space for standard cell placement, decoupling caps, and routing tracks.

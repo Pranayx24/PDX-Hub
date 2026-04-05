@@ -693,4 +693,45 @@ document.addEventListener('DOMContentLoaded', () => {
             <button onclick="location.reload()" class="btn btn-primary" style="margin-top:20px;">Retry Simulation</button>
         `;
     }
+    // GDSII Pro Simulation Engine
+    window.simulatePlacement = function() {
+        const canvas = document.getElementById('fp-canvas');
+        if (!canvas) return;
+        for (let i = 0; i < 40; i++) {
+            const cell = document.createElement('div');
+            cell.style.cssText = `position: absolute; width: 6px; height: 10px; background: #0071e3; opacity: 0.8; 
+                left: ${Math.random() * 95}%; top: ${Math.random() * 95}%; border-radius: 1px; z-index: 5;`;
+            canvas.appendChild(cell);
+        }
+    }
+
+    window.toggle3DView = function() {
+        const canvas = document.getElementById('fp-canvas');
+        if (!canvas) return;
+        const currentRotation = canvas.style.transform;
+        if (currentRotation.includes('rotateX')) {
+            canvas.style.transform = 'rotateX(0deg)';
+        } else {
+            canvas.style.transform = 'rotate3d(1, 0, 0, 45deg) rotateZ(-10deg)';
+        }
+    }
+
+    window.toggleRuler = function() {
+        const stage = document.getElementById('fp-canvas');
+        if (!stage) return;
+        stage.style.cursor = 'crosshair';
+        stage.onclick = (e) => {
+            const rect = stage.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const point = document.createElement('div');
+            point.style.cssText = `position:absolute; width:10px; height:10px; background:var(--accent-color); border-radius:50%; left:${x-5}px; top:${y-5}px; pointer-events:none; z-index: 100;`;
+            stage.appendChild(point);
+            
+            const display = document.getElementById('layer-status');
+            if (display) {
+                display.innerText = `COORDINATE CAPTURED: [${x.toFixed(0)}, ${y.toFixed(0)}]`;
+            }
+        };
+    }
 });
