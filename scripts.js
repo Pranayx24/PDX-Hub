@@ -25,6 +25,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // --- Omni-Search Engine Data ---
+    const searchDatabase = [
+        { title: 'GDSII Visualizer', url: 'visualizer.html', category: 'Tool' },
+        { title: 'Logical Effort', url: 'tools.html', category: 'Calculator' },
+        { title: 'MOSFET Explorer', url: 'tools.html', category: 'Simulator' },
+        { title: 'Timing Analyzer Pro', url: 'lab.html', category: 'Lab' },
+        { title: 'PDN Analyzer', url: 'lab.html', category: 'Lab' },
+        { title: 'Foundry Academy', url: 'learn_new.html', category: 'Learning' },
+        { title: 'Interview Hub', url: 'interview.html', category: 'Career' }
+    ];
+
+    const omniSearch = document.getElementById('omni-search');
+    if (omniSearch) {
+        omniSearch.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            if (query.length < 2) return;
+            const res = searchDatabase.find(item => item.title.toLowerCase().includes(query));
+            if (res && window.showFoundryOS) {
+                window.showFoundryOS(`FOUNDRY OS: Found ${res.title} in ${res.category}`);
+            }
+        });
+        omniSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value.toLowerCase();
+                const res = searchDatabase.find(item => item.title.toLowerCase().includes(query));
+                if (res) window.location.href = res.url;
+            }
+        });
+    }
+
     // Theme Configuration
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
@@ -818,19 +848,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // Tape-out Process Wizard
-    window.startTapeout = function() {
-        const steps = ['Verifying Netlist...', 'Running Floorplan DRC...', 'CTS Analysis...', 'Initiating Photolithography...', 'Sign-off complete!'];
-        let step = 0;
-        const interval = setInterval(() => {
-            if (step >= steps.length) {
-                clearInterval(interval);
-                window.showFoundryOS('GDSII TAPE-OUT: SUCCESS [V2.5]');
-                if (window.updateSignoffBadge) window.updateSignoffBadge(4); 
-                return;
-            }
-            window.showFoundryOS(steps[step].toUpperCase());
-            step++;
-        }, 1500);
+    // Academy Verification Quiz
+    window.startModuleQuiz = function(moduleName) {
+        const quizData = {
+            'basics': 'Question: What is the main charge carrier in N-type silicon? (Electrons/Holes)',
+            'flow': 'Question: Which step comes after Floorplanning? (Placement/Routing/CTS)',
+            'signoff': 'Question: What is the maximum allowed IR drop (mV)? (10/50/100)'
+        };
+        const answer = prompt(quizData[moduleName]);
+        if (answer && (answer.toLowerCase() === 'electrons' || answer.toLowerCase() === 'placement' || answer.toLowerCase() === '50')) {
+            window.showFoundryOS(`MODULE PASS: ${moduleName.toUpperCase()} VERIFIED`);
+            window.updateSignoffBadge(3); // Award Quiz Badge
+        } else {
+            window.showFoundryOS('QUIZ FAILED: RE-READ MODULE DATA');
+        }
     }
 });
