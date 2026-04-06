@@ -214,7 +214,7 @@
         const macroContainer = document.getElementById('macro-container');
         const heatmapLayer = document.getElementById('heatmap-layer');
         const m1Group = document.getElementById('route-m1');
-        const m2Group = document.getElementById('route-route-m2');
+        const m2Group = document.getElementById('route-m2');
         
         let macros = [];
         let totalArea = 0;
@@ -242,6 +242,7 @@
 
             el.onmousedown = (e) => {
                 isDragging = true;
+                el.style.zIndex = 100;
                 startX = e.clientX - el.offsetLeft;
                 startY = e.clientY - el.offsetTop;
             };
@@ -252,33 +253,27 @@
                     let x = e.clientX - rect.left - (el.offsetWidth / 2);
                     let y = e.clientY - rect.top - (el.offsetHeight / 2);
                     
-                    // Boundary checks
                     x = Math.max(0, Math.min(x, canvas.offsetWidth - el.offsetWidth));
                     y = Math.max(0, Math.min(y, canvas.offsetHeight - el.offsetHeight));
                     
                     el.style.left = x + 'px';
                     el.style.top = y + 'px';
-                    
                     checkDRC();
-                    updateRoutes();
                 }
             };
 
-            document.onmouseup = () => { isDragging = false; };
+            document.onmouseup = () => { isDragging = false; el.style.zIndex = 20; };
         }
 
         function checkDRC() {
             let hasCollision = false;
             const panel = document.getElementById('drc-panel');
-
-            // Reset states
             macros.forEach(m => m.el.classList.remove('drc-error'));
 
             for (let i = 0; i < macros.length; i++) {
                 for (let j = i + 1; j < macros.length; j++) {
                     const r1 = macros[i].el.getBoundingClientRect();
                     const r2 = macros[j].el.getBoundingClientRect();
-
                     if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
                         macros[i].el.classList.add('drc-error');
                         macros[j].el.classList.add('drc-error');
@@ -286,9 +281,8 @@
                     }
                 }
             }
-
             if (hasCollision) {
-                panel.innerHTML = '<div style="font-size: 11px; color: #ff3b30; font-weight: 700;">DRC ERROR: OVERLAP DETECTED</div>';
+                panel.innerHTML = '<div style="font-size: 11px; color: #ff3b30; font-weight: 700;">DRC ERROR: OVERLAP</div>';
                 panel.style.background = 'rgba(255, 59, 48, 0.1)';
             } else {
                 panel.innerHTML = '<div style="font-size: 11px; color: #34c759; font-weight: 700;">DRC STATUS: CLEAN</div>';
@@ -299,34 +293,41 @@
         function updateAnalytics() {
             let area = 0;
             macros.forEach(m => area += (m.w * m.h));
-            const pct = Math.min((area / (canvas.offsetWidth * canvas.offsetHeight)) * 100 * 2, 100); // Scaled for demo
-            
+            const pct = Math.min((area / (canvas.offsetWidth * canvas.offsetHeight)) * 100 * 2, 100);
             document.getElementById('util-val').innerText = Math.round(pct) + '%';
             document.getElementById('util-bar').style.width = pct + '%';
         }
 
         function runAutoRoute() {
-            const m1 = document.getElementById('route-m1');
-            m1.innerHTML = '';
+            m1Group.innerHTML = '';
+            m2Group.innerHTML = '';
             
-            // Draw horizontal routes
-            for (let y = 0; y < canvas.offsetHeight; y += 40) {
+            // Horizontal M1 (Blue)
+            for (let y = 20; y < canvas.offsetHeight; y += 40) {
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", "0");
-                line.setAttribute("y1", y);
-                line.setAttribute("x2", canvas.offsetWidth);
-                line.setAttribute("y2", y);
-                m1.appendChild(line);
+                line.setAttribute("x1", 0); line.setAttribute("y1", y);
+                line.setAttribute("x2", canvas.offsetWidth); line.setAttribute("y2", y);
+                m1Group.appendChild(line);
             }
-            showToast("Global Routing M1 Synthesized.");
+            // Vertical M2 (Green)
+            for (let x = 20; x < canvas.offsetWidth; x += 60) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", x); line.setAttribute("y1", 0);
+                line.setAttribute("x2", x); line.setAttribute("y2", canvas.offsetHeight);
+                m2Group.appendChild(line);
+            }
+            showToast("Global M1/M2 Routes Synthesized.");
         }
 
         function toggleLayer(layer) {
             if (layer === 'heatmap') {
-                heatmapLayer.style.display = heatmapLayer.style.display === 'none' ? 'block' : 'none';
-                if (heatmapLayer.style.display === 'block') generateHeatmap();
+                const isShowing = heatmapLayer.style.display === 'block';
+                heatmapLayer.style.display = isShowing ? 'none' : 'block';
+                if (!isShowing) generateHeatmap();
             } else if (layer === 'm1') {
                 m1Group.style.display = m1Group.style.display === 'none' ? 'block' : 'none';
+            } else if (layer === 'm2') {
+                m2Group.style.display = m2Group.style.display === 'none' ? 'block' : 'none';
             }
         }
 
@@ -336,24 +337,36 @@
                 for (let y = 0; y < canvas.offsetHeight; y += 25) {
                     const cell = document.createElement('div');
                     cell.className = 'heatmap-cell';
-                    cell.style.left = x + 'px';
-                    cell.style.top = y + 'px';
+                    cell.style.left = x + 'px'; cell.style.top = y + 'px';
                     const heat = Math.random();
-                    cell.style.background = heat > 0.7 ? '#ff3b30' : (heat > 0.4 ? '#ff9500' : '#34c759');
+                    cell.style.background = heat > 0.8 ? '#ff3b30' : (heat > 0.4 ? '#ff9500' : '#34c759');
                     heatmapLayer.appendChild(cell);
                 }
             }
         }
 
         function exportGDS() {
-            showToast("Floorplan JSON Exported Successfully.");
+            const data = { die: " फाउंड्री_7NM", macros: macros.length, util: document.getElementById('util-val').innerText };
+            console.log("GDSII Export:", data);
+            showToast("Design Handoff JSON: Check Console.");
         }
 
         function showToast(msg) {
             const t = document.getElementById('toast-v');
-            t.innerText = msg;
-            t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
+            if (t) {
+                t.innerText = msg;
+                t.style.display = 'block';
+                setTimeout(() => t.style.display = 'none', 3000);
+            }
+        }
+
+        // 3D Engine Implementation
+        let is3D = false;
+        window.toggle3DView = function() {
+            is3D = !is3D;
+            canvas.style.transform = is3D ? 'perspective(1000px) rotateX(45deg) rotateZ(-10deg)' : 'none';
+            canvas.style.borderRadius = is3D ? '40px' : '16px';
+            showToast(is3D ? "3D Layer Inspection Active" : "Top-Down View Restored");
         }
     </script>
 </body>
