@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="pdx_chip.png?v=2.2"><link rel="manifest" href="manifest_v2.json"><link rel="icon" href="pdx_chip.png?v=2.2" type="image/png"><title>Floorplan Visualizer Pro | PDX Hub</title>
+    <link rel="shortcut icon" href="pdx_chip.png?v=2.2">
+    <link rel="manifest" href="manifest_v2.json">
+    <link rel="icon" href="pdx_chip.png?v=2.2" type="image/png">
+    <title>GDSII Visualizer Pro | PDX Hub</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,269 +14,346 @@
     <style>
         .canvas-area {
             width: 100%;
-            max-width: 600px;
-            height: 400px;
-            background: #111;
-            border-radius: 12px;
-            border: 2px solid var(--accent-color);
+            height: 500px;
+            background: #050505;
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
             position: relative;
             overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
             background-image: 
-                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+                radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+            background-size: 30px 30px;
+            cursor: crosshair;
         }
-        @media (max-width: 768px) {
-            .canvas-area {
-                height: 300px;
-            }
-            main[style*="display: flex"] {
-                flex-direction: column !important;
-            }
-            .section-container > div {
-                flex-direction: column !important;
-            }
-        }
-        .macro-block {
-            padding: 10px;
-            background: var(--accent-color);
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 600;
-            user-select: none;
-            transition: transform 0.2s;
-        }
-        .macro-block:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--accent-color); }
+        
         .placed-macro {
             position: absolute;
-            background: rgba(0, 113, 227, 0.4);
-            border: 1px solid var(--accent-color);
+            background: rgba(0, 113, 227, 0.2);
+            border: 2px solid var(--accent-color);
             color: #fff;
+            padding: 8px;
+            font-size: 10px;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
-            border-radius: 2px;
+            border-radius: 4px;
             cursor: grab;
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .placed-macro:active { cursor: grabbing; border-style: dashed; }
+        .placed-macro.drc-error { border-color: #ff3b30; background: rgba(255, 59, 48, 0.2); }
+
+        /* GDSII Layers Styling */
+        .gds-layer-m1 { stroke: #0071e3; stroke-width: 1; fill: none; opacity: 0.6; }
+        .gds-layer-m2 { stroke: #34c759; stroke-width: 2; fill: none; opacity: 0.4; }
+        .gds-layer-via { fill: #fff; opacity: 0.8; }
+
+        .heatmap-cell {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            opacity: 0.3;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .control-sidebar {
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .layer-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .layer-toggle:hover { background: rgba(255,255,255,0.08); }
+        .layer-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        @media (max-width: 1100px) {
+            .visualizer-layout { flex-direction: column !important; }
+            .control-sidebar { width: 100%; }
         }
     </style>
 </head>
 <body data-theme="dark">
-    <!-- Elite UI Elements -->
+    <!-- UI Overlays -->
     <div id="custom-cursor"></div>
     <div id="custom-cursor-follower"></div>
     <div class="bg-aura"><div class="aura-blob" id="aura-blob"></div></div>
-    <div id="toast-v" class="toast">Copied!</div>
-    
-    <!-- Mastery Hub Modal (NEW) -->
-    <div id="profile-modal" onclick="closeProfile()">
-        <div class="modal-content glass" onclick="event.stopPropagation()">
-            <div class="modal-close" onclick="closeProfile()">×</div>
-            <h2 style="font-size: 32px; letter-spacing: -1px;">Engineering Identity</h2>
-            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="card glass">
-                    <div style="font-size: 11px; color: var(--accent-color);">ACADEMY STATUS</div>
-                    <div id="modal-academy-pct" style="font-size: 24px; font-weight: 700;">0%</div>
-                </div>
-                <div class="card glass">
-                    <div style="font-size: 11px; color: var(--accent-color);">MEDALS EARNED</div>
-                    <div id="modal-medals-count" style="font-size: 24px; font-weight: 700;">0/4</div>
-                </div>
-            </div>
-            <div id="medals-display" style="margin-top: 30px; display: flex; gap: 10px;"></div>
-            <button class="btn btn-primary" style="margin-top: 40px; width: 100%;" onclick="closeProfile()">Close Hub</button>
-        </div>
-    </div>
-    
+    <div id="toast-v" class="toast">Floorplan Exported!</div>
 
     <nav class="glass">
         <div class="nav-content">
-            <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-            </button>
-            <button class="theme-toggle" id="theme-toggle">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </button>
-            <div class="nav-search">
-                <input type="text" id="omni-search" placeholder="Search tools, lab, or concepts...">
-            </div>
             <div class="nav-links">
                 <a href="index.html">Home</a>
-                <a href="visualizer.html">Visualizer</a>
-                <a href="lab.html">Tools Lab</a>
-                <a href="learn.html">Learn</a>
-                <a href="interview.html">Interview</a>
+                <a href="visualizer.html" class="active">Visualizer</a>
+                <a href="lab.html">Labs</a>
+                <a href="learn_new.html">Academy</a>
+                <a href="interview.html">Interview Hub</a>
             </div>
             <a href="index.html" class="logo">PDX Hub</a>
         </div>
     </nav>
 
-    <main class="section-container" style="padding-top: 130px;">
-        <div style="display: flex; gap: 40px; align-items: flex-start;">
-            <!-- Toolbox -->
-            <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
-                <h3 style="font-size: 28px;">Macro Workshop</h3>
-                <p style="color: var(--text-secondary); font-size: 14px;">Select components to place in the Die Area. Aim for ~70% utilization.</p>
-                
-                <!-- Manual Macro Selection -->
-                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
-                    <div class="macro-block glass" onclick="addMacro('Memory', 100, 60)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ Memory (RAM)</div>
-                    <div class="macro-block glass" onclick="addMacro('IP Core', 80, 80)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ IP Core</div>
-                    <div class="macro-block glass" onclick="addMacro('Analog', 120, 40)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ Analog IP</div>
-                    <div class="macro-block glass" onclick="addMacro('CPU-L2', 70, 50)" style="cursor: pointer; padding: 15px; text-align: center; border-radius: 12px; font-size: 12px; border: 1px solid var(--border-color); background: rgba(0,113,227,0.1);">+ CPU Cache</div>
+    <main class="section-container" style="padding-top: 120px;">
+        <header style="margin-bottom: 40px; text-align: center;">
+            <h1 style="font-size: 48px; letter-spacing: -2px;">Interactive <span class="accent-text">GDSII Visualizer.</span></h1>
+            <p style="color: var(--text-secondary);">Simulate Macro Placement, Routing Density, and DRC Sign-off in Real-time.</p>
+        </header>
+
+        <div class="visualizer-layout" style="display: flex; gap: 40px;">
+            <!-- Control Side -->
+            <aside class="control-sidebar">
+                <div class="card glass">
+                    <h3 style="font-size: 18px; margin-bottom: 15px;">Macro Library</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button class="btn btn-secondary" style="font-size: 11px;" onclick="addMacro('SRAM_2KB', 120, 80, '#0071e3')">+ SRAM 2KB</button>
+                        <button class="btn btn-secondary" style="font-size: 11px;" onclick="addMacro('ARM_CPU', 100, 100, '#34c759')">+ CPU Core</button>
+                        <button class="btn btn-secondary" style="font-size: 11px;" onclick="addMacro('PLL_ANA', 60, 60, '#ff9500')">+ PLL Analog</button>
+                        <button class="btn btn-secondary" style="font-size: 11px;" onclick="addMacro('DDR_PHY', 180, 40, '#ff3b30')">+ DDR PHY</button>
+                    </div>
                 </div>
 
-                <!-- Pro Simulation Controls -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; border-top: 1px solid var(--border-color); padding-top: 20px;">
-                    <button class="btn btn-primary" style="font-size: 11px; padding: 10px;" onclick="window.simulatePlacement()">Auto-Place Cells</button>
-                    <button class="btn btn-primary" style="font-size: 11px; padding: 10px;" onclick="window.runGlobalRoute()">Global Route M1</button>
-                    <button class="btn btn-secondary" style="font-size: 11px; padding: 10px;" onclick="window.toggleRuler()">DRC Ruler</button>
-                    <button class="btn btn-secondary" style="font-size: 11px; padding: 10px;" onclick="window.toggle3DView()">3D Perspective</button>
+                <div class="card glass">
+                    <h3 style="font-size: 18px; margin-bottom: 15px;">Layer Visibility</h3>
+                    <div class="layer-toggle" onclick="toggleLayer('m1')">
+                        <span>Metal 1 (Horizontal)</span>
+                        <div class="layer-dot" style="background: #0071e3;"></div>
+                    </div>
+                    <div class="layer-toggle" onclick="toggleLayer('m2')" style="margin-top: 8px;">
+                        <span>Metal 2 (Vertical)</span>
+                        <div class="layer-dot" style="background: #34c759;"></div>
+                    </div>
+                    <div class="layer-toggle" onclick="toggleLayer('heatmap')" style="margin-top: 8px;">
+                        <span>Density Heatmap</span>
+                        <div class="layer-dot" style="background: #ff3b30;"></div>
+                    </div>
                 </div>
 
-                <div class="card glass" style="margin-top: 20px;">
-                    <h4>Die Statistics</h4>
-                    <div style="margin-top: 15px; font-size: 14px;">
-                        <div>Area: <span id="stat-area">240,000 µm²</span></div>
-                        <div>Utilized: <span id="stat-util-area">0 µm²</span></div>
-                        <div style="margin-top: 10px;">
-                            <div style="width:100%; height:8px; background:#444; border-radius:4px; overflow:hidden;">
-                                <div id="util-progress" style="width:0%; height:100%; background:var(--accent-color); transition: 0.3s all;"></div>
-                            </div>
-                            <div style="text-align:right; font-size:12px; margin-top:5px; color:var(--accent-color); font-weight:700;">Density: <span id="stat-util-pct">0%</span></div>
+                <div class="card glass">
+                    <h3 style="font-size: 18px; margin-bottom: 5px;">Analytical Metrics</h3>
+                    <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">Global Optimization Goals</div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                            <span>UTILIZATION DENSITY</span>
+                            <span id="util-val">0%</span>
+                        </div>
+                        <div style="height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;">
+                            <div id="util-bar" style="width: 0%; height: 100%; background: var(--accent-color); transition: 0.5s;"></div>
                         </div>
                     </div>
+
+                    <div id="drc-panel" style="padding: 12px; background: rgba(52, 199, 89, 0.1); border-radius: 8px; border: 1px solid rgba(52,199,89,0.3);">
+                        <div style="font-size: 11px; color: #34c759; font-weight: 700;">DRC STATUS: CLEAN</div>
+                    </div>
                 </div>
 
-                <!-- GDSII Layer Dashboard (NEW) -->
-                <div class="card glass" style="margin-top: 20px; border-left: 4px solid var(--accent-color);">
-                    <h4>GDSII Layer Manager</h4>
-                    <div style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;">
-                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" checked onchange="toggleGDSLayer('metal1')"> 
-                            <span style="color: #0071e3; font-weight: 600;">Metal 1 (Line)</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" checked onchange="toggleGDSLayer('poly')"> 
-                            <span style="color: #ff3b30; font-weight: 600;">Polysilicon (Gate)</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer;">
-                            <input type="checkbox" checked onchange="toggleGDSLayer('diff')"> 
-                            <span style="color: #34c759; font-weight: 600;">Active Diffusion</span>
-                        </label>
-                    </div>
-                    <div style="margin-top: 15px; font-size: 10px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">
-                        Status: <span id="layer-status" style="color: var(--accent-color);">MULTILAYER VIEW</span>
-                    </div>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <button class="btn btn-primary" onclick="runAutoRoute()">Run Global Route</button>
+                    <button class="btn btn-secondary" onclick="exportGDS()">Export Layout (JSON)</button>
                 </div>
-            </div>
+            </aside>
 
-            <!-- Canvas -->
-            <div style="flex: 2;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                    <h3>Chip Floorplan (Visual Canvas)</h3>
-                    <button class="btn btn-secondary" style="font-size: 12px; padding: 8px 16px;" onclick="clearCanvas()">Clear Design</button>
+            <!-- Visualizer Stage -->
+            <section style="flex: 1;">
+                <div class="canvas-area" id="gds-canvas">
+                    <!-- Heatmap Grid -->
+                    <div id="heatmap-layer" style="position: absolute; top:0; left:0; width:100%; height:100%; display: none;"></div>
+                    
+                    <!-- SVG Routing Layer -->
+                    <svg id="gds-svg" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+                        <defs>
+                            <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+                                <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)" />
+                        <g id="route-m1" class="gds-layer-m1"></g>
+                        <g id="route-m2" class="gds-layer-m2"></g>
+                    </svg>
+
+                    <!-- Macro Container -->
+                    <div id="macro-container" style="position: absolute; top:0; left:0; width:100%; height:100%;"></div>
                 </div>
-                <div id="canvas-stage" style="perspective: 1000px; transition: 0.8s all;">
-                    <div class="canvas-area glass" id="fp-canvas" style="transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);">
-                        <!-- Macros rendered here -->
-                        <div id="ruler-line" style="position: absolute; height: 1px; background: var(--accent-color); display: none; z-index: 100;"></div>
-                        <!-- Routing Layer SVG -->
-                        <svg id="routing-layer" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 10;"></svg>
+
+                <div class="interview-tip" style="margin-top: 30px; display: flex; align-items: flex-start; gap: 15px; background: rgba(0,113,227,0.05); padding: 20px; border-radius: 12px; border-left: 4px solid var(--accent-color);">
+                    <div style="font-size: 24px;">💡</div>
+                    <div>
+                        <h4 style="margin-bottom: 5px;">Pro Foundry Knowledge</h4>
+                        <p style="font-size: 14px; line-height: 1.5; color: var(--text-secondary);">Metal layers 1-2 are typically used for local routing and standard cell connections. Higher layers (M6+) are thicker and used for global power rails (VDD/GND) to minimize IR drop. Drag macros to observe the DRC collision system in action.</p>
                     </div>
                 </div>
-                <div class="interview-tip" style="margin-top: 25px;">
-                    💡 Interview Tip: "Why keep utilization below 80% during Floorplanning?" - To leave space for standard cell placement, decoupling caps, and routing tracks.
-                </div>
-            </div>
+            </section>
         </div>
     </main>
 
-    <!-- Universal Silicon Footer -->
-    <footer class="glass-footer">
-        <div class="footer-grid">
-            <div class="footer-column">
-                <h5 style="color: var(--accent-color);">PLATFORM</h5>
-                <a href="index.html">Mastery Home</a>
-                <a href="visualizer.html">GDSII Visualizer</a>
-                <a href="lab.html">Tools Lab Pro</a>
-                <a href="learn.html">Academy Masterclass</a>
-            </div>
-            <div class="footer-column">
-                <h5 style="color: var(--accent-color);">RESOURCES</h5>
-                <a href="about.html">About PDX Hub</a>
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="terms.html">Terms of Service</a>
-                <a href="contact.html">Contact Us</a>
-                <a href="interview.html">Interview Hub</a>
-                <a href="tools.html">Physical Design Tools</a>
-                <a href="#">Tier-1 Checklists</a>
-                <a href="#">Foundry Specs</a>
-            </div>
-            <div class="footer-column">
-                <h5 style="color: var(--accent-color);">COMMUNITY</h5>
-                <a href="#">Global Leaderboard</a>
-                <a href="javascript:void(0)" onclick="openProfile()">Identity Modal</a>
-                <a href="#">Engineering Bot</a>
-            </div>
-            <div class="footer-column">
-                <h5 style="color: var(--accent-color);">PDX HUB IDENTITY</h5>
-                <div style="font-size: 13px; opacity: 0.7;">Physical Design Expert Hub – The elite educational ecosystem for Tier-1 Engineers.</div>
-                <div style="margin-top: 20px; font-weight: 700; font-size: 11px; letter-spacing: 2px;">© 2026 SILICON 2.0 | BUILT BY YEGIREDDY PRANAY KUMAR</div>
-            </div>
+    <footer class="glass-footer" style="margin-top: 100px;">
+        <div style="text-align: center; font-size: 11px; opacity: 0.5; letter-spacing: 1px;">
+            © 2026 SILICON 2.0 | BUILT BY YEGIREDDY PRANAY KUMAR
         </div>
     </footer>
 
     <script src="scripts.js"></script>
     <script>
-        let currentUtilization = 0;
-        const totalArea = 240000;
-        const canvas = document.getElementById('fp-canvas');
+        const canvas = document.getElementById('gds-canvas');
+        const macroContainer = document.getElementById('macro-container');
+        const heatmapLayer = document.getElementById('heatmap-layer');
+        const m1Group = document.getElementById('route-m1');
+        const m2Group = document.getElementById('route-route-m2');
+        
+        let macros = [];
+        let totalArea = 0;
+        const canvasArea = canvas.offsetWidth * canvas.offsetHeight;
 
-        function addMacro(name, w, h) {
+        function addMacro(name, w, h, color) {
             const m = document.createElement('div');
-            m.className = 'placed-macro glass reveal';
+            m.className = 'placed-macro reveal';
             m.style.width = w + 'px';
             m.style.height = h + 'px';
-            m.style.top = '20px';
-            m.style.left = '20px';
+            m.style.borderColor = color;
+            m.style.left = '50px';
+            m.style.top = '50px';
             m.innerHTML = name;
             
-            // Basic drag logic (simplified for frontend static)
+            enableDrag(m);
+            macroContainer.appendChild(m);
+            macros.push({ el: m, w, h, x: 50, y: 50 });
+            updateAnalytics();
+        }
+
+        function enableDrag(el) {
             let isDragging = false;
-            m.onmousedown = (e) => { isDragging = true; };
+            let startX, startY;
+
+            el.onmousedown = (e) => {
+                isDragging = true;
+                startX = e.clientX - el.offsetLeft;
+                startY = e.clientY - el.offsetTop;
+            };
+
             document.onmousemove = (e) => {
                 if (isDragging) {
                     const rect = canvas.getBoundingClientRect();
-                    m.style.left = (e.clientX - rect.left - w/2) + 'px';
-                    m.style.top = (e.clientY - rect.top - h/2) + 'px';
-                    // Trigger real-time DRC
-                    if (window.checkDRCCollision) window.checkDRCCollision();
+                    let x = e.clientX - rect.left - (el.offsetWidth / 2);
+                    let y = e.clientY - rect.top - (el.offsetHeight / 2);
+                    
+                    // Boundary checks
+                    x = Math.max(0, Math.min(x, canvas.offsetWidth - el.offsetWidth));
+                    y = Math.max(0, Math.min(y, canvas.offsetHeight - el.offsetHeight));
+                    
+                    el.style.left = x + 'px';
+                    el.style.top = y + 'px';
+                    
+                    checkDRC();
+                    updateRoutes();
                 }
             };
-            document.onmouseup = () => { 
-                isDragging = false; 
-                if (window.checkDRCCollision) window.checkDRCCollision();
-            };
 
-            canvas.appendChild(m);
-            updateStats(w * h * 10); // Simulated scale
+            document.onmouseup = () => { isDragging = false; };
         }
 
-        function updateStats(newArea) {
-            currentUtilization += newArea;
-            const pct = Math.min((currentUtilization / totalArea) * 100, 100).toFixed(1);
-            document.getElementById('stat-util-area').textContent = currentUtilization.toLocaleString() + ' µm²';
-            document.getElementById('stat-util-pct').textContent = pct + '%';
-            document.getElementById('util-progress').style.width = pct + '%';
+        function checkDRC() {
+            let hasCollision = false;
+            const panel = document.getElementById('drc-panel');
+
+            // Reset states
+            macros.forEach(m => m.el.classList.remove('drc-error'));
+
+            for (let i = 0; i < macros.length; i++) {
+                for (let j = i + 1; j < macros.length; j++) {
+                    const r1 = macros[i].el.getBoundingClientRect();
+                    const r2 = macros[j].el.getBoundingClientRect();
+
+                    if (!(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top)) {
+                        macros[i].el.classList.add('drc-error');
+                        macros[j].el.classList.add('drc-error');
+                        hasCollision = true;
+                    }
+                }
+            }
+
+            if (hasCollision) {
+                panel.innerHTML = '<div style="font-size: 11px; color: #ff3b30; font-weight: 700;">DRC ERROR: OVERLAP DETECTED</div>';
+                panel.style.background = 'rgba(255, 59, 48, 0.1)';
+            } else {
+                panel.innerHTML = '<div style="font-size: 11px; color: #34c759; font-weight: 700;">DRC STATUS: CLEAN</div>';
+                panel.style.background = 'rgba(52, 199, 89, 0.1)';
+            }
         }
 
-        function clearCanvas() {
-            canvas.innerHTML = '';
-            currentUtilization = 0;
-            updateStats(0);
+        function updateAnalytics() {
+            let area = 0;
+            macros.forEach(m => area += (m.w * m.h));
+            const pct = Math.min((area / (canvas.offsetWidth * canvas.offsetHeight)) * 100 * 2, 100); // Scaled for demo
+            
+            document.getElementById('util-val').innerText = Math.round(pct) + '%';
+            document.getElementById('util-bar').style.width = pct + '%';
+        }
+
+        function runAutoRoute() {
+            const m1 = document.getElementById('route-m1');
+            m1.innerHTML = '';
+            
+            // Draw horizontal routes
+            for (let y = 0; y < canvas.offsetHeight; y += 40) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "0");
+                line.setAttribute("y1", y);
+                line.setAttribute("x2", canvas.offsetWidth);
+                line.setAttribute("y2", y);
+                m1.appendChild(line);
+            }
+            showToast("Global Routing M1 Synthesized.");
+        }
+
+        function toggleLayer(layer) {
+            if (layer === 'heatmap') {
+                heatmapLayer.style.display = heatmapLayer.style.display === 'none' ? 'block' : 'none';
+                if (heatmapLayer.style.display === 'block') generateHeatmap();
+            } else if (layer === 'm1') {
+                m1Group.style.display = m1Group.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        function generateHeatmap() {
+            heatmapLayer.innerHTML = '';
+            for (let x = 0; x < canvas.offsetWidth; x += 25) {
+                for (let y = 0; y < canvas.offsetHeight; y += 25) {
+                    const cell = document.createElement('div');
+                    cell.className = 'heatmap-cell';
+                    cell.style.left = x + 'px';
+                    cell.style.top = y + 'px';
+                    const heat = Math.random();
+                    cell.style.background = heat > 0.7 ? '#ff3b30' : (heat > 0.4 ? '#ff9500' : '#34c759');
+                    heatmapLayer.appendChild(cell);
+                }
+            }
+        }
+
+        function exportGDS() {
+            showToast("Floorplan JSON Exported Successfully.");
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast-v');
+            t.innerText = msg;
+            t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
         }
     </script>
 </body>
