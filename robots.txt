@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://pranayx24.github.io/PDX-Hub/sitemap.xml
