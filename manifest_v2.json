@@ -1,0 +1,23 @@
+{
+  "name": "PDX Hub Mastery",
+  "short_name": "PDX Hub",
+  "description": "Industrial VLSI Mastery Platform",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0071e3",
+  "icons": [
+    {
+      "src": "pdx_chip.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pdx_chip.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
