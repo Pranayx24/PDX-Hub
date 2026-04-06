@@ -2,214 +2,132 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('terminal-input');
     const output = document.getElementById('terminal-output');
     
-    let isDesignRead = false;
-    let isCompiled = false;
+    let currentPath = '/home/user';
+    let fileSystem = {
+        '/home/user': ['design.v', 'netlist.v', 'constraints.sdc', 'tech_lib/'],
+        '/home/user/tech_lib': ['std_cells.db', 'macros.db']
+    };
     let commandHistory = [];
+    let isVLSIMode = false; // For shell-within-shell experience if needed
 
     if (input) {
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 const val = input.value.trim();
                 if (val) {
-                    processCommand(val);
+                    processLinuxCommand(val);
                     input.value = '';
                 }
             }
         });
     }
 
-    function processCommand(cmd) {
+    function processLinuxCommand(cmd) {
+        // Log the command line
         const line = document.createElement('div');
         line.className = 'terminal-line';
-        line.innerHTML = `<span class="prompt" style="color: var(--accent-color); font-weight: bold;">dc_shell></span> ${cmd}`;
+        line.innerHTML = `<span style="color: #00ff00; font-weight: bold;">user@pdxhub:</span><span style="color: #34c759;">${currentPath.replace('/home/user', '~')}</span>$ ${cmd}`;
         output.appendChild(line);
 
         const response = document.createElement('div');
         response.className = 'terminal-line';
-        response.style.paddingLeft = '20px';
-        response.style.color = '#ccc';
+        response.style.paddingLeft = '15px';
+        response.style.color = '#00ff00';
+        response.style.opacity = '0.9';
         
         const lowerCmd = cmd.toLowerCase();
-        const parts = lowerCmd.split(' ');
-        const baseCmd = parts[0];
+        const args = lowerCmd.split(' ');
+        const base = args[0];
 
-        switch (baseCmd) {
+        switch (base) {
             case 'help':
                 response.innerHTML = `
-                    <div style="color: var(--accent-color); font-weight: bold; margin-bottom: 5px;">--- DESIGN COMPILER COMMANDS HELPER ---</div>
-                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 10px;">
-                        <span>read_verilog</span> <span>Read RTL source files</span>
-                        <span>link</span> <span>Resolve design references</span>
-                        <span>check_design</span> <span>Sanity check for connectivity</span>
-                        <span>set_clock</span> <span>Define clock period/uncertainty</span>
-                        <span>compile</span> <span>Synthesize & Optimize logic</span>
-                        <span>report_timing</span> <span>Full path timing analysis</span>
-                        <span>report_area</span> <span>Silicon area & gate count</span>
-                        <span>report_power</span> <span>Power (Switching/Leakage)</span>
-                        <span>report_constraint</span> <span>Worst Violations Summary</span>
-                        <span>write</span> <span>Save netlist (Verilog/DB)</span>
-                        <span>clear</span> <span>Clear terminal buffer</span>
+                    <div style="color: #00ff00; font-weight: bold; margin-bottom: 5px;">--- PDX HUB TERMINAL HELP ---</div>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 5px; font-size: 13px;">
+                        <span style="color: #fff;">ls</span> <span>List design files and folders</span>
+                        <span style="color: #fff;">cd [dir]</span> <span>Change directory</span>
+                        <span style="color: #fff;">pwd</span> <span>Print current working directory</span>
+                        <span style="color: #fff;">cat [file]</span> <span>View content of VLSI files</span>
+                        <span style="color: #fff;">mkdir [dir]</span> <span>Create a new project folder</span>
+                        <span style="color: #fff;">dc_shell</span> <span>Launch Design Compiler Simulator</span>
+                        <span style="color: #fff;">run_drc</span> <span>Execute Design Rule Checks</span>
+                        <span style="color: #fff;">report_timing</span> <span>Quick STA analysis check</span>
+                        <span style="color: #fff;">clear</span> <span>Clear terminal history</span>
                     </div>`;
-                break;
-            
-            case 'read_verilog':
-                isDesignRead = true;
-                response.innerHTML = `Reading Verilog file... [OK]<br>Successfully read design 'top' from ${parts[1] || 'design.v'}`;
-                response.style.color = '#34c759';
-                break;
-
-            case 'link':
-                if (!isDesignRead) {
-                    response.innerHTML = "Error: No design read. Use 'read_verilog' first.";
-                    response.style.color = '#ff3b30';
-                } else {
-                    response.innerHTML = "Linking design 'top' to library tech_7nm... [OK]";
-                    response.style.color = '#34c759';
-                }
-                break;
-
-            case 'check_design':
-                if (!isDesignRead) {
-                    response.innerHTML = "Error: No design to check.";
-                    response.style.color = '#ff3b30';
-                } else {
-                    response.innerHTML = "Checking design 'top'...<br>[INFO] No floating pins found.<br>[INFO] Connectivity check passed.";
-                    response.style.color = '#34c759';
-                }
-                break;
-
-            case 'set_clock':
-            case 'set_clock_uncertainty':
-            case 'set_clock_jitter':
-                response.innerHTML = `Applied constraint to clock 'clk': ${parts.slice(1).join(' ') || 'default'}`;
-                response.style.color = '#5856D6';
-                break;
-
-            case 'compile':
-            case 'compile_ultra':
-                if (!isDesignRead) {
-                    response.innerHTML = "Error: No design loaded. Use 'read_verilog' first.";
-                    response.style.color = '#ff3b30';
-                } else {
-                    isCompiled = true;
-                    response.innerHTML = "Running Synthesis Optimization Flow...<br>[1] Loading Tech Library (7nm)...<br>[2] Mapping GTECH to Gates...<br>[3] Optimizing for Slack & Leakage...<br>Synthesis Successful. Design 'top' is mapped.";
-                    response.style.color = '#34c759';
-                }
-                break;
-
-            case 'report_timing':
-                if (!isCompiled) {
-                    response.innerHTML = "Warning: Design not compiled. Showing pre-synthesis estimates.";
-                    response.style.color = '#ff9500';
-                }
-                const slack = (Math.random() * 0.5 - 0.1).toFixed(3);
-                response.innerHTML = `
-                    <pre style="font-family: inherit; margin: 0; line-height: 1.2;">
-****************************************
-Report : timing
-        -path full
-        -delay max
-        -max_paths 1
-Design : top
-Version: S-2026.PD-H
-****************************************
-Startpoint: REG_A (rising edge-triggered flip-flop)
-Endpoint: REG_B (rising edge-triggered flip-flop)
-Path Type: max
-
-  Point                                    Incr       Path
-  -----------------------------------------------------------
-  clock clk (rise edge)                   0.00       0.00
-  clock source latency                    0.05       0.05
-  REG_A/CP (DFF_X1)                       0.00       0.05 r
-  REG_A/Q (DFF_X1)                        0.15       0.20 f
-  U12/Z (NAND2_X1)                        0.12       0.32 r
-  U45/Z (OR2_X1)                          0.11       0.43 f
-  REG_B/D (DFF_X1)                        0.02       0.45 f
-  data arrival time                                  0.45
-
-  clock clk (rise edge)                   1.00       1.00
-  clock network delay (ideal)             0.00       1.00
-  REG_B/CP (DFF_X1)                                  1.00 r
-  library setup time                     -0.05       0.95
-  data required time                                 0.95
-  -----------------------------------------------------------
-  data required time                                 0.95
-  data arrival time                                 -0.45
-  -----------------------------------------------------------
-  slack (MET)                                        0.50
-                    </pre>`;
-                break;
-
-            case 'report_area':
-                response.innerHTML = `
-                    <pre style="font-family: inherit; margin: 0;">
-****************************************
-Report : area
-Design : top
-****************************************
-Library(s) Used: tech_7nm
-Number of ports: 42
-Number of nets: 1420
-Number of cells: 840
-Total Cell Area: 664.20 µm²
-Hierarchical Area: 420.50 µm²
-                    </pre>`;
-                break;
-
-            case 'report_power':
-                response.innerHTML = `
-                    <pre style="font-family: inherit; margin: 0;">
-****************************************
-Report : power
-Design : top
-****************************************
-Switching Power: 142.4 µW  (62%)
-Internal Power:  58.2 µW   (25%)
-Leakage Power:   28.5 µW   (13%)
-Total Power:     229.1 µW
-                    </pre>`;
-                break;
-
-            case 'report_constraint':
-                response.innerHTML = `
-                    <pre style="font-family: inherit; margin: 0;">
-****************************************
-Report : constraint
-Design : top
-****************************************
-Critical Path Slack:  0.500 (MET)
-Max Capacitance:      0.005 (MET)
-Max Transition:       0.010 (MET)
-Max Fanout:           UNCONSTRAINED
-                    </pre>`;
                 break;
 
             case 'ls':
-                response.innerHTML = "design.v  constraints.sdc  tech_7nm.db  reports/ scripts/";
+                const items = fileSystem[currentPath] || [];
+                response.innerHTML = items.map(i => {
+                    const isDir = i.endsWith('/');
+                    return `<span style="color: ${isDir ? '#5856D6' : '#00ff00'}; margin-right: 15px;">${i}</span>`;
+                }).join('');
                 break;
 
             case 'pwd':
-                response.innerHTML = "/home/pdx_engineer/foundry/top_design";
+                response.innerHTML = currentPath;
                 break;
 
             case 'clear':
-                output.innerHTML = '<div class="terminal-line" style="color: var(--text-secondary); font-style: italic;">Terminal buffer cleared. DC Shell [Foundry v2.7] ready.</div>';
+                output.innerHTML = '<div class="terminal-line" style="color: #00ff00; opacity: 0.5;">Terminal history cleared.</div>';
                 return;
 
-            case 'history':
-                response.innerHTML = commandHistory.length ? commandHistory.join('<br>') : "No command history.";
+            case 'cd':
+                const target = args[1];
+                if (!target || target === '~') {
+                    currentPath = '/home/user';
+                } else if (target === '..') {
+                    if (currentPath !== '/home/user') currentPath = '/home/user';
+                } else if (fileSystem[currentPath + '/' + target.replace('/', '')]) {
+                    currentPath += '/' + target.replace('/', '');
+                } else {
+                    response.innerHTML = `cd: no such directory: ${target}`;
+                    response.style.color = '#ff3b30';
+                }
                 break;
 
-            case 'exit':
-            case 'quit':
-                response.innerHTML = "Terminating DC Shell session... Goodbye!";
-                response.style.color = '#ff9500';
-                setTimeout(() => location.reload(), 1500);
+            case 'mkdir':
+                const newDir = args[1];
+                if (newDir) {
+                    fileSystem[currentPath].push(newDir + '/');
+                    fileSystem[currentPath + '/' + newDir] = [];
+                    response.innerHTML = `Directory '${newDir}' created successfully.`;
+                }
+                break;
+
+            case 'cat':
+                const file = args[1];
+                if (file === 'design.v') {
+                    response.innerHTML = `<pre style="color: #fff; font-size: 11px;">module top(clk, rst, d, q);<br>  input clk, rst, d;<br>  output reg q;<br>  always @(posedge clk or posedge rst) begin<br>    if (rst) q <= 0;<br>    else q <= d;<br>  end<br>endmodule</pre>`;
+                } else if (file === 'constraints.sdc') {
+                    response.innerHTML = `<pre style="color: #fff; font-size: 11px;">create_clock -name clk -period 1.0 [get_ports clk]<br>set_clock_uncertainty 0.05 [get_clocks clk]<br>set_input_delay 0.2 -clock clk [get_ports d]</pre>`;
+                } else {
+                    response.innerHTML = `cat: ${file || 'file'}: No such file or directory`;
+                    response.style.color = '#ff3b30';
+                }
+                break;
+
+            case 'dc_shell':
+                response.innerHTML = "Initializing Synopsys Design Compiler (Sim)... <br>[SUCCESS] dc_shell mode active. Type 'help' for synthesis commands.";
+                response.style.color = '#fff';
+                break;
+
+            case 'run_drc':
+                response.innerHTML = "Loading 7nm Foundry Rules... <br>Checking density... [OK] <br>Checking spacing... [OK] <br>[FINISH] 0 Violations found.";
+                response.style.color = '#34c759';
+                break;
+
+            case 'report_timing':
+                response.innerHTML = `
+                    <div style="color: #fff; border: 1px solid #333; padding: 10px; margin-top: 5px;">
+                        Path Type: Setup Slack (Max)<br>
+                        Endpoint: REG_Q/D (rising edge-triggered)<br>
+                        Slack: +0.540 ns (MET)
+                    </div>`;
                 break;
 
             default:
-                response.innerHTML = `Error: Command '${cmd}' is not a valid dc_shell or unix command. Type 'help' for instructions.`;
+                response.innerHTML = `-pdxhub: ${base}: command not found`;
                 response.style.color = '#ff3b30';
         }
 
