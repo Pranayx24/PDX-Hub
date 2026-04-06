@@ -42,7 +42,7 @@
         </div>
     </div>
 
-
+    <!-- Professional Nav -->
     <nav class="glass">
         <div class="nav-content">
             <button class="mobile-menu-toggle" id="menu-toggle" aria-label="Toggle Menu">
@@ -54,47 +54,23 @@
             <div class="nav-search">
                 <input type="text" id="omni-search" placeholder="Search tools, lab, or concepts...">
             </div>
-            <div class="nav-links">
+            <div class="nav-links" id="nav-links">
                 <a href="index.html">Home</a>
                 <a href="visualizer.html">Visualizer</a>
                 <a href="lab.html">Tools Lab</a>
                 <a href="learn_new.html">Learn</a>
-                <a href="interview.html">Interview</a>
+                <a href="interview.html">Interview Hub</a>
             </div>
             <a href="index.html" class="logo">PDX Hub</a>
         </div>
     </nav>
 
     <main>
-        <section class="hero reveal mobile-hide">
-            <div style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 30px;">
-                <div class="chip-3d">
-                    <div class="chip-inner">
-                        <span style="color: var(--accent-color); font-weight: 700; font-size: 24px;">PDX-1</span>
-                    </div>
-                </div>
-
-                <!-- Circular Progress -->
-                <div class="card glass" style="display: flex; align-items: center; gap: 20px; padding: 15px 25px; border-radius: 980px;">
-                    <div class="progress-ring">
-                        <svg>
-                            <circle cx="30" cy="30" r="26" stroke="#444"></circle>
-                            <circle id="dash-circle" cx="30" cy="30" r="26" stroke="var(--accent-color)" stroke-dasharray="163.36" stroke-dashoffset="163.36"></circle>
-                        </svg>
-                        <span id="dash-pct" style="position: absolute; font-size: 12px; font-weight: 700;">0%</span>
-                    </div>
-                    <div style="text-align: left;">
-                        <span style="display: block; font-size: 11px; font-weight: 600; color: var(--accent-color);">HUB MASTERY</span>
-                        <span style="font-size: 13px; color: var(--text-secondary);">Pro Dashboard</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Elite Silicon Hero (BUILD FINAL) -->
         <section class="hero-section" style="padding: 120px 20px; text-align: center; position: relative; overflow: hidden; border-bottom: 1px solid var(--border-color);">
             <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 1000px; height: 1000px; background: radial-gradient(circle, rgba(0,113,227,0.1) 0%, transparent 70%); z-index: -1;"></div>
             
+            <!-- Central Silicon Crystal (Retained for visual depth) -->
             <div id="silicon-crystal" style="margin: 0 auto 60px; width: 100px; height: 100px; transform-style: preserve-3d; animation: rotateCrystal 20s infinite linear;">
                 <div style="position: absolute; width: 100%; height: 100%; background: rgba(0,113,227,0.2); border: 2px solid var(--accent-color); transform: rotateY(0deg) translateZ(50px); backdrop-filter: blur(10px);"></div>
                 <div style="position: absolute; width: 100%; height: 100%; background: rgba(0,113,227,0.1); border: 2px solid var(--accent-color); transform: rotateY(90deg) translateZ(50px); backdrop-filter: blur(10px);"></div>
@@ -186,90 +162,12 @@
                 </div>
             </div>
         </section>
-        <section class="section-container reveal" style="margin-top: 120px; padding: 60px; background: rgba(0, 113, 227, 0.05); border-radius: 40px;">
-            <div style="text-align: center; margin-bottom: 60px;">
-                <h2 style="font-size: 40px; letter-spacing: -1px;">Silicon Career Roadmap</h2>
-                <p style="color: var(--text-secondary);">The defined path from Entry-Level to Industry Leadership.</p>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0; position: relative; max-width: 600px; margin: 0 auto;">
-                <div style="position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent-color) 0%, transparent 100%);"></div>
-                
-                <div class="roadmap-step">
-                    <div class="step-circle">1</div>
-                    <div>
-                        <h4 style="font-size: 18px;">VLSI Intern / Junior PD</h4>
-                        <p style="font-size: 14px; color: var(--text-secondary);">Focus: Tool Basics, DRC/LVS fundamentals, Netlist concepts.</p>
-                    </div>
-                </div>
-                <div class="roadmap-step">
-                    <div class="step-circle">2</div>
-                    <div>
-                        <h4 style="font-size: 18px;">Senior Physical Design Engineer</h4>
-                        <p style="font-size: 14px; color: var(--text-secondary);">Focus: P&R, CTS optimization, Timing closure (STA), ECO runs.</p>
-                    </div>
-                </div>
-                <div class="roadmap-step">
-                    <div class="step-circle">3</div>
-                    <div>
-                        <h4 style="font-size: 18px;">Design Sign-off Lead</h4>
-                        <p style="font-size: 14px; color: var(--text-secondary);">Focus: PV sign-off, Power analysis, Chip level integration.</p>
-                    </div>
-                </div>
-                <div class="roadmap-step" style="border-color: #34c759; background: rgba(52, 199, 89, 0.1);">
-                    <div class="step-circle" style="background: #34c759;">4</div>
-                    <div>
-                        <h4 style="font-size: 18px; color: #34c759;">Silicon Tape-out Owner</h4>
-                        <p style="font-size: 14px; color: var(--text-secondary);">Focus: Full chip ownership, Yield management, GDSII delivery.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="section-container reveal" style="margin-top: 100px;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px;">
-                <div>
-                    <h2 style="font-size: 32px;">Masters of Silicon</h2>
-                    <p style="color: var(--text-secondary);">Top platform practitioners ranking by DRC-Success & Timing Mastery.</p>
-                </div>
-                <button class="btn btn-secondary" style="font-size: 14px;">View All Practitioners</button>
-            </div>
-            <div class="card glass" style="padding: 0; overflow: hidden;">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead style="background: rgba(0, 113, 227, 0.1);">
-                        <tr>
-                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">RANK</th>
-                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">PRACTITIONER</th>
-                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">EXPERTISE</th>
-                            <th style="padding: 20px; font-size: 12px; letter-spacing: 1px;">HUB SCORE</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 14px;">
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 20px; font-weight: 700; color: #FFD700;">#1</td>
-                            <td style="padding: 20px; font-weight: 600;">Arjun V. (Intel)</td>
-                            <td style="padding: 20px; color: var(--text-secondary);">Timing Closure & ECO</td>
-                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,850</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid var(--border-color);">
-                            <td style="padding: 20px; font-weight: 700; color: #C0C0C0;">#2</td>
-                            <td style="padding: 20px; font-weight: 600;">Sara M. (NVIDIA)</td>
-                            <td style="padding: 20px; color: var(--text-secondary);">Complex Floorplanning</td>
-                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,720</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 20px; font-weight: 700; color: #CD7F32;">#3</td>
-                            <td style="padding: 20px; font-weight: 600;">Li Wei (Qualcomm)</td>
-                            <td style="padding: 20px; color: var(--text-secondary);">Power Optimization</td>
-                            <td style="padding: 20px; font-weight: 700; color: var(--accent-color);">9,540</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+
         <div id="scroll-progress"></div>
         <button id="scroll-to-top" class="glass">↑</button>
     </main>
 
-    <!-- Universal Silicon Footer (UPGRADE) -->
+    <!-- Universal Silicon Footer -->
     <footer class="glass-footer">
         <div class="footer-grid">
             <div class="footer-column">
@@ -287,8 +185,6 @@
                 <a href="contact.html">Contact Us</a>
                 <a href="interview.html">Interview Hub</a>
                 <a href="tools.html">Physical Design Tools</a>
-                <a href="#">Tier-1 Checklists</a>
-                <a href="#">Foundry Specs</a>
             </div>
             <div class="footer-column">
                 <h5 style="color: var(--accent-color);">COMMUNITY</h5>
