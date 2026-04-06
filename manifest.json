@@ -1,0 +1,17 @@
+{
+  "name": "PDX Hub | Master VLSI",
+  "short_name": "PDX Hub",
+  "description": "Master VLSI Physical Design with Advanced Engineering Tools",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0071e3",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
